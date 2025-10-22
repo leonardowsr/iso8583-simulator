@@ -1,0 +1,10 @@
+{
+	"extends": "@woovi-playground/tsconfig/nextjs.json",
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		"../../packages/ui/src/Logo.tsx"
+	],
+	"exclude": ["node_modules"]
+}

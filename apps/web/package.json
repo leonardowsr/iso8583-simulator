@@ -1,0 +1,39 @@
+{
+	"name": "@woovi-playground/web",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"build": "next build",
+		"config:local": "cp .env.example .env",
+		"dev": "next dev",
+		"lint": "next lint",
+		"relay": "relay-compiler",
+		"start": "next start"
+	},
+	"dependencies": {
+		"@emotion/react": "^11.11.1",
+		"@emotion/server": "^11.11.0",
+		"@emotion/styled": "^11.11.0",
+		"@mui/icons-material": "^5.14.18",
+		"@mui/material": "^5.14.19",
+		"@woovi-playground/ui": "*",
+		"graphql-ws": "^5.14.2",
+		"luxon": "^3.3.0",
+		"next": "latest",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-relay": "^15.0.0",
+		"relay-runtime": "^15.0.0"
+	},
+	"devDependencies": {
+		"@types/luxon": "^3.3.0",
+		"@types/node": "^17.0.12",
+		"@types/react": "^18.0.22",
+		"@types/react-dom": "^18.0.7",
+		"@types/react-relay": "^14.1.3",
+		"@types/relay-runtime": "^14.1.10",
+		"@woovi-playground/tsconfig": "*",
+		"relay-compiler": "^15.0.0",
+		"typescript": "latest"
+	}
+}

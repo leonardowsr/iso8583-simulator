@@ -1,0 +1,37 @@
+{
+	"private": true,
+	"name": "woovi-playground",
+	"workspaces": {
+		"packages": [
+			"apps/*",
+			"packages/*"
+		]
+	},
+	"scripts": {
+		"build": "turbo run build",
+		"config:local": "turbo run config:local",
+		"dev": "turbo dev",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"lint": "turbo run lint",
+		"relay": "turbo run relay",
+		"schema": "turbo run schema",
+		"compose:up": "docker-compose -f docker-compose.yml up -d",
+		"compose-down": "docker-compose -f docker-compose down"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.0",
+		"@babel/preset-env": "^7.23.8",
+		"@babel/preset-typescript": "^7.23.3",
+		"autoprefixer": "^10.4.16",
+		"babel-plugin-transform-barrels": "^1.0.10",
+		"jest": "^29.7.0",
+		"jest-junit": "^16.0.0",
+		"turbo": "latest"
+	},
+	"lint-staged": {
+		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+			"biome check --write --unsafe ."
+		]
+	},
+	"packageManager": "pnpm@10.0.0"
+}
