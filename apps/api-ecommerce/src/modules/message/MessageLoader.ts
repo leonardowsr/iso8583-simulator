@@ -1,7 +1,5 @@
 import { createLoader } from "@entria/graphql-mongo-helpers";
-
 import { registerLoader } from "../_loader/loaderRegister";
-
 import { Message } from "./MessageModel";
 
 const { Wrapper, getLoader, clearCache, load, loadAll } = createLoader({

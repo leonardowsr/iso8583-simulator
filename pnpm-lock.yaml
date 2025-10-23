@@ -37,31 +37,34 @@ importers:
     dependencies:
       '@entria/graphql-mongo-helpers':
         specifier: ^1.1.2
-        version: 1.1.2(dataloader@2.2.2)(graphql-relay@0.10.0(graphql@16.8.1))(graphql@16.8.1)(mongoose@7.0.3)
+        version: 1.1.2(dataloader@2.2.3)(graphql-relay@0.10.2(graphql@16.11.0))(graphql@16.11.0)(mongoose@7.0.3)
+      '@woovi-playground/shared':
+        specifier: '*'
+        version: link:../../packages/shared
       dataloader:
-        specifier: ^2.2.2
-        version: 2.2.2
+        specifier: ^2.2.3
+        version: 2.2.3
       dotenv-safe:
         specifier: ^8.2.0
         version: 8.2.0
       graphql:
-        specifier: ^16.8.1
-        version: 16.8.1
+        specifier: ^16.11.0
+        version: 16.11.0
       graphql-redis-subscriptions:
-        specifier: ^2.6.0
-        version: 2.6.0(graphql-subscriptions@2.0.0(graphql@16.8.1))
+        specifier: ^2.7.0
+        version: 2.7.0(graphql-subscriptions@2.0.0(graphql@16.11.0))
       graphql-relay:
-        specifier: ^0.10.0
-        version: 0.10.0(graphql@16.8.1)
+        specifier: ^0.10.2
+        version: 0.10.2(graphql@16.11.0)
       graphql-relay-subscription:
         specifier: ^1.0.0
-        version: 1.0.0(graphql@16.8.1)
+        version: 1.0.0(graphql@16.11.0)
       graphql-subscriptions:
         specifier: ^2.0.0
-        version: 2.0.0(graphql@16.8.1)
+        version: 2.0.0(graphql@16.11.0)
       graphql-ws:
         specifier: ^5.14.2
-        version: 5.14.2(graphql@16.8.1)
+        version: 5.14.2(graphql@16.11.0)
       kcors:
         specifier: ^2.2.2
         version: 2.2.2
@@ -69,11 +72,11 @@ importers:
         specifier: ^2.14.2
         version: 2.14.2
       koa-bodyparser:
-        specifier: ^4.4.0
-        version: 4.4.0
+        specifier: ^4.4.1
+        version: 4.4.1
       koa-graphql:
         specifier: ^0.12.0
-        version: 0.12.0(graphql@16.8.1)
+        version: 0.12.0(graphql@16.11.0)
       koa-logger:
         specifier: ^3.2.1
         version: 3.2.1
@@ -84,8 +87,11 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       ws:
-        specifier: ^8.14.2
-        version: 8.14.2
+        specifier: ^8.18.3
+        version: 8.18.3
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@types/dotenv-safe':
         specifier: ^9.1.0
@@ -97,8 +103,8 @@ importers:
         specifier: ^2.13.12
         version: 2.13.12
       '@types/koa-bodyparser':
-        specifier: ^4.3.10
-        version: 4.3.10
+        specifier: ^4.3.12
+        version: 4.3.12
       '@types/koa-logger':
         specifier: ^3.1.5
         version: 3.1.5
@@ -134,7 +140,7 @@ importers:
         version: link:../../packages/ui
       graphql-ws:
         specifier: ^5.14.2
-        version: 5.14.2(graphql@16.8.1)
+        version: 5.14.2(graphql@16.11.0)
       luxon:
         specifier: ^3.3.0
         version: 3.3.0
@@ -182,6 +188,12 @@ importers:
         specifier: latest
         version: 5.9.3
 
+  packages/shared:
+    devDependencies:
+      '@woovi-playground/tsconfig':
+        specifier: '*'
+        version: link:../tsconfig
+
   packages/tsconfig: {}
 
   packages/ui:
@@ -199,8 +211,8 @@ importers:
         specifier: ^17.0.2
         version: 17.0.2
       typescript:
-        specifier: ^4.5.2
-        version: 4.5.3
+        specifier: latest
+        version: 5.9.3
 
 packages:
 
@@ -1596,8 +1608,8 @@ packages:
   '@types/keygrip@1.0.2':
     resolution: {integrity: sha512-GJhpTepz2udxGexqos8wgaBx4I/zWIDPh/KOGEwAqtuGDkOUJu5eFvwmdBX4AmB8Odsr+9pHCQqiAqDL/yKMKw==}
 
-  '@types/koa-bodyparser@4.3.10':
-    resolution: {integrity: sha512-6ae05pjhmrmGhUR8GYD5qr5p9LTEMEGfGXCsK8VaSL+totwigm8+H/7MHW7K4854CMeuwRAubT8qcc/EagaeIA==}
+  '@types/koa-bodyparser@4.3.12':
+    resolution: {integrity: sha512-hKMmRMVP889gPIdLZmmtou/BijaU1tHPyMNmcK7FAHAdATnRcGQQy78EqTTxLH1D4FTsrxIzklAQCso9oGoebQ==}
 
   '@types/koa-compose@3.2.5':
     resolution: {integrity: sha512-B8nG/OoE1ORZqCkBVsup/AKcvjdgoHnfi4pZMn5UwAPCbhk/96xyv284eBYW8JlQbQ7zDmnpFr68I/40mFoIBQ==}
@@ -1939,8 +1951,8 @@ packages:
   csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
 
-  dataloader@2.2.2:
-    resolution: {integrity: sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==}
+  dataloader@2.2.3:
+    resolution: {integrity: sha512-y2krtASINtPFS1rSDjacrFgn1dcUuoREVabwlOGOe4SdxenREqwjwjElAdwvbGM7kgZz9a3KVicWR7vcz8rnzA==}
 
   debug@4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -2170,18 +2182,18 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  graphql-redis-subscriptions@2.6.0:
-    resolution: {integrity: sha512-hWAPkCNSFKpEOJBMLAcbpGl/gv+s1Yho2JIwP9MK2RlvqlWiqhAYqjA/HVRK86nkYsRkBwGgqvaNxtV1fAexBQ==}
+  graphql-redis-subscriptions@2.7.0:
+    resolution: {integrity: sha512-IK4uCKx1UNhkcnG9lIqFWz9PpltSbuM8RygwGoB/e1HZMuKpAGeqqfHFeLKkQjjubvk4tAdUdx48AUkTAXJ17Q==}
     peerDependencies:
-      graphql-subscriptions: ^1.0.0 || ^2.0.0
+      graphql-subscriptions: ^1.0.0 || ^2.0.0 || ^3.0.0
 
   graphql-relay-subscription@1.0.0:
     resolution: {integrity: sha512-ga+wEJEMf4MB4lCxLNjyr8BIC7bhVA0SMzC8+oKIW9ny9R7RPSEz5yT/BUJO26ekGRDTQY8bBwrR+iJl2dq11Q==}
     peerDependencies:
       graphql: '>=16.0.0'
 
-  graphql-relay@0.10.0:
-    resolution: {integrity: sha512-44yBuw2/DLNEiMypbNZBt1yMDbBmyVPVesPywnteGGALiBmdyy1JP8jSg8ClLePg8ZZxk0O4BLhd1a6U/1jDOQ==}
+  graphql-relay@0.10.2:
+    resolution: {integrity: sha512-abybva1hmlNt7Y9pMpAzHuFnM2Mme/a2Usd8S4X27fNteLGRAECMYfhmsrpZFvGn3BhmBZugMXYW/Mesv3P1Kw==}
     engines: {node: ^12.20.0 || ^14.15.0 || >= 15.9.0}
     peerDependencies:
       graphql: ^16.2.0
@@ -2197,8 +2209,8 @@ packages:
     peerDependencies:
       graphql: '>=0.11 <=16'
 
-  graphql@16.8.1:
-    resolution: {integrity: sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==}
+  graphql@16.11.0:
+    resolution: {integrity: sha512-mS1lbMsxgQj6hge1XZ6p7GPhbrtFwUFYi3wRzXAC/FmYnyXMTvvI3td3rjmQ2u8ewXueaSvRPWaEcgVVOT9Jnw==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
   has-flag@3.0.0:
@@ -2539,8 +2551,8 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
 
-  koa-bodyparser@4.4.0:
-    resolution: {integrity: sha512-AXPY7wwKZUmbgb8VkTEUFoRNOlx6aWRJwEnQD+zfNf33/7KSAkN4Oo9BqlIk80D+5TvuqlhpQT5dPVcyxl5Zsw==}
+  koa-bodyparser@4.4.1:
+    resolution: {integrity: sha512-kBH3IYPMb+iAXnrxIhXnW+gXV8OTzCu8VPDqvcDHW9SQrbkHmqPQtiZwrltNmSq6/lpipHnT7k7PsjlVD7kK0w==}
     engines: {node: '>=8.0.0'}
 
   koa-compose@4.1.0:
@@ -3273,11 +3285,6 @@ packages:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
 
-  typescript@4.5.3:
-    resolution: {integrity: sha512-eVYaEHALSt+s9LbvgEv4Ef+Tdq7hBiIZgii12xXJnukryt3pMgJf6aKhoCZ3FWQsu6sydEnkg11fYXLzhLBjeQ==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-
   typescript@5.9.3:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
@@ -3366,8 +3373,8 @@ packages:
     resolution: {integrity: sha512-7KxauUdBmSdWnmpaGFg+ppNjKF8uNLry8LyzjauQDOVONfFLNKrKvQOxZ/VuTIcS/gge/YNahf5RIIQWTSarlg==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
 
-  ws@8.14.2:
-    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
+  ws@8.18.3:
+    resolution: {integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -3414,6 +3421,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
 snapshots:
 
@@ -4321,18 +4331,18 @@ snapshots:
 
   '@emotion/weak-memoize@0.3.1': {}
 
-  '@entria/graphql-mongo-helpers@1.1.2(dataloader@2.2.2)(graphql-relay@0.10.0(graphql@16.8.1))(graphql@16.8.1)(mongoose@7.0.3)':
+  '@entria/graphql-mongo-helpers@1.1.2(dataloader@2.2.3)(graphql-relay@0.10.2(graphql@16.11.0))(graphql@16.11.0)(mongoose@7.0.3)':
     dependencies:
-      '@entria/graphql-mongoose-loader': 4.4.0(graphql-relay@0.10.0(graphql@16.8.1))(graphql@16.8.1)(mongoose@7.0.3)
-      dataloader: 2.2.2
-      graphql: 16.8.1
-      graphql-relay: 0.10.0(graphql@16.8.1)
+      '@entria/graphql-mongoose-loader': 4.4.0(graphql-relay@0.10.2(graphql@16.11.0))(graphql@16.11.0)(mongoose@7.0.3)
+      dataloader: 2.2.3
+      graphql: 16.11.0
+      graphql-relay: 0.10.2(graphql@16.11.0)
       mongoose: 7.0.3
 
-  '@entria/graphql-mongoose-loader@4.4.0(graphql-relay@0.10.0(graphql@16.8.1))(graphql@16.8.1)(mongoose@7.0.3)':
+  '@entria/graphql-mongoose-loader@4.4.0(graphql-relay@0.10.2(graphql@16.11.0))(graphql@16.11.0)(mongoose@7.0.3)':
     dependencies:
-      graphql: 16.8.1
-      graphql-relay: 0.10.0(graphql@16.8.1)
+      graphql: 16.11.0
+      graphql-relay: 0.10.2(graphql@16.11.0)
       mongoose: 7.0.3
 
   '@esbuild-kit/cjs-loader@2.4.2':
@@ -4949,7 +4959,7 @@ snapshots:
 
   '@types/keygrip@1.0.2': {}
 
-  '@types/koa-bodyparser@4.3.10':
+  '@types/koa-bodyparser@4.3.12':
     dependencies:
       '@types/koa': 2.13.12
 
@@ -5353,7 +5363,7 @@ snapshots:
 
   csstype@3.1.2: {}
 
-  dataloader@2.2.2: {}
+  dataloader@2.2.3: {}
 
   debug@4.3.4:
     dependencies:
@@ -5477,11 +5487,11 @@ snapshots:
       jest-message-util: 29.7.0
       jest-util: 29.7.0
 
-  express-graphql@0.12.0(graphql@16.8.1):
+  express-graphql@0.12.0(graphql@16.11.0):
     dependencies:
       accepts: 1.3.8
       content-type: 1.0.5
-      graphql: 16.8.1
+      graphql: 16.11.0
       http-errors: 1.8.0
       raw-body: 2.5.2
 
@@ -5575,32 +5585,32 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphql-redis-subscriptions@2.6.0(graphql-subscriptions@2.0.0(graphql@16.8.1)):
+  graphql-redis-subscriptions@2.7.0(graphql-subscriptions@2.0.0(graphql@16.11.0)):
     dependencies:
-      graphql-subscriptions: 2.0.0(graphql@16.8.1)
+      graphql-subscriptions: 2.0.0(graphql@16.11.0)
     optionalDependencies:
       ioredis: 5.3.2
     transitivePeerDependencies:
       - supports-color
 
-  graphql-relay-subscription@1.0.0(graphql@16.8.1):
+  graphql-relay-subscription@1.0.0(graphql@16.11.0):
     dependencies:
-      graphql: 16.8.1
+      graphql: 16.11.0
 
-  graphql-relay@0.10.0(graphql@16.8.1):
+  graphql-relay@0.10.2(graphql@16.11.0):
     dependencies:
-      graphql: 16.8.1
+      graphql: 16.11.0
 
-  graphql-subscriptions@2.0.0(graphql@16.8.1):
+  graphql-subscriptions@2.0.0(graphql@16.11.0):
     dependencies:
-      graphql: 16.8.1
+      graphql: 16.11.0
       iterall: 1.3.0
 
-  graphql-ws@5.14.2(graphql@16.8.1):
+  graphql-ws@5.14.2(graphql@16.11.0):
     dependencies:
-      graphql: 16.8.1
+      graphql: 16.11.0
 
-  graphql@16.8.1: {}
+  graphql@16.11.0: {}
 
   has-flag@3.0.0: {}
 
@@ -6124,10 +6134,11 @@ snapshots:
 
   kleur@3.0.3: {}
 
-  koa-bodyparser@4.4.0:
+  koa-bodyparser@4.4.1:
     dependencies:
       co-body: 6.1.0
       copy-to: 2.0.1
+      type-is: 1.6.18
 
   koa-compose@4.1.0: {}
 
@@ -6136,11 +6147,11 @@ snapshots:
       co: 4.6.0
       koa-compose: 4.1.0
 
-  koa-graphql@0.12.0(graphql@16.8.1):
+  koa-graphql@0.12.0(graphql@16.11.0):
     dependencies:
       '@types/koa': 2.13.12
-      express-graphql: 0.12.0(graphql@16.8.1)
-      graphql: 16.8.1
+      express-graphql: 0.12.0(graphql@16.11.0)
+      graphql: 16.11.0
       http-errors: 1.8.1
 
   koa-logger@3.2.1:
@@ -6850,8 +6861,6 @@ snapshots:
       media-typer: 0.3.0
       mime-types: 2.1.35
 
-  typescript@4.5.3: {}
-
   typescript@5.9.3: {}
 
   ua-parser-js@1.0.35: {}
@@ -6928,7 +6937,7 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 3.0.7
 
-  ws@8.14.2: {}
+  ws@8.18.3: {}
 
   xml@1.0.1: {}
 
@@ -6959,3 +6968,5 @@ snapshots:
   ylru@1.3.2: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@4.1.12: {}

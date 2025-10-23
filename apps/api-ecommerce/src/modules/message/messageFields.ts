@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: change any after */
 import type { BaseContext } from "@entria/graphql-mongo-helpers/lib/createLoader";
 import { connectionArgs } from "graphql-relay";
 import { MessageLoader } from "./MessageLoader";

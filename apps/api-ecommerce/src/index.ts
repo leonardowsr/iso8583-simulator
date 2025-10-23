@@ -9,6 +9,7 @@ import { app } from "./server/app";
 	const server = http.createServer(app.callback());
 
 	server.listen(config.PORT, () => {
-		console.info(`Server running on port:${config.PORT}`);
+		console.info(`GraphQL Playground: http://localhost:${config.PORT}/graphql`);
+		console.info("Mongoexpress  : http://localhost:8081/mongoexpress");
 	});
 })();

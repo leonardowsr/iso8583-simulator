@@ -5,7 +5,6 @@ const Schema = new mongoose.Schema<IMessage>(
 	{
 		content: {
 			type: String,
-			description: 'The content of the message',
 		},
 	},
 	{
@@ -15,7 +14,7 @@ const Schema = new mongoose.Schema<IMessage>(
 );
 
 export type IMessage = {
-	content: string;
+	content: string;	
 	createdAt: Date;
 	updatedAt: Date;
 } & Document;
