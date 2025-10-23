@@ -8,7 +8,7 @@ import { Message } from "../components/Message";
 import { MessageList } from "../components/MessageList";
 import { getPreloadedQuery } from "../relay/network";
 
-const IndexQuery = graphql`
+const _IndexQuery = graphql`
 	query pages_PageQuery($first: Int!, $after: String) {
 		messages(first: $first, after: $after) @connection(key: "pages_messages") {
 			__id
@@ -45,7 +45,7 @@ const Index = ({ queryRefs }: IndexProps) => {
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (_context) => {
 	return {
 		props: {
 			preloadedQueries: {

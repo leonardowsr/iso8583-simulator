@@ -1,6 +1,7 @@
-import { NextPage } from 'next';
-import React, { useMemo } from 'react';
-import { useRelayEnvironment } from 'react-relay';
+import type { NextPage } from "next";
+import type React from "react";
+import { useMemo } from "react";
+import { useRelayEnvironment } from "react-relay";
 
 export type NextPageWithLayout<T> = NextPage<T> & {
 	getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -28,26 +29,26 @@ export const RelayHydrate = <T,>({
 
 		const queryRefs: any = {};
 		for (const [queryName, { params, variables, response }] of Object.entries(
-			preloadedQueries
+			preloadedQueries,
 		) as any) {
 			environment
 				.getNetwork()
-				// @ts-ignore - seems to be a private untyped api 🤷‍♂️
+				// @ts-expect-error - seems to be a private untyped api 🤷‍♂️
 				.responseCache.set(params.id, variables, response);
 			// TODO: create using a function exported from react-relay package
 			queryRefs[queryName] = {
 				environment,
 				fetchKey: params.id,
-				fetchPolicy: 'store-or-network',
+				fetchPolicy: "store-or-network",
 				isDisposed: false,
 				name: params.name,
-				kind: 'PreloadedQuery',
+				kind: "PreloadedQuery",
 				variables,
 			};
 		}
 
 		return { ...otherProps, queryRefs };
-	}, [props]);
+	}, [props, environment]);
 
 	return <>{getLayout(<Component {...transformedProps} />)}</>;
 };

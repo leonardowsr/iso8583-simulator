@@ -25,7 +25,8 @@
 			"!**/.svelte-kit",
 			"!**/wrangler.jsonc",
 			"!**/prisma",
-			"!**/.source"
+			"!**/.source",
+			"!**/web"
 		]
 	},
 	"formatter": {
@@ -61,7 +62,6 @@
 			"style": {
 				"noParameterAssign": "error",
 				"useAsConstAssertion": "error",
-
 				"useDefaultParameterLast": "error",
 				"useEnumInitializers": "error",
 				"useSelfClosingElements": "error",

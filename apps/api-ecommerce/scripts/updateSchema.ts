@@ -1,6 +1,6 @@
-import fs from "fs/promises";
+import fs from "node:fs/promises";
+import path from "node:path";
 import { printSchema } from "graphql/utilities";
-import path from "path";
 
 import { schema } from "../src/schema/schema";
 

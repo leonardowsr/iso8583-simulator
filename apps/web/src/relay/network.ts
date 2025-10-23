@@ -23,7 +23,7 @@ function createNetwork() {
 		const { id } = operation;
 
 		const isQuery = operation.operationKind === "query";
-		const forceFetch = cacheConfig && cacheConfig.force;
+		const forceFetch = cacheConfig?.force;
 
 		if (isQuery && !forceFetch) {
 			const fromCache = responseCache.get(id as string, variables);

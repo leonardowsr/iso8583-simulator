@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 import { config } from "./config";
+import { createDefaultUser } from "./modules/user/seed";
 
 async function connectDatabase() {
 	mongoose.connection.on("connected", () =>
@@ -17,6 +18,7 @@ async function connectDatabase() {
 
 	try {
 		await mongoose.connect(config.MONGO_URI);
+		await createDefaultUser();
 	} catch (error) {
 		console.error("Failed to connect to database:", error);
 		process.exit(1);

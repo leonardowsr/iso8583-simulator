@@ -1,4 +1,4 @@
-import { graphql } from 'react-relay';
+import { graphql } from "react-relay";
 
 export const MessageAdd = graphql`
   mutation MessageAddMutation($input: MessageAddInput!) {

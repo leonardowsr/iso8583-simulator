@@ -3,7 +3,7 @@ import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import { Product } from "../ProductModel";
 import { productField } from "../productFields";
-import type { ProductUpdateInput } from "../validation/schemas";
+import type { ProductUpdateInput } from "../schemas";
 
 const mutation = mutationWithClientMutationId({
 	name: "ProductUpdate",
