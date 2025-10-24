@@ -36,14 +36,11 @@ importers:
         specifier: latest
         version: 2.5.8
 
-  apps/api-ecommerce:
+  apps/acquire-sim:
     dependencies:
       '@entria/graphql-mongo-helpers':
         specifier: ^1.1.2
         version: 1.1.2(dataloader@2.2.3)(graphql-relay@0.10.2(graphql@16.11.0))(graphql@16.11.0)(mongoose@7.0.3)
-      '@woovi-playground/shared':
-        specifier: '*'
-        version: link:../../packages/shared
       dataloader:
         specifier: ^2.2.3
         version: 2.2.3
@@ -54,10 +51,10 @@ importers:
         specifier: ^16.11.0
         version: 16.11.0
       graphql-redis-subscriptions:
-        specifier: ^2.7.0
+        specifier: ^2.6.0
         version: 2.7.0(graphql-subscriptions@2.0.0(graphql@16.11.0))
       graphql-relay:
-        specifier: ^0.10.2
+        specifier: ^0.10.0
         version: 0.10.2(graphql@16.11.0)
       graphql-relay-subscription:
         specifier: ^1.0.0
@@ -68,6 +65,9 @@ importers:
       graphql-ws:
         specifier: ^5.14.2
         version: 5.14.2(graphql@16.11.0)
+      iso_8583:
+        specifier: ^2.6.7
+        version: 2.6.7
       kcors:
         specifier: ^2.2.2
         version: 2.2.2
@@ -90,8 +90,81 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       ws:
-        specifier: ^8.18.3
+        specifier: ^8.14.2
         version: 8.18.3
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
+    devDependencies:
+      '@types/dotenv-safe':
+        specifier: ^9.1.0
+        version: 9.1.0(dotenv@8.6.0)
+      '@types/kcors':
+        specifier: ^2.2.8
+        version: 2.2.8
+      '@types/koa':
+        specifier: ^2.13.12
+        version: 2.13.12
+      '@types/koa-bodyparser':
+        specifier: ^4.3.10
+        version: 4.3.12
+      '@types/koa-logger':
+        specifier: ^3.1.5
+        version: 3.1.5
+      '@types/koa-router':
+        specifier: ^7.4.8
+        version: 7.4.8
+      '@types/node':
+        specifier: ^17.0.12
+        version: 17.0.12
+      '@types/ws':
+        specifier: ^8.18.1
+        version: 8.18.1
+      tsx:
+        specifier: ^3.12.6
+        version: 3.12.6
+
+  apps/api-ecommerce:
+    dependencies:
+      '@entria/graphql-mongo-helpers':
+        specifier: ^1.1.2
+        version: 1.1.2(dataloader@2.2.3)(graphql-relay@0.10.2(graphql@16.11.0))(graphql@16.11.0)(mongoose@7.0.3)
+      '@woovi-playground/shared':
+        specifier: '*'
+        version: link:../../packages/shared
+      dataloader:
+        specifier: ^2.2.3
+        version: 2.2.3
+      dotenv-safe:
+        specifier: ^8.2.0
+        version: 8.2.0
+      graphql:
+        specifier: ^16.11.0
+        version: 16.11.0
+      graphql-relay:
+        specifier: ^0.10.2
+        version: 0.10.2(graphql@16.11.0)
+      kcors:
+        specifier: ^2.2.2
+        version: 2.2.2
+      koa:
+        specifier: ^2.14.2
+        version: 2.14.2
+      koa-bodyparser:
+        specifier: ^4.4.1
+        version: 4.4.1
+      koa-graphql:
+        specifier: ^0.12.0
+        version: 0.12.0(graphql@16.11.0)
+      koa-logger:
+        specifier: ^3.2.1
+        version: 3.2.1
+      koa-router:
+        specifier: ^12.0.1
+        version: 12.0.1
+      mongoose:
+        specifier: ^7.0.3
+        version: 7.0.3
       zod:
         specifier: ^4.1.12
         version: 4.1.12
@@ -1692,6 +1765,9 @@ packages:
   '@types/whatwg-url@8.2.2':
     resolution: {integrity: sha512-FtQu10RWgn3D9U4aazdwIE2yzphmTJREDqNdODHrbrZmmMqI0vMheC/6NE/J1Yveaj8H+ela+YwWTjq5PGmuhA==}
 
+  '@types/ws@8.18.1':
+    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
+
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
 
@@ -1987,6 +2063,10 @@ packages:
 
   dataloader@2.2.3:
     resolution: {integrity: sha512-y2krtASINtPFS1rSDjacrFgn1dcUuoREVabwlOGOe4SdxenREqwjwjElAdwvbGM7kgZz9a3KVicWR7vcz8rnzA==}
+
+  date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
 
   debug@4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -2407,6 +2487,9 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  iso_8583@2.6.7:
+    resolution: {integrity: sha512-XwilmWnLScKHnZ+UM4/Oong4dXFO2ghWsLG24p8UcOE6KZ/Lr7voHKCBTXcSJJjLFSx4fndwyQ44Gw6LCRpcug==}
+
   istanbul-lib-coverage@3.2.2:
     resolution: {integrity: sha512-O8dpsF+r0WV/8MNRKfnmrtCWhuKjxrq2w+jpzBL5UZKTi2LeVWnWOmWRxFlesJONmc+wLAGvKQZEOanko0LFTg==}
     engines: {node: '>=8'}
@@ -2590,6 +2673,9 @@ packages:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
+
+  jxon@2.0.0-beta.5:
+    resolution: {integrity: sha512-Ot7muZ0v2cmgQ1k+e6bpNcz6E3q2zHssvzYubbKTk5nIEvBLqJfiS6/uivU2ujqKZQlORcjKqcyx6D9X6BEAkQ==}
 
   kareem@2.5.1:
     resolution: {integrity: sha512-7jFxRVm+jD+rkq3kY0iZDJfsO2/t4BBPeEb2qKn2lR/9KhuksYk5hxzfRYWMPV8P/x2d0kHD306YyWLzjjH+uA==}
@@ -3512,6 +3598,11 @@ packages:
 
   xml@1.0.1:
     resolution: {integrity: sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw==}
+
+  xmldom@0.1.31:
+    resolution: {integrity: sha512-yS2uJflVQs6n+CyjHoaBmVSqIDevTAWrzMmjG1Gc7h1qQ7uVozNhEPJAwZXWyGQ/Gafo3fCwrcaokezLPupVyQ==}
+    engines: {node: '>=0.1'}
+    deprecated: Deprecated due to CVE-2021-21366 resolved in 0.5.0
 
   xtend@2.1.2:
     resolution: {integrity: sha512-vMNKzr2rHP9Dp/e1NQFnLQlwlhp9L/LfvnsVdHxN1f+uggyVI3i08uD14GPvCToPkdsRfyPqIyYGmIk58V98ZQ==}
@@ -5187,6 +5278,10 @@ snapshots:
       '@types/node': 17.0.12
       '@types/webidl-conversions': 7.0.0
 
+  '@types/ws@8.18.1':
+    dependencies:
+      '@types/node': 17.0.12
+
   '@types/yargs-parser@21.0.3': {}
 
   '@types/yargs@17.0.32':
@@ -5519,6 +5614,10 @@ snapshots:
   csstype@3.1.2: {}
 
   dataloader@2.2.3: {}
+
+  date-fns@2.30.0:
+    dependencies:
+      '@babel/runtime': 7.23.4
 
   debug@4.3.4:
     dependencies:
@@ -5922,6 +6021,11 @@ snapshots:
 
   isexe@2.0.0: {}
 
+  iso_8583@2.6.7:
+    dependencies:
+      date-fns: 2.30.0
+      jxon: 2.0.0-beta.5
+
   istanbul-lib-coverage@3.2.2: {}
 
   istanbul-lib-instrument@5.2.1:
@@ -6294,6 +6398,10 @@ snapshots:
   json-parse-even-better-errors@2.3.1: {}
 
   json5@2.2.3: {}
+
+  jxon@2.0.0-beta.5:
+    dependencies:
+      xmldom: 0.1.31
 
   kareem@2.5.1: {}
 
@@ -7190,6 +7298,8 @@ snapshots:
   ws@8.18.3: {}
 
   xml@1.0.1: {}
+
+  xmldom@0.1.31: {}
 
   xtend@2.1.2:
     dependencies:

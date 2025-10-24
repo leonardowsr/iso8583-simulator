@@ -5,7 +5,6 @@
 	"scripts": {
 		"build": "next build",
 		"config:local": "cp .env.example .env",
-		"dev": "next dev",
 		"lint": "next lint",
 		"relay": "relay-compiler",
 		"start": "next start"
