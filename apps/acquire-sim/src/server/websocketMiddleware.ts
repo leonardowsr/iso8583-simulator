@@ -1,13 +1,13 @@
-import http from 'http';
+import http from "http";
 
-import WebSocket, { WebSocketServer as WSWebSocketServer } from 'ws';
+import WebSocket, { WebSocketServer as WSWebSocketServer } from "ws";
 
 // work with commonjs and esm
 const WebSocketServer = WSWebSocketServer;
 
 export const createWebsocketMiddleware = (
-	propertyName = 'ws',
-	options = {}
+	propertyName = "ws",
+	options = {},
 ) => {
 	if (options instanceof http.Server) options = { server: options };
 
@@ -34,11 +34,11 @@ export const createWebsocketMiddleware = (
 	};
 
 	const websocketMiddleware = async (ctx, next) => {
-		const upgradeHeader = (ctx.request.headers.upgrade || '')
-			.split(',')
+		const upgradeHeader = (ctx.request.headers.upgrade || "")
+			.split(",")
 			.map((s) => s.trim());
 
-		if (~upgradeHeader.indexOf('websocket')) {
+		if (~upgradeHeader.indexOf("websocket")) {
 			const wss = getOrCreateWebsocketServer(ctx.url);
 
 			ctx[propertyName] = () =>
@@ -48,9 +48,9 @@ export const createWebsocketMiddleware = (
 						ctx.request.socket,
 						Buffer.alloc(0),
 						(ws) => {
-							wss.emit('connection', ws, ctx.req);
+							wss.emit("connection", ws, ctx.req);
 							resolve(ws);
-						}
+						},
 					);
 					ctx.respond = false;
 				});

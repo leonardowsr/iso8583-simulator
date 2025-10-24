@@ -3,9 +3,8 @@ import mongoose from "mongoose";
 import { config } from "./config";
 
 async function connectDatabase() {
-	// eslint-disable-next-line
 	mongoose.connection.on("close", () =>
-		console.log("Database connection closed."),
+		console.info("Database connection closed."),
 	);
 
 	try {

@@ -1,5 +1,6 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
+import { Iso8583Client } from "../../../adapters/iso8583.port";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
 import { Message } from "../../message/MessageModel";
 import { Transaction } from "../TransationModel";
@@ -39,6 +40,8 @@ const mutation = mutationWithClientMutationId({
 			return { transaction: existingTransaction._id.toString() };
 		}
 
+		const isoClient = new Iso8583Client();
+
 		const transaction = await Transaction.create({
 			userId: args.userId,
 			orderRef: args.orderRef,
@@ -51,9 +54,22 @@ const mutation = mutationWithClientMutationId({
 			content: "Transaction Added",
 		}).save();
 
-		redisPubSub.publish("MESSAGE.ADDED", {
-			message: message._id.toString(),
-		});
+		try {
+			await isoClient.connect();
+
+			redisPubSub.publish("MESSAGE.ADDED", {
+				message: message._id.toString(),
+			});
+
+			await isoClient.sendTransaction(transaction);
+		} catch (err) {
+			console.error("Error processing transaction:", err);
+		} finally {
+			redisPubSub.publish("MESSAGE.ADDED", {
+				message: message._id.toString(),
+			});
+			await isoClient.close();
+		}
 
 		return {};
 	},
