@@ -13,11 +13,8 @@ dotenvSafe.config({
 const ENV = process.env;
 
 const config = {
-	PORT: Number(ENV.PORT) ?? 4000,
-	ISSUER_PORT: Number(ENV.ISSUER_PORT ?? 5000),
-	ISSUER_HOST: ENV.ISSUER_HOST ?? "localhost",
+	PORT: Number(ENV.PORT) ?? 5000,
 	MONGO_URI: ENV.MONGO_URI ?? "",
-	REDIS_HOST: ENV.REDIS_HOST ?? "",
 };
 
 export { config };

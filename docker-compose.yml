@@ -55,6 +55,36 @@ services:
     networks:
       - shared-net
 
+  mongo-express-issuer:
+    image: mongo-express:latest
+    container_name: mongo-express-issuer
+    ports:
+      - "8083:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb-issuer:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: pass
+    depends_on:
+      - mongodb-issuer
+    restart: always
+    networks:
+      - shared-net
+
+  mongodb-issuer:
+    image: mongo
+    container_name: mongodb-issuer
+    ports:
+      - "27019:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: woovi-playground
+    restart: always
+    networks:
+      - shared-net
+
   redis:
     image: redis
     container_name: redis

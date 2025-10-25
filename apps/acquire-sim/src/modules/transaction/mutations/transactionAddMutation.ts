@@ -1,6 +1,7 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import { Iso8583Client } from "../../../adapters/iso8583.port";
+import { Iso8583Client } from "../../../adapters/iso8583.adapter";
+import { PUB_SUB_EVENTS } from "../../_pubSub/pubSubEvents";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
 import { Message } from "../../message/MessageModel";
 import { Transaction } from "../TransationModel";
@@ -40,6 +41,10 @@ const mutation = mutationWithClientMutationId({
 			return { transaction: existingTransaction._id.toString() };
 		}
 
+		if (String(args.amount).length > 12) {
+			throw new Error("Valor da transação excede o limite permitido");
+		}
+
 		const isoClient = new Iso8583Client();
 
 		const transaction = await Transaction.create({
@@ -51,27 +56,31 @@ const mutation = mutationWithClientMutationId({
 		});
 
 		const message = await new Message({
-			content: "Transaction Added",
+			content: "IN: Processing transaction " + transaction._id,
 		}).save();
 
 		try {
 			await isoClient.connect();
+			redisPubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
+				message: message._id.toString(),
+			});
+
+			const response = await isoClient.sendTransaction(args);
+			console.log("ISO 8583 response received:", response);
 
 			redisPubSub.publish("MESSAGE.ADDED", {
 				message: message._id.toString(),
 			});
-
-			await isoClient.sendTransaction(transaction);
 		} catch (err) {
 			console.error("Error processing transaction:", err);
-		} finally {
 			redisPubSub.publish("MESSAGE.ADDED", {
 				message: message._id.toString(),
 			});
-			await isoClient.close();
 		}
 
-		return {};
+		return {
+			transaction: transaction._id.toString(),
+		};
 	},
 	outputFields: {
 		...transactionField("transaction"),

@@ -1,5 +1,5 @@
 {
-	"name": "acquire-simulator",
+	"name": "issuer-simulator",
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {

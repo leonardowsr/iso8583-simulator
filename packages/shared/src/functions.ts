@@ -4,3 +4,4 @@ export const removeUndefined = (obj: Record<string, any>) => {
 		Object.entries(obj).filter(([_, value]) => value !== undefined),
 	);
 };
+

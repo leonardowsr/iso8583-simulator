@@ -41,6 +41,9 @@ importers:
       '@entria/graphql-mongo-helpers':
         specifier: ^1.1.2
         version: 1.1.2(dataloader@2.2.3)(graphql-relay@0.10.2(graphql@16.11.0))(graphql@16.11.0)(mongoose@7.0.3)
+      '@woovi-playground/shared':
+        specifier: '*'
+        version: link:../../packages/shared
       dataloader:
         specifier: ^2.2.3
         version: 2.2.3
@@ -194,6 +197,97 @@ importers:
         specifier: ^3.12.6
         version: 3.12.6
 
+  apps/issuer-sim:
+    dependencies:
+      '@entria/graphql-mongo-helpers':
+        specifier: ^1.1.2
+        version: 1.1.2(dataloader@2.2.3)(graphql-relay@0.10.2(graphql@16.11.0))(graphql@16.11.0)(mongoose@7.0.3)
+      '@woovi-playground/shared':
+        specifier: '*'
+        version: link:../../packages/shared
+      dataloader:
+        specifier: ^2.2.3
+        version: 2.2.3
+      dotenv-safe:
+        specifier: ^8.2.0
+        version: 8.2.0
+      graphql:
+        specifier: ^16.11.0
+        version: 16.11.0
+      graphql-redis-subscriptions:
+        specifier: ^2.6.0
+        version: 2.7.0(graphql-subscriptions@2.0.0(graphql@16.11.0))
+      graphql-relay:
+        specifier: ^0.10.0
+        version: 0.10.2(graphql@16.11.0)
+      graphql-relay-subscription:
+        specifier: ^1.0.0
+        version: 1.0.0(graphql@16.11.0)
+      graphql-subscriptions:
+        specifier: ^2.0.0
+        version: 2.0.0(graphql@16.11.0)
+      graphql-ws:
+        specifier: ^5.14.2
+        version: 5.14.2(graphql@16.11.0)
+      iso_8583:
+        specifier: ^2.6.7
+        version: 2.6.7
+      kcors:
+        specifier: ^2.2.2
+        version: 2.2.2
+      koa:
+        specifier: ^2.14.2
+        version: 2.14.2
+      koa-bodyparser:
+        specifier: ^4.4.1
+        version: 4.4.1
+      koa-graphql:
+        specifier: ^0.12.0
+        version: 0.12.0(graphql@16.11.0)
+      koa-logger:
+        specifier: ^3.2.1
+        version: 3.2.1
+      koa-router:
+        specifier: ^12.0.1
+        version: 12.0.1
+      mongoose:
+        specifier: ^7.0.3
+        version: 7.0.3
+      ws:
+        specifier: ^8.14.2
+        version: 8.18.3
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
+    devDependencies:
+      '@types/dotenv-safe':
+        specifier: ^9.1.0
+        version: 9.1.0(dotenv@8.6.0)
+      '@types/kcors':
+        specifier: ^2.2.8
+        version: 2.2.8
+      '@types/koa':
+        specifier: ^2.13.12
+        version: 2.13.12
+      '@types/koa-bodyparser':
+        specifier: ^4.3.10
+        version: 4.3.12
+      '@types/koa-logger':
+        specifier: ^3.1.5
+        version: 3.1.5
+      '@types/koa-router':
+        specifier: ^7.4.8
+        version: 7.4.8
+      '@types/node':
+        specifier: ^17.0.12
+        version: 17.0.12
+      '@types/ws':
+        specifier: ^8.18.1
+        version: 8.18.1
+      tsx:
+        specifier: ^3.12.6
+        version: 3.12.6
+
   apps/web:
     dependencies:
       '@emotion/react':
@@ -265,6 +359,13 @@ importers:
         version: 5.9.3
 
   packages/shared:
+    dependencies:
+      iso_8583:
+        specifier: ^2.6.7
+        version: 2.6.7
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@woovi-playground/tsconfig':
         specifier: '*'
