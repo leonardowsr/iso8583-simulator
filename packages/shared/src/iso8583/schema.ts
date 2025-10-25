@@ -13,8 +13,9 @@ export const iso8583Schema = z
 		12: z.string({ error: "TRANSACTION_TIME_REQ" }).length(6), // Time, Local Transaction
 		13: z.string({ error: "TRANSACTION_DATE_REQ" }).length(4), // Date, Local Transaction
 		14: z.string({ error: "EXPIRATION_DATE_REQ" }).length(4), // Date, Expiration
+		48: z.string({ error: "CARDHOLDER_NAME_REQ" }).max(250), // Additional Data – Private
 		55: z.string({ error: "ICC_DATA_REQ" }), // ICC Data – EMV Having multiple subfields
-		63: z.string({ error: "IDEMPOTENCY_REQ" }).length(100), // Additional Data – Private
+		63: z.string({ error: "IDEMPOTENCY_REQ" }).max(100), // Additional Data – Private
 	})
 	.transform((data) => {
 		return {
@@ -25,9 +26,10 @@ export const iso8583Schema = z
 			transmissionDateTime: Number(data[7]),
 			localTransactionTime: data[12],
 			localTransactionDate: data[13],
-			expirationDate: data[14],
+			cardExpirationDate: data[14],
+			cardHolderName: data[48],
+			cardCvv: data[55],
 			idempotencyKey: data[63],
-			cvvData: data[55],
 		};
 	});
 

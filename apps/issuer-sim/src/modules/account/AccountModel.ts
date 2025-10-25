@@ -1,6 +1,6 @@
 import mongoose, { type Document } from "mongoose";
 
-export enum AccountType {
+export enum EAccountType {
 	INTERNAL = "internal",
 	COSTUME = "costumer",
 }
@@ -11,8 +11,8 @@ const Schema = new mongoose.Schema<IAccount>(
 		accountType: {
 			type: String,
 			required: true,
-			enum: AccountType,
-			default: AccountType.COSTUME,
+			enum: EAccountType,
+			default: EAccountType.COSTUME,
 		},
 		expiryDate: { type: String },
 		balance: { type: Number, required: true, default: 1000000 },
@@ -27,7 +27,7 @@ const Schema = new mongoose.Schema<IAccount>(
 export type IAccount = {
 	cardHolderName: string;
 	balance: number;
-	accountType: AccountType;
+	accountType: EAccountType;
 	cardNumber: string;
 	expiryDate: string;
 	createdAt: Date;

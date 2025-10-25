@@ -36,6 +36,7 @@ export const createIsoPack = (args: TransactionAddInput): iso_8583 => {
 		25: "00",
 		41: "ACQTERM1",
 		42: "INDBANK00012345",
+		48: args.cardHolderName,
 		49: "986",
 		55: args.cardCvv, // só para simulação
 		63: args.idepotencyKey, // correlacionar

@@ -19,7 +19,7 @@ const Schema = new mongoose.Schema<ILedgerEntry>(
 			enum: EledgerEntryType,
 		},
 		createdAt: { type: Date, default: Date.now },
-		idempotencyKey: { type: String, required: true, unique: true },
+		idempotencyKey: { type: String, required: true },
 	},
 	{
 		collection: "ledgerEntries",
