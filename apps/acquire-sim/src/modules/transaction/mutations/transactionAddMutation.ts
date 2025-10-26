@@ -1,16 +1,21 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import { Iso8583Client } from "../../../adapters/iso8583.port";
+import mongoose from "mongoose";
+import { Iso8583Client } from "../../../adapters/iso8583.adapter";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
-import { Message } from "../../message/MessageModel";
-import { Transaction } from "../TransationModel";
+import { SpyMessage } from "../../spyMessage/SpyMessageModel";
+import {
+	ETransactionStatus,
+	type ITransaction,
+	Transaction,
+} from "../TransationModel";
 import { transactionField } from "../transactionFields";
 
 export type TransactionAddInput = {
 	userId: string;
 	orderRef: string;
 	amount: number;
-	idepotencyKey: string;
+	idempotencyKey: string;
 	cardNumber: string;
 	cardHolderName: string;
 	cardExpiryMonth: string;
@@ -24,7 +29,7 @@ const mutation = mutationWithClientMutationId({
 		userId: { type: new GraphQLNonNull(GraphQLString) },
 		orderRef: { type: new GraphQLNonNull(GraphQLString) },
 		amount: { type: new GraphQLNonNull(GraphQLInt) },
-		idepotencyKey: { type: new GraphQLNonNull(GraphQLString) },
+		idempotencyKey: { type: new GraphQLNonNull(GraphQLString) },
 		cardNumber: { type: new GraphQLNonNull(GraphQLString) },
 		cardHolderName: { type: new GraphQLNonNull(GraphQLString) },
 		cardExpiryMonth: { type: new GraphQLNonNull(GraphQLString) },
@@ -32,46 +37,71 @@ const mutation = mutationWithClientMutationId({
 		cardCvv: { type: new GraphQLNonNull(GraphQLString) },
 	},
 	mutateAndGetPayload: async (args: TransactionAddInput) => {
-		const existingTransaction = await Transaction.findOne({
-			idepotencyKey: args.idepotencyKey,
-		});
-
-		if (existingTransaction) {
-			return { transaction: existingTransaction._id.toString() };
+		if (String(args.amount).length > 12) {
+			throw new Error("Valor da transação excede o limite permitido");
 		}
 
-		const isoClient = new Iso8583Client();
+		const session = await mongoose.startSession();
 
-		const transaction = await Transaction.create({
-			userId: args.userId,
-			orderRef: args.orderRef,
-			amount: args.amount,
-			idepotencyKey: args.idepotencyKey,
-			cardLastFour: args.cardNumber.slice(-4),
+		const transaction = await session.withTransaction(async () => {
+			const existingTransaction = await Transaction.findOne(
+				{
+					idempotencyKey: args.idempotencyKey,
+				},
+				{ session },
+			);
+
+			if (existingTransaction) {
+				return existingTransaction;
+			}
+
+			const newTransaction = new Transaction({
+				userId: args.userId,
+				orderRef: args.orderRef,
+				amount: args.amount,
+				idempotencyKey: args.idempotencyKey,
+				cardLastFour: args.cardNumber.slice(-4),
+			});
+
+			await newTransaction.save({ session });
+
+			return newTransaction;
 		});
 
-		const message = await new Message({
-			content: "Transaction Added",
-		}).save();
+		session.endSession();
+
+		if (!transaction) {
+			throw new Error("Transaction could not be created");
+		}
+
+		if (transaction.status !== ETransactionStatus.PENDING) {
+			return { transaction: transaction._id.toString() };
+		}
 
 		try {
-			await isoClient.connect();
+			const isoClient = new Iso8583Client(redisPubSub, SpyMessage);
 
-			redisPubSub.publish("MESSAGE.ADDED", {
-				message: message._id.toString(),
+			await isoClient.sendTransaction({
+				...args,
+				transactionId: transaction._id.toString(),
 			});
-
-			await isoClient.sendTransaction(transaction);
+			transaction.status = ETransactionStatus.COMPLETED;
 		} catch (err) {
 			console.error("Error processing transaction:", err);
+			transaction.status = ETransactionStatus.FAILED;
+			if (err instanceof Error) {
+				transaction.failedReason = err.message;
+			} else {
+				transaction.failedReason = err?.toString();
+			}
+			throw err;
 		} finally {
-			redisPubSub.publish("MESSAGE.ADDED", {
-				message: message._id.toString(),
-			});
-			await isoClient.close();
+			await transaction.save();
 		}
 
-		return {};
+		return {
+			transaction: transaction._id.toString(),
+		};
 	},
 	outputFields: {
 		...transactionField("transaction"),

@@ -1,6 +1,6 @@
 import { GraphQLObjectType } from "graphql";
 
-import { messageMutations } from "../modules/message/mutations/messageMutations";
+import { messageMutations } from "../modules/spyMessage/mutations/messageMutations";
 import { transactionMutations } from "../modules/transaction/mutations/mutations";
 
 export const MutationType = new GraphQLObjectType({

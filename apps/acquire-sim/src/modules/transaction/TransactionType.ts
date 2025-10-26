@@ -1,6 +1,7 @@
 import {
 	GraphQLFloat,
 	GraphQLID,
+	GraphQLInt,
 	GraphQLObjectType,
 	GraphQLString,
 } from "graphql";
@@ -30,7 +31,7 @@ const TransactionType = new GraphQLObjectType<ITransaction>({
 			resolve: (transaction) => transaction.status,
 		},
 		amount: {
-			type: GraphQLFloat,
+			type: GraphQLInt,
 			resolve: (transaction) => transaction.amount,
 		},
 		createdAt: {
