@@ -1,86 +1,40 @@
+version: '4.0'
+
 services:
+  mongodb:
+    image: mongo:7.0
+    command: [ "--replSet", "rs0", "--bind_ip_all", "--port", "27017" ]
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+    volumes:
+      - "mongodb_data:/data/db"
+      - "mongodb_config:/data/configdb"
+    networks:
+      - shared-net
+
   mongo-express:
     image: mongo-express:latest
     container_name: mongo-express
     ports:
       - "8081:8081"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017/?replicaSet=rs0
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: pass
     depends_on:
       - mongodb
-    restart: always
-
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: woovi-playground
-    restart: always
-
-  mongo-express-acquire:
-    image: mongo-express:latest
-    container_name: mongo-express-acquire
-    ports:
-      - "8082:8081"
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb-acquire:27017/
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: pass
-    depends_on:
-      - mongodb-acquire
-    restart: always
-    networks:
-      - shared-net
-
-  mongodb-acquire:
-    image: mongo
-    container_name: mongodb-acquire
-    ports:
-      - "27018:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: woovi-playground
-    restart: always
-    networks:
-      - shared-net
-
-  mongo-express-issuer:
-    image: mongo-express:latest
-    container_name: mongo-express-issuer
-    ports:
-      - "8083:8081"
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb-issuer:27017/
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: pass
-    depends_on:
-      - mongodb-issuer
-    restart: always
-    networks:
-      - shared-net
-
-  mongodb-issuer:
-    image: mongo
-    container_name: mongodb-issuer
-    ports:
-      - "27019:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: woovi-playground
     restart: always
     networks:
       - shared-net
@@ -91,6 +45,13 @@ services:
     ports:
       - "6379:6379"
     restart: always
+    networks:
+      - shared-net
+
+volumes:
+  mongodb_data:
+  mongodb_config:
+
 
 networks:
   shared-net:

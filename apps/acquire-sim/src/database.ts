@@ -8,7 +8,9 @@ async function connectDatabase() {
 	);
 
 	try {
-		await mongoose.connect(config.MONGO_URI);
+		await mongoose.connect(config.MONGO_URI, {
+			dbName: config.DB_NAME,
+		});
 	} catch (error) {
 		console.error("Failed to connect to database:", error);
 		process.exit(1);

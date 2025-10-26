@@ -52,9 +52,9 @@ export const createIsoErrorBuffer = (
 		0: "0210",
 		39: "ER",
 		44: reason,
-		63: message,
+		63: message.trim(),
 	};
-	const buffer = new iso_8583(isoData).getBufferMessage();
 
+	const buffer = new iso_8583(isoData).getBufferMessage();
 	return buffer;
 };

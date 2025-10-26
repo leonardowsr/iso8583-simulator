@@ -51,7 +51,7 @@ export const mutation = mutationWithClientMutationId({
 					productId: p._id,
 					productName: p.name,
 					productDescription: p.description,
-					productImageUrl: p.image_url,
+					productImageUrl: p.images,
 					quantity: item.quantity,
 					price: p.price,
 				});

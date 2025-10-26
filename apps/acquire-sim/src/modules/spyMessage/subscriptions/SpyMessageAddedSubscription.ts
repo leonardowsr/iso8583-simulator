@@ -10,7 +10,7 @@ type SpyMessageAddedPayload = {
 };
 
 const subscription = subscriptionWithClientId({
-	name: "MessageAdded",
+	name: "SpyMessageAdded",
 	subscribe: withFilter(
 		() => redisPubSub.asyncIterator(PUB_SUB_EVENTS.MESSAGE.ADDED),
 		async (payload: SpyMessageAddedPayload) => {
@@ -34,6 +34,6 @@ const subscription = subscriptionWithClientId({
 	},
 });
 
-export const MessageAddedSubscription = {
+export const SpyMessageAddedSubscription = {
 	...subscription,
 };

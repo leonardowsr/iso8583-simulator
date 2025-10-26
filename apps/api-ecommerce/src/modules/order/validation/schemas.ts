@@ -13,7 +13,7 @@ export const productAddSchema = z.object({
 		.number()
 		.int("price must be an integer")
 		.min(0, "price must be greater than or equal to 0"),
-	image_url: z.string().url("image_url must be a valid URL").optional(),
+	images: z.string().url("images must be a valid URL").optional(),
 });
 
 export const productUpdateSchema = z.object({
@@ -33,11 +33,7 @@ export const productUpdateSchema = z.object({
 		.int("price must be an integer")
 		.min(0, "price must be greater than or equal to 0")
 		.optional(),
-	image_url: z
-		.string()
-		.url("image_url must be a valid URL")
-		.nullable()
-		.optional(),
+	images: z.string().url("images must be a valid URL").nullable().optional(),
 });
 
 export type ProductAddInput = z.infer<typeof productAddSchema>;

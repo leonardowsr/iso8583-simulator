@@ -18,6 +18,7 @@ const config = {
 	ISSUER_HOST: ENV.ISSUER_HOST ?? "localhost",
 	MONGO_URI: ENV.MONGO_URI ?? "",
 	REDIS_HOST: ENV.REDIS_HOST ?? "",
+	DB_NAME: ENV.MONGO_DB_NAME ?? "acquire-sim",
 };
 
 export { config };

@@ -21,9 +21,9 @@ const ProductType = new GraphQLObjectType<IProduct>({
 			type: GraphQLString,
 			resolve: (product) => product.description,
 		},
-		image_url: {
+		images: {
 			type: GraphQLString,
-			resolve: (product) => product.image_url,
+			resolve: (product) => product.images,
 		},
 		createdAt: {
 			type: GraphQLString,

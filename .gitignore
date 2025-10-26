@@ -38,3 +38,6 @@ npm-debug.log*
 # miscs
 apps/server/docs*
 .claude/
+data
+.docker
+mongo-keyfile

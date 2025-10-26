@@ -1,7 +1,7 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import mongoose from "mongoose";
-import { Iso8583Client } from "../../../adapters/iso8583.adapter";
+import mongoose, { type HydratedDocument, type Model } from "mongoose";
+import { createIssuerAdapterFactory } from "../../../adapters/iso8583.adapter";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
 import { SpyMessage } from "../../spyMessage/SpyMessageModel";
 import {
@@ -40,21 +40,20 @@ const mutation = mutationWithClientMutationId({
 		if (String(args.amount).length > 12) {
 			throw new Error("Valor da transação excede o limite permitido");
 		}
-
 		const session = await mongoose.startSession();
 
-		const transaction = await session.withTransaction(async () => {
-			const existingTransaction = await Transaction.findOne(
-				{
-					idempotencyKey: args.idempotencyKey,
-				},
-				{ session },
-			);
+		// biome-ignore lint/suspicious/noExplicitAny: problem with never type after set transaction
+		let transaction!: HydratedDocument<ITransaction>;
+
+		await session.withTransaction(async () => {
+			const existingTransaction = await Transaction.findOne({
+				idempotencyKey: args.idempotencyKey,
+			}).session(session);
 
 			if (existingTransaction) {
-				return existingTransaction;
+				transaction = existingTransaction;
+				return;
 			}
-
 			const newTransaction = new Transaction({
 				userId: args.userId,
 				orderRef: args.orderRef,
@@ -65,21 +64,19 @@ const mutation = mutationWithClientMutationId({
 
 			await newTransaction.save({ session });
 
-			return newTransaction;
+			transaction = newTransaction;
 		});
 
 		session.endSession();
-
 		if (!transaction) {
 			throw new Error("Transaction could not be created");
 		}
-
 		if (transaction.status !== ETransactionStatus.PENDING) {
 			return { transaction: transaction._id.toString() };
 		}
 
 		try {
-			const isoClient = new Iso8583Client(redisPubSub, SpyMessage);
+			const isoClient = createIssuerAdapterFactory(redisPubSub, SpyMessage);
 
 			await isoClient.sendTransaction({
 				...args,

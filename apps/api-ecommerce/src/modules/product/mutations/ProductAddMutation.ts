@@ -1,4 +1,9 @@
-import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
+import {
+	GraphQLInt,
+	GraphQLList,
+	GraphQLNonNull,
+	GraphQLString,
+} from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import { Product } from "../ProductModel";
 import { productField } from "../productFields";
@@ -10,14 +15,17 @@ const mutation = mutationWithClientMutationId({
 		name: {
 			type: new GraphQLNonNull(GraphQLString),
 		},
+		slug: {
+			type: new GraphQLNonNull(GraphQLString),
+		},
 		description: {
 			type: new GraphQLNonNull(GraphQLString),
 		},
 		price: {
 			type: new GraphQLNonNull(GraphQLInt),
 		},
-		image_url: {
-			type: GraphQLString,
+		images: {
+			type: new GraphQLList(GraphQLString),
 		},
 	},
 
@@ -32,7 +40,8 @@ const mutation = mutationWithClientMutationId({
 			name: args.name,
 			description: args.description,
 			price: args.price,
-			image_url: args.image_url,
+			slug: args.slug,
+			images: args.images,
 		});
 
 		return {
