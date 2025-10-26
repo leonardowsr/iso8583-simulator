@@ -20,7 +20,6 @@ export function parseIsoPack(
 
 		return {
 			error: {
-				code: "INVALID_ISO8583_DATA",
 				message: message || "Invalid ISO8583 data",
 			},
 		};

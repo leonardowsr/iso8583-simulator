@@ -1,4 +1,5 @@
 import type mongoose from "mongoose";
+import { CustomError } from "../_error/customError";
 import { Accounts, EAccountType } from "./AccountModel";
 
 export const accountService = () => {
@@ -46,23 +47,31 @@ export const accountService = () => {
 		]);
 
 		if (!costumerAccount) {
-			throw new Error(
-				"NOT-FOUND:Account with provided card details does not exist",
+			throw new CustomError(
+				"NOT_FOUND",
+				"Conta com os dados do cartão fornecidos não existe",
 			);
 		}
 
 		if (costumerAccount.balance < data.amount) {
-			throw new Error(
-				"INSUFFICIENT-FUNDS:Account does not have sufficient balance",
+			throw new CustomError(
+				"INSUFFICIENT_FUNDS",
+				"Conta não possui saldo suficiente",
 			);
 		}
 
 		if (costumerAccount.expiryDate !== data.expiryDate) {
-			throw new Error("INVALID-EXPIRY:Account expiry date does not match");
+			throw new CustomError(
+				"EXPIRED_CARD",
+				"Data de expiração do cartão não corresponde",
+			);
 		}
 
 		if (!internalAccount) {
-			throw new Error("INTERNAL-ACCOUNT-MISSING: Internal account not found");
+			throw new CustomError(
+				"INTERNAL_ACCOUNT_MISSING",
+				"Conta interna não encontrada",
+			);
 		}
 
 		return { costumerAccount, internalAccount };

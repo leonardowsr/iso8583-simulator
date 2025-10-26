@@ -3,46 +3,46 @@ import { createIsoErrorBuffer, parseIsoPack } from "@woovi-playground/shared";
 import iso_8583 from "iso_8583";
 import net from "net";
 import { config } from "../config";
+import { CustomError, errorEnum } from "../modules/_error/customError";
 import { authorizationService } from "../modules/authorization/authorizationService";
 
 export const isoTcpServer = () => {
 	const authorizeTransaction = authorizationService();
 	const server = net.createServer();
-	const isoInstance = new iso_8583();
 
 	server.on("connection", (socket) => {
 		socket.on("data", async (data) => {
+			const isoInstance = new iso_8583();
+
 			try {
 				const unpackedData = parseIsoPack(data, isoInstance);
 
 				if ("error" in unpackedData) {
-					const error = new Error();
-					error.name = `${unpackedData.error.code}:${unpackedData.error.message}`;
-					throw error;
+					throw new CustomError(
+						"INVALID_ISO8583_DATA",
+						unpackedData.error.message,
+					);
 				}
 
 				await authorizeTransaction.authorizeTransaction(unpackedData);
 
 				const isoInstanceRes = new iso_8583();
-				isoInstanceRes.setMti("0110");
+				isoInstanceRes.setMti("0210");
 				isoInstanceRes.setField(39, "00");
 
 				const responseBuffer = isoInstanceRes.getBufferMessage();
 				socket.write(responseBuffer);
 			} catch (err) {
 				let errorBuffer: Uint8Array;
-				if (err instanceof Error) {
-					const [errorReason, errorMessage] = (err.message || "")
-						.split(":")
-						.map((s) => s.trim());
+				if (err instanceof CustomError) {
 					errorBuffer = createIsoErrorBuffer(
-						errorReason || "INVALID_ISO8583_DATA",
-						errorMessage || "Failed to parse ISO8583 data",
+						err.reason || "INVALID_ISO8583_DATA",
+						err.message || "Failed to parse ISO8583 data",
 					);
 				} else {
 					errorBuffer = createIsoErrorBuffer(
-						"UNKNOWN_ERROR",
-						"Functionality not implemented",
+						errorEnum.UNKNOWN_ERROR,
+						"Algo deu errado",
 					);
 				}
 

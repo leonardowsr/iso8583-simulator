@@ -2,9 +2,8 @@ import { GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId, toGlobalId } from "graphql-relay";
 import { PUB_SUB_EVENTS } from "../../_pubSub/pubSubEvents";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
-
-import { Message } from "../MessageModel";
 import { messageField } from "../messageFields";
+import { Message } from "../SpyMessageModel";
 
 export type MessageAddInput = {
 	content: string;

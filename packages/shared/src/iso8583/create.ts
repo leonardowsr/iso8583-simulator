@@ -4,7 +4,7 @@ export type TransactionAddInput = {
 	userId: string;
 	orderRef: string;
 	amount: number;
-	idepotencyKey: string;
+	idempotencyKey: string;
 	cardNumber: string;
 	cardHolderName: string;
 	cardExpiryMonth: string;
@@ -22,7 +22,7 @@ export const createIsoPack = (args: TransactionAddInput): iso_8583 => {
 	const ss = String(now.getSeconds()).padStart(2, "0");
 
 	const isoData = {
-		0: "0100",
+		0: "0200",
 		2: args.cardNumber,
 		3: "000000",
 		4: amount,
@@ -39,7 +39,7 @@ export const createIsoPack = (args: TransactionAddInput): iso_8583 => {
 		48: args.cardHolderName,
 		49: "986",
 		55: args.cardCvv, // só para simulação
-		63: args.idepotencyKey, // correlacionar
+		63: args.idempotencyKey, // correlacionar
 	};
 	return new iso_8583(isoData);
 };
@@ -49,7 +49,7 @@ export const createIsoErrorBuffer = (
 	message: string,
 ): Uint8Array => {
 	const isoData = {
-		0: "0110",
+		0: "0210",
 		39: "ER",
 		44: reason,
 		63: message,

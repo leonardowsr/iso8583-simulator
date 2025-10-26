@@ -1,17 +1,16 @@
 import { createLoader } from "@entria/graphql-mongo-helpers";
 
 import { registerLoader } from "../_loader/loaderRegister";
-
-import { Message } from "./MessageModel";
+import { SpyMessage } from "./SpyMessageModel";
 
 const { Wrapper, getLoader, clearCache, load, loadAll } = createLoader({
-	model: Message,
-	loaderName: "MessageLoader",
+	model: SpyMessage,
+	loaderName: "SpyMessageLoader",
 });
 
-registerLoader("MessageLoader", getLoader);
+registerLoader("SpyMessageLoader", getLoader);
 
-export const MessageLoader = {
+export const SpyMessageLoader = {
 	Message: Wrapper,
 	getLoader,
 	clearCache,

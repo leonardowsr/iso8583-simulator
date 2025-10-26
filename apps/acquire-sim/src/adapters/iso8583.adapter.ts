@@ -5,41 +5,83 @@ import {
 	parseIsobuffer,
 	type TransactionAddInput,
 } from "@woovi-playground/shared";
+import type { RedisPubSub } from "graphql-redis-subscriptions";
+import type { Model } from "mongoose";
 import net from "net";
 import { config } from "../config";
+import { PUB_SUB_EVENTS } from "../modules/_pubSub/pubSubEvents";
+import {
+	Edirection,
+	type ISpyMessage,
+} from "../modules/spyMessage/SpyMessageModel";
 
+type transactionData = TransactionAddInput & { transactionId: string };
 export interface IIso8583Client {
-	connect(): Promise<void>;
-	sendTransaction(data: any): Promise<void>;
-	close(): Promise<void>;
+	sendTransaction(data: transactionData): Promise<void>;
 }
 
 export class Iso8583Client implements IIso8583Client {
-	private client: net.Socket;
+	private client: net.Socket | null = null;
 	private host: string = config.ISSUER_HOST;
 	private port: number = config.ISSUER_PORT;
-	constructor() {
-		this.client = new net.Socket();
+	private pubSub: RedisPubSub;
+	private spyMessageModel: Model<ISpyMessage>;
+	constructor(pubSub: RedisPubSub, spyMessageModel: Model<ISpyMessage>) {
+		this.pubSub = pubSub;
+		this.spyMessageModel = spyMessageModel;
 	}
 
-	async connect(): Promise<void> {
+	private getClient(): net.Socket {
+		if (!this.client) {
+			throw new Error("Socket not initialized");
+		}
+		return this.client;
+	}
+
+	private async connect(): Promise<void> {
+		this.client = new net.Socket();
+
 		return new Promise((resolve, reject) => {
-			this.client.once("error", (err) => {
+			const client = this.getClient();
+
+			client.once("error", (err) => {
 				console.error("Connection error:", err);
 				reject(err);
 			});
 
-			this.client.connect(this.port, this.host, () => {
+			client.connect(this.port, this.host, () => {
 				console.info("Connected to ISO 8583 server");
 				resolve();
 			});
 		});
 	}
 
-	async sendTransaction(data: TransactionAddInput): Promise<void> {
+	async sendTransaction(data: transactionData): Promise<void> {
+		try {
+			await this.connect();
+		} catch (err) {
+			console.error("Error connecting to ISO 8583 server:", err);
+			throw err;
+		}
+
+		const messageOut = await this.spyMessageModel.create({
+			rawContent:
+				"Sending ISO 8583 message, mti 0200 to issuer sim to authorize card",
+			transactionId: data.transactionId,
+			direction: Edirection.OUTGOING,
+			idempotencyKey: data.idempotencyKey,
+		});
+
+		this.pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
+			MessageAdded: messageOut,
+		});
+
 		return new Promise((resolve, reject) => {
+			const client = this.getClient();
+
 			const isoBuffer = createIsoPack(data).getBufferMessage();
-			this.client.write(isoBuffer, (err) => {
+
+			client.write(isoBuffer, (err) => {
 				if (err) {
 					console.error("Error sending ISO 8583 message:", err);
 					reject(err);
@@ -48,19 +90,77 @@ export class Iso8583Client implements IIso8583Client {
 				}
 			});
 
-			this.client.once("data", (response) => {
+			client.once("data", async (response) => {
 				const isoData = parseIsobuffer(response);
-				if ("39" in isoData && isoData["39"] === "ER") {
+
+				const messageIn = await this.spyMessageModel.create({
+					transactionId: data.transactionId,
+					direction: Edirection.INCOMING,
+					idempotencyKey: data.idempotencyKey,
+					rawContent: `Response 39:${isoData["63"] || "No data"}`,
+					isoResponseCode: isoData["39"] || "ER",
+				});
+				this.pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
+					MessageAdded: messageIn,
+				});
+
+				await this.close();
+
+				if (isoData["39"] && isoData["39"] !== "00") {
 					reject(isoData);
+				} else {
+					resolve(isoData);
 				}
-				resolve(isoData);
+			});
+
+			client.setTimeout(5000);
+
+			client.once("timeout", async () => {
+				console.error("ISO 8583 message timed out");
+
+				const messageIn = await this.spyMessageModel.create({
+					transactionId: data.transactionId,
+					direction: Edirection.INCOMING,
+					idempotencyKey: data.idempotencyKey,
+					rawContent: "ISO 8583 message timed out waiting for response 5000 ms",
+					isoResponseCode: "91",
+				});
+				this.pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
+					MessageAdded: messageIn,
+				});
+
+				await this.close();
+				reject(new Error("ISO 8583 message timed out"));
+			});
+
+			client.once("error", async (err) => {
+				console.error("ISO 8583 client error:", err);
+
+				const messageIn = await this.spyMessageModel.create({
+					transactionId: data.transactionId,
+					direction: Edirection.INCOMING,
+					idempotencyKey: data.idempotencyKey,
+					rawContent: `Erro de rede: ${err.message}`,
+					isoResponseCode: "96",
+				});
+				this.pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
+					MessageAdded: messageIn,
+				});
+
+				await this.close();
+				reject(err);
 			});
 		});
 	}
 
-	async close(): Promise<void> {
+	private async close(): Promise<void> {
 		return new Promise((resolve) => {
-			this.client.end(() => {
+			const client = this.getClient();
+			if (!client) {
+				resolve();
+				return;
+			}
+			client.end(() => {
 				console.info("Disconnected from ISO 8583 server");
 				resolve();
 			});

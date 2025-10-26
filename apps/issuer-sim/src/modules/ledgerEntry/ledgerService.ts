@@ -1,4 +1,5 @@
 import type mongoose from "mongoose";
+import { CustomError } from "../_error/customError";
 import { EledgerEntryType, LedgerEntries } from "./LedgerEntryModel";
 
 export const ledgerService = () => {
@@ -44,8 +45,9 @@ export const ledgerService = () => {
 			{ session },
 		);
 		if (existingEntry) {
-			throw new Error(
-				"DUPLICATE-ENTRY: Ledger entry with the same idempotency key already exists",
+			throw new CustomError(
+				"DUPLICATE_ENTRY",
+				"Encontrado entrada para a chave de idempotência fornecida",
 			);
 		}
 	}

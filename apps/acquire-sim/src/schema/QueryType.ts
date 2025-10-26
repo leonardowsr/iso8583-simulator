@@ -1,10 +1,11 @@
 import { GraphQLObjectType } from "graphql";
-
-import { messageConnectionField } from "../modules/message/messageFields";
+import { spyMessageConnectionField } from "../modules/spyMessage/spyMessageFields";
+import { transactionConnectionField } from "../modules/transaction/transactionFields";
 
 export const QueryType = new GraphQLObjectType({
 	name: "Query",
 	fields: () => ({
-		...messageConnectionField("messages"),
+		...spyMessageConnectionField("messages"),
+		...transactionConnectionField("transactions"),
 	}),
 });

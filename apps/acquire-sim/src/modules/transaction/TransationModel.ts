@@ -16,8 +16,9 @@ export const Schema = new mongoose.Schema<ITransaction>(
 			default: ETransactionStatus.PENDING,
 			required: true,
 		},
+		failedReason: { type: String, required: false },
 		amount: { type: Number, required: true },
-		idepotencyKey: { type: String, required: false },
+		idempotencyKey: { type: String, required: false },
 		createdAt: { type: Date, default: Date.now },
 		cardLastFour: { type: String, required: false },
 	},
@@ -29,8 +30,9 @@ export type ITransaction = {
 	userId: string;
 	amount: number;
 	cardLastFour: string;
-	idepotencyKey?: string;
+	idempotencyKey?: string;
 	status: ETransactionStatus;
+	failedReason?: string;
 	createdAt: Date;
 	updatedAt: Date;
 } & Document;
