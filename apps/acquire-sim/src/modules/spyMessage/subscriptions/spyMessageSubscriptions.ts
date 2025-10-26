@@ -1,5 +1,5 @@
-import { MessageAddedSubscription } from './SpyMessageAddedSubscription';
+import { SpyMessageAddedSubscription } from "./SpyMessageAddedSubscription";
 
-export const messageSubscriptions = {
-	MessageAdded: MessageAddedSubscription,
+export const spyMessageSubscriptions = {
+	SpyMessageAdded: SpyMessageAddedSubscription,
 };

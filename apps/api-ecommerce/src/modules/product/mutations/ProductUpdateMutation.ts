@@ -20,7 +20,7 @@ const mutation = mutationWithClientMutationId({
 		price: {
 			type: GraphQLInt,
 		},
-		image_url: {
+		images: {
 			type: GraphQLString,
 		},
 	},
@@ -30,7 +30,7 @@ const mutation = mutationWithClientMutationId({
 			name: args.name,
 			description: args.description,
 			price: args.price,
-			image_url: args.image_url,
+			images: args.images,
 		});
 
 		if (Object.keys(updates).length === 0) {

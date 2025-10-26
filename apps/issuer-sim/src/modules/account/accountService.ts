@@ -11,13 +11,12 @@ export const accountService = () => {
 			await Accounts.updateOne(
 				{ _id: data.accountId },
 				{ $inc: { balance: -data.amount } },
-				{ session },
-			),
+			).session(session),
 			await Accounts.updateOne(
 				{ accountType: EAccountType.INTERNAL },
 				{ $inc: { balance: data.amount } },
 				{ session },
-			),
+			).session(session),
 		]);
 	}
 
@@ -31,46 +30,40 @@ export const accountService = () => {
 		session: mongoose.ClientSession,
 	) {
 		const [costumerAccount, internalAccount] = await Promise.all([
-			Accounts.findOne(
-				{
-					cardNumber: data.cardNumber,
-					cardHolderName: data.cardHolderName,
-				},
-				{ session },
-			),
-			Accounts.findOne(
-				{
-					accountType: EAccountType.INTERNAL,
-				},
-				{ session },
-			),
+			Accounts.findOne({
+				cardNumber: data.cardNumber,
+				cardHolderName: data.cardHolderName,
+			}).session(session),
+			Accounts.findOne({
+				accountType: EAccountType.INTERNAL,
+			}).session(session),
 		]);
 
 		if (!costumerAccount) {
 			throw new CustomError(
 				"NOT_FOUND",
-				"Conta com os dados do cartão fornecidos não existe",
+				"Conta com os dados do cartao fornecido nao existe",
 			);
 		}
 
 		if (costumerAccount.balance < data.amount) {
 			throw new CustomError(
 				"INSUFFICIENT_FUNDS",
-				"Conta não possui saldo suficiente",
+				"Conta nao possui saldo suficiente",
 			);
 		}
 
 		if (costumerAccount.expiryDate !== data.expiryDate) {
 			throw new CustomError(
 				"EXPIRED_CARD",
-				"Data de expiração do cartão não corresponde",
+				"Data de expiracao do cartao nao corresponde",
 			);
 		}
 
 		if (!internalAccount) {
 			throw new CustomError(
 				"INTERNAL_ACCOUNT_MISSING",
-				"Conta interna não encontrada",
+				"Conta interna nao encontrada",
 			);
 		}
 

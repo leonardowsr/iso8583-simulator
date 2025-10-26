@@ -9,7 +9,6 @@ export function authorizationService() {
 
 	async function authorizeTransaction(data: Iiso8583ParsedSchema) {
 		const session = await mongoose.startSession();
-
 		await session.withTransaction(async () => {
 			await ledger.checkExistingEntry(data.idempotencyKey, session);
 

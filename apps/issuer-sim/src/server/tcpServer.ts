@@ -6,6 +6,11 @@ import { config } from "../config";
 import { CustomError, errorEnum } from "../modules/_error/customError";
 import { authorizationService } from "../modules/authorization/authorizationService";
 
+const isoResponse = {
+	0: "0210",
+	39: "00",
+};
+
 export const isoTcpServer = () => {
 	const authorizeTransaction = authorizationService();
 	const server = net.createServer();
@@ -23,12 +28,9 @@ export const isoTcpServer = () => {
 						unpackedData.error.message,
 					);
 				}
-
 				await authorizeTransaction.authorizeTransaction(unpackedData);
 
-				const isoInstanceRes = new iso_8583();
-				isoInstanceRes.setMti("0210");
-				isoInstanceRes.setField(39, "00");
+				const isoInstanceRes = new iso_8583(isoResponse);
 
 				const responseBuffer = isoInstanceRes.getBufferMessage();
 				socket.write(responseBuffer);

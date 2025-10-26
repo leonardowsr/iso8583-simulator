@@ -7,7 +7,7 @@ export const productAddSchema = z.object({
 	name: z
 		.string()
 		.min(3, "Nome deve ter pelo menos 3 caracteres")
-		.max(100, "Nome deve ter no máximo 100 caracteres"),
+		.max(200, "Nome deve ter no máximo 200 caracteres"),
 	description: z
 		.string()
 		.min(10, "Descrição deve ter pelo menos 10 caracteres")
@@ -16,7 +16,11 @@ export const productAddSchema = z.object({
 		.number()
 		.int("Preço deve ser um número inteiro")
 		.min(0, "Preço deve ser maior ou igual a 0"),
-	image_url: z.url("URL da imagem deve ser uma URL válida").optional(),
+	slug: z
+		.string()
+		.min(3, "Slug deve ter pelo menos 3 caracteres")
+		.max(200, "Slug deve ter no máximo 200 caracteres"),
+	images: z.array(z.url("URL da imagem deve ser uma URL válida")).optional(),
 });
 
 export const productUpdateSchema = productAddSchema.partial().extend({

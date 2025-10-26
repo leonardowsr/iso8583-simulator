@@ -7,6 +7,12 @@ const Schema = new mongoose.Schema<IProduct>(
 			required: true,
 			description: "Name of the product",
 		},
+		slug: {
+			type: String,
+			required: true,
+			description: "Slug of the product",
+			unique: true,
+		},
 		price: {
 			type: Number,
 			required: true,
@@ -17,8 +23,8 @@ const Schema = new mongoose.Schema<IProduct>(
 			required: true,
 			description: "Description of the product",
 		},
-		image_url: {
-			type: String,
+		images: {
+			type: [String],
 			required: false,
 			description: "Image URL of the product",
 		},
@@ -29,8 +35,9 @@ const Schema = new mongoose.Schema<IProduct>(
 export type IProduct = {
 	name: string;
 	price: number;
+	slug: string;
 	description: string;
-	image_url?: string;
+	images: string[];
 	createdAt: Date;
 	updatedAt: Date;
 } & Document;
