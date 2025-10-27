@@ -10,7 +10,7 @@ const getDataloaders = (): Record<string, () => unknown> =>
 			...prev,
 			[loaderKey]: loaders[loaderKey](),
 		}),
-		{}
+		{},
 	);
 
 export { registerLoader, getDataloaders };

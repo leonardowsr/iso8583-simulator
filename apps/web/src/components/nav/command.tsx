@@ -1,8 +1,7 @@
 "use client";
 
-import { CircleIcon, LaptopIcon, MoonIcon, SunIcon } from "lucide-react";
+import { CircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {

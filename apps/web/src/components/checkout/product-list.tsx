@@ -2,7 +2,6 @@
 
 import { Minus, Plus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import * as React from "react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/use-cart-store";
 import { Button } from "../ui/button";

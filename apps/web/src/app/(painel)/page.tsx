@@ -1,8 +1,8 @@
 import { CTA } from "@/components/landing/CTA";
 import { FeaturedProducts } from "@/components/landing/FeaturedProducts";
 import { Features } from "@/components/landing/Features";
-import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/landing/Hero";
+import { Footer } from "@/components/layout/Footer";
 import Header from "@/components/nav/header";
 
 export default function Page() {

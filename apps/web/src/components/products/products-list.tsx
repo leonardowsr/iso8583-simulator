@@ -1,7 +1,6 @@
 import {
 	Pagination,
 	PaginationContent,
-	PaginationEllipsis,
 	PaginationItem,
 	PaginationLink,
 	PaginationNext,
@@ -9,7 +8,6 @@ import {
 } from "@/components/ui/pagination";
 import { usePaginateParam } from "@/hooks/use-paginate-param";
 import { useProducts } from "@/hooks/use-products";
-import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 import ProductCard from "./product";

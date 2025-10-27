@@ -1,5 +1,4 @@
 import { type ClassValue, clsx } from "clsx";
-import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -38,4 +37,3 @@ export const moneyToString = (valueInCents: number | null | undefined) => {
 		maximumFractionDigits: 2,
 	}).format(value / 100);
 };
-

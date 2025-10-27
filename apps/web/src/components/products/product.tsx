@@ -81,7 +81,7 @@ const ProductCard = ({ product }: Props) => {
 			<CardContent className="flex-1 px-2 py-0">
 				<p className="w-full text-[12px] text-muted-foreground">
 					{description.length > 70
-						? description.substring(0, 70) + "..."
+						? `${description.substring(0, 70)}...`
 						: description}
 				</p>
 			</CardContent>

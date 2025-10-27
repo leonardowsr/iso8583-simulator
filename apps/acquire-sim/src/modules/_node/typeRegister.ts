@@ -1,5 +1,5 @@
-import { GraphQLObjectType, GraphQLTypeResolver } from 'graphql';
-import { fromGlobalId, nodeDefinitions } from 'graphql-relay';
+import type { GraphQLObjectType, GraphQLTypeResolver } from "graphql";
+import { fromGlobalId, nodeDefinitions } from "graphql-relay";
 
 type Load = (context: unknown, id: string) => unknown;
 type TypeLoaders = {
@@ -29,13 +29,13 @@ const getTypeRegister = () => {
 
 			const { load } = typesLoaders[type] || { load: null };
 
-			return (load && load(context, id)) || null;
+			return load?.(context, id) || null;
 		},
 		(obj: GraphQLTypeResolver<unknown, unknown>) => {
 			const { type } = typesLoaders[obj.constructor.name] || { type: null };
 
 			return type.name;
-		}
+		},
 	);
 
 	return {

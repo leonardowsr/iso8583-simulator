@@ -1,14 +1,12 @@
 "use client";
 
-import { ShoppingBasketRounded } from "@mui/icons-material";
 // import { useAuthenticated } from '@/hooks/useAuthentication'
-import { LogInIcon, MoonIcon, ShoppingBasketIcon, SunIcon } from "lucide-react";
+import { LogInIcon, MoonIcon, SunIcon } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { CartClient } from "../cart/cart-content";
-import { CommandMenu } from "../command";
-import { UserNav } from "../panel/user-nav";
+import { CommandMenu } from "./command";
 import { MainNav } from "./desktop";
 import { MobileNav } from "./mobile";
 

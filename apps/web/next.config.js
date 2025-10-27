@@ -5,7 +5,7 @@ const nextConfig = {
 	typedRoutes: true,
 	transpilePackages: ["@woovi-playground/ui"],
 	compiler: {
-		// @ts-ignore
+		// @ts-expect-error
 		relay: require("./relay.config"),
 	},
 };

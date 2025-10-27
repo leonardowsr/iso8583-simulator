@@ -42,7 +42,6 @@ export const createGraphqlWs = (
 			onConnect: () => {
 				// eslint-disable-next-line no-console
 				console.info(`✅ Connected to ${path} WebSocket`);
-				
 			},
 			onSubscribe: async (_, message) => {
 				const { operationName, query, variables } = message.payload;

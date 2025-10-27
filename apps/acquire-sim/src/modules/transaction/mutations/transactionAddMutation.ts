@@ -1,6 +1,6 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import mongoose, { type HydratedDocument, type Model } from "mongoose";
+import mongoose, { type HydratedDocument } from "mongoose";
 import { createIssuerAdapterFactory } from "../../../adapters/iso8583.adapter";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
 import { SpyMessage } from "../../spyMessage/SpyMessageModel";

@@ -24,7 +24,7 @@ export function CheckoutHeader({ className }: { className?: string }) {
 	const currentStep = steps.findIndex((s) => s.href === pathname);
 
 	return (
-		<div className="flex w-full border-b bg-secondary">
+		<div className="flex w-full border-b dark:bg-secondary">
 			<Link href="/" className="p-4 font-bold text-2xl hover:text-primary">
 				{" "}
 				Página inicial
