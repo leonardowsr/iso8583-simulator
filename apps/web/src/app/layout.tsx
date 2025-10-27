@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import "./index.css";
 
 import { Toaster } from "sonner";
+import { ReactQueryProvider } from "@/components/providers/react-query-provider";
 import { ThemeProvider } from "../components/providers/theme-provider";
 
 export const metadata: Metadata = {
@@ -18,13 +20,13 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body>
-				{/* <ReactQueryProvider> */}
+				<ReactQueryProvider>
 					<Toaster position="top-right" />
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-						{children}
+						<NuqsAdapter>{children}</NuqsAdapter>
 						<NextTopLoader />
 					</ThemeProvider>
-				{/* </ReactQueryProvider> */}
+				</ReactQueryProvider>
 			</body>
 		</html>
 	);

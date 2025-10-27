@@ -1,3 +1,4 @@
+"use client";
 /** biome-ignore-all lint/style/useNumberNamespace: no need */
 
 import { Slot } from "@radix-ui/react-slot";
@@ -252,8 +253,8 @@ const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 		validate: (value) => {
 			const cleaned = value.replace(REGEX_CACHE.nonDigits, "");
 			if (!REGEX_CACHE.time.test(cleaned)) return false;
-			const hours = parseInt(cleaned.substring(0, 2), 10);
-			const minutes = parseInt(cleaned.substring(2, 4), 10);
+			const hours = Number.parseInt(cleaned.substring(0, 2), 10);
+			const minutes = Number.parseInt(cleaned.substring(2, 4), 10);
 			return hours <= 23 && minutes <= 59;
 		},
 	},
@@ -269,7 +270,7 @@ const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 			for (let i = cleaned.length - 1; i >= 0; i--) {
 				const digitChar = cleaned[i];
 				if (!digitChar) continue;
-				let digit = parseInt(digitChar, 10);
+				let digit = Number.parseInt(digitChar, 10);
 				if (isEven) {
 					digit *= 2;
 					if (digit > 9) {
@@ -289,8 +290,8 @@ const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 			const cleaned = value.replace(REGEX_CACHE.nonDigits, "");
 			if (!REGEX_CACHE.creditCardExpiry.test(cleaned)) return false;
 
-			const month = parseInt(cleaned.substring(0, 2), 10);
-			const year = parseInt(cleaned.substring(2, 4), 10);
+			const month = Number.parseInt(cleaned.substring(0, 2), 10);
+			const year = Number.parseInt(cleaned.substring(2, 4), 10);
 
 			if (month < 1 || month > 12) return false;
 
@@ -432,7 +433,7 @@ const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 		},
 		validate: (value) => {
 			if (!REGEX_CACHE.currencyValidation.test(value)) return false;
-			const num = parseFloat(value);
+			const num = Number.parseFloat(value);
 			return !Number.isNaN(num) && num >= 0;
 		},
 	},
@@ -450,7 +451,7 @@ const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 			return cleaned;
 		},
 		validate: (value, opts = {}) => {
-			const num = parseFloat(value);
+			const num = Number.parseFloat(value);
 			const min = opts.min ?? 0;
 			const max = opts.max ?? 100;
 			return !Number.isNaN(num) && num >= min && num <= max;
@@ -473,7 +474,7 @@ const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 				return segments.every((segment) => {
 					if (segment === "") return true;
 					if (!REGEX_CACHE.ipv4Segment.test(segment)) return false;
-					const num = parseInt(segment, 10);
+					const num = Number.parseInt(segment, 10);
 					return num <= 255;
 				});
 			}
@@ -488,7 +489,7 @@ const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 			if (chunks.length > 4) return false;
 
 			return chunks.every((chunk) => {
-				const num = parseInt(chunk, 10);
+				const num = Number.parseInt(chunk, 10);
 				return num >= 0 && num <= 255;
 			});
 		},
@@ -971,8 +972,8 @@ function MaskInput(props: MaskInputProps) {
 
 	const validationOpts = React.useMemo(
 		() => ({
-			min: typeof min === "string" ? parseFloat(min) : min,
-			max: typeof max === "string" ? parseFloat(max) : max,
+			min: typeof min === "string" ? Number.parseFloat(min) : min,
+			max: typeof max === "string" ? Number.parseFloat(max) : max,
 		}),
 		[min, max],
 	);
