@@ -1,100 +1,149 @@
-'use client'
+"use client";
 
-import { Button } from '@/components/ui/button'
+import { CircleIcon, LaptopIcon, MoonIcon, SunIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
-   CommandDialog,
-   CommandEmpty,
-   CommandGroup,
-   CommandInput,
-   CommandItem,
-   CommandList,
-   CommandSeparator,
-} from '@/components/ui/command'
-import { docsConfig } from '@/lib/constant'
-import { cn } from '@/lib/utils'
-import { CircleIcon, LaptopIcon, MoonIcon, SunIcon } from 'lucide-react'
-import { useTheme } from 'next-themes'
-import { useRouter } from 'next/navigation'
-import * as React from 'react'
+	CommandDialog,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+	CommandSeparator,
+} from "@/components/ui/command";
+import { PRODUCTS_LIST } from "@/constants/products";
+import { cn } from "@/lib/utils";
 
-export function CommandMenu({ ...props }: any) {
-   const router = useRouter()
-   const [open, setOpen] = React.useState(false)
-   const { setTheme } = useTheme()
+export function CommandMenu() {
+	const router = useRouter();
+	const [open, setOpen] = React.useState(false);
+	const [searchValue, setSearchValue] = React.useState("");
 
-   React.useEffect(() => {
-      const down = (e: KeyboardEvent) => {
-         if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-            e.preventDefault()
-            setOpen((open) => !open)
-         }
-      }
+	React.useEffect(() => {
+		const down = (e: KeyboardEvent) => {
+			if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+				e.preventDefault();
+				setOpen((open) => !open);
+			}
+		};
 
-      document.addEventListener('keydown', down)
-      return () => document.removeEventListener('keydown', down)
-   }, [])
+		document.addEventListener("keydown", down);
+		return () => document.removeEventListener("keydown", down);
+	}, []);
 
-   const runCommand = React.useCallback((command: () => unknown) => {
-      setOpen(false)
-      command()
-   }, [])
+	const runCommand = React.useCallback((command: () => unknown) => {
+		setOpen(false);
+		command();
+	}, []);
 
-   return (
-      <>
-         <Button
-            variant="outline"
-            className={cn(
-               'relative w-full justify-start text-sm font-light text-muted-foreground sm:pr-12 md:w-40 lg:w-64'
-            )}
-            onClick={() => setOpen(true)}
-            {...props}
-         >
-            <span className="inline-flex">Search...</span>
-         </Button>
-         <CommandDialog open={open} onOpenChange={setOpen}>
-            <CommandInput placeholder="Type a command or search..." />
-            <CommandList>
-               <CommandEmpty>No results found.</CommandEmpty>
+	const filteredProducts = React.useMemo(() => {
+		if (!searchValue.trim()) return [];
 
-               <CommandGroup heading="Links">
-                  {docsConfig.sidebarNav.map((navItem) => (
-                     <CommandItem
-                        key={navItem.href}
-                        value={navItem.title}
-                        onSelect={() => {
-                           runCommand(() => router.push(navItem.href as string))
-                        }}
-                     >
-                        <div className="mr-2 flex h-4 items-center justify-center">
-                           <CircleIcon className="h-3" />
-                        </div>
-                        {navItem.title}
-                     </CommandItem>
-                  ))}
-               </CommandGroup>
-               <CommandSeparator />
-               <CommandGroup heading="Theme">
-                  <CommandItem
-                     onSelect={() => runCommand(() => setTheme('light'))}
-                  >
-                     <SunIcon className="mr-2 h-4" />
-                     Light
-                  </CommandItem>
-                  <CommandItem
-                     onSelect={() => runCommand(() => setTheme('dark'))}
-                  >
-                     <MoonIcon className="mr-2 h-4" />
-                     Dark
-                  </CommandItem>
-                  <CommandItem
-                     onSelect={() => runCommand(() => setTheme('system'))}
-                  >
-                     <LaptopIcon className="mr-2 h-4" />
-                     System
-                  </CommandItem>
-               </CommandGroup>
-            </CommandList>
-         </CommandDialog>
-      </>
-   )
+		const searchTerm = searchValue.toLowerCase();
+		return PRODUCTS_LIST.filter(
+			(product) =>
+				product.title.toLowerCase().includes(searchTerm) ||
+				product.description.toLowerCase().includes(searchTerm) ||
+				product.category.name.toLowerCase().includes(searchTerm),
+		);
+	}, [searchValue]);
+
+	return (
+		<>
+			<Button
+				variant="outline"
+				className={cn(
+					"relative w-full justify-start font-light text-muted-foreground text-sm sm:pr-12 md:w-40 lg:w-64",
+				)}
+				onClick={() => setOpen(true)}
+			>
+				<span className="inline-flex">Search...</span>
+			</Button>
+			<CommandDialog
+				open={open}
+				onOpenChange={(newOpen) => {
+					setOpen(newOpen);
+					if (!newOpen) {
+						setSearchValue("");
+					}
+				}}
+			>
+				<CommandInput
+					placeholder="Search products..."
+					value={searchValue}
+					onValueChange={setSearchValue}
+				/>
+				<CommandList>
+					{filteredProducts.length === 0 && (
+						<CommandEmpty>
+							{searchValue.length > 0
+								? "Nenhum produto encontrado."
+								: "Digite para pesquisar..."}
+						</CommandEmpty>
+					)}
+
+					{filteredProducts.length > 0 && (
+						<CommandGroup heading="Products">
+							{filteredProducts.map((product) => (
+								<CommandItem
+									key={product.id}
+									value={product.title}
+									onSelect={() => {
+										runCommand(() => router.push(`/products/${product.slug}`));
+									}}
+									className="flex items-center gap-3 p-3"
+								>
+									<div className="flex-shrink-0">
+										<img
+											src={product.images[0]}
+											alt={product.title}
+											className="h-10 w-10 rounded-md object-cover"
+											onError={(e) => {
+												(e.target as HTMLImageElement).src = "/placeholder.png";
+											}}
+										/>
+									</div>
+									<div className="min-w-0 flex-1">
+										<div className="truncate font-medium text-sm">
+											{product.title}
+										</div>
+										<div className="truncate text-muted-foreground text-xs">
+											{product.category.name} • R$ {product.price}
+										</div>
+									</div>
+								</CommandItem>
+							))}
+						</CommandGroup>
+					)}
+
+					{searchValue.trim() && filteredProducts.length > 0 && (
+						<>
+							<CommandSeparator />
+							<CommandGroup heading="Actions">
+								<CommandItem
+									onSelect={() => {
+										runCommand(() =>
+											router.push(
+												`/products?search=${encodeURIComponent(searchValue)}`,
+											),
+										);
+									}}
+								>
+									<div className="mr-2 flex h-4 items-center justify-center">
+										<CircleIcon className="h-3" />
+									</div>
+									View all {filteredProducts.length} results
+								</CommandItem>
+							</CommandGroup>
+						</>
+					)}
+
+					<CommandSeparator />
+				</CommandList>
+			</CommandDialog>
+		</>
+	);
 }

@@ -1,7 +1,6 @@
 export const CONFIG = {
-	name: "Woovi Challenger",
+	name: "Página inicial",
 	description: "An e-commerce platform built with Next.js and Tailwind CSS.",
-	url: "https://woovi-challenger.example.com",
 };
 
 export interface NavItem {

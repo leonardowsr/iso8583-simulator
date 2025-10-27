@@ -35,7 +35,7 @@ export function SidebarFilters() {
 	};
 
 	return (
-		<Card className="flex min-w-60 items-center justify-center p-2 pt-4">
+		<Card className="flex min-w-60 items-center justify-center space-y-4 p-2 pt-4 pb-4">
 			<p>
 				Filtros selecionados:{" "}
 				{categories.length + (minPrice || maxPrice ? 1 : 0)}

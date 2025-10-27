@@ -1,7 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useCartStore } from "@/store/use-cart-store";
+import { LoginForm } from "../login-form";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "../ui/dialog";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
@@ -19,8 +27,8 @@ export function CheckoutDisplayValue() {
 		0,
 	);
 
-	const router = useRouter();
 	const total = subtotal + FRETE.preco;
+	const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
 	return (
 		<>
@@ -69,11 +77,22 @@ export function CheckoutDisplayValue() {
 			</div>
 			<button
 				className="mt-3 w-full rounded bg-green-600 py-2 font-bold text-white transition hover:bg-green-700"
-				onClick={() => router.push("/checkout/payment")}
+				onClick={() => setIsLoginModalOpen(true)}
 				type="button"
 			>
 				Ir para pagamento
 			</button>
+			<Dialog open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+				<DialogContent className="sm:max-w-md">
+					<DialogHeader>
+						<DialogTitle>Login necessário</DialogTitle>
+						<DialogDescription>
+							Faça login para continuar com o pagamento
+						</DialogDescription>
+					</DialogHeader>
+					<LoginForm />
+				</DialogContent>
+			</Dialog>
 		</>
 	);
 }
