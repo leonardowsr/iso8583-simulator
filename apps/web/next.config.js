@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactCompiler: true,
-	reactStrictMode:true,
-	transpilePackages:['@woovi-playground/ui'],
-	compiler:{
-		// @ts-ignore
-		relay: require('./relay.config') 
-	}
+	reactStrictMode: true,
+	typedRoutes: true,
+	transpilePackages: ["@woovi-playground/ui"],
+	compiler: {
+		// @ts-expect-error
+		relay: require("./relay.config"),
+	},
 };
- 
-module.exports = nextConfig
+
+module.exports = nextConfig;

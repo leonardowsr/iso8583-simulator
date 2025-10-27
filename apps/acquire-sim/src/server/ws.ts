@@ -1,8 +1,8 @@
-import { execute, subscribe, validate, parse } from 'graphql';
-import { useServer } from 'graphql-ws/lib/use/ws';
+import { execute, parse, subscribe, validate } from "graphql";
+import { useServer } from "graphql-ws/lib/use/ws";
 
-import { schema } from '../schema/schema';
-import { getContext } from './getContext';
+import { schema } from "../schema/schema";
+import { getContext } from "./getContext";
 
 export type ConnectionParams = { Authorization: string };
 
@@ -22,14 +22,14 @@ export const ws = async (ctx) => {
 		useServer(
 			{
 				schema,
-				context: async (wsContext: WsContext) => getContext(),
+				context: async (_wsContext: WsContext) => getContext(),
 				execute,
 				subscribe,
-				onConnect: async (wsContext: WsContext) => {},
-				onSubscribe: async (wsContext: WsContext, message) => {
+				onConnect: async (_wsContext: WsContext) => {},
+				onSubscribe: async (_wsContext: WsContext, message) => {
 					const { operationName, query, variables } = message.payload;
 
-					const document = typeof query === 'string' ? parse(query) : query;
+					const document = typeof query === "string" ? parse(query) : query;
 
 					const args = {
 						schema,
@@ -61,10 +61,10 @@ export const ws = async (ctx) => {
 				//   console.log('Complete', { ctx, msg });
 				// },
 			},
-			ctx.wss
+			ctx.wss,
 		);
 
 		// connect to websocket
-		ctx.wss.emit('connection', client, ctx.req);
+		ctx.wss.emit("connection", client, ctx.req);
 	}
 };

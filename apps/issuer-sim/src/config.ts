@@ -1,5 +1,5 @@
+import path from "node:path";
 import dotenvSafe from "dotenv-safe";
-import path from "path";
 
 const cwd = process.cwd();
 

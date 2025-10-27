@@ -1,6 +1,6 @@
-import http from "http";
+import http from "node:http";
 
-import WebSocket, { WebSocketServer as WSWebSocketServer } from "ws";
+import { WebSocketServer as WSWebSocketServer } from "ws";
 
 // work with commonjs and esm
 const WebSocketServer = WSWebSocketServer;

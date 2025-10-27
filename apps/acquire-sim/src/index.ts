@@ -1,4 +1,4 @@
-import http from "http";
+import http from "node:http";
 import { config } from "./config";
 import { connectDatabase } from "./database";
 import { schema } from "./schema/schema";
