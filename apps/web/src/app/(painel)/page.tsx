@@ -1,6 +1,10 @@
-
+import Header from "@/components/nav/header";
 
 export default function Page() {
-
-  return <div>Hello World</div>
-} 
+	return (
+		<div>
+			<Header />
+			Hello World
+		</div>
+	);
+}

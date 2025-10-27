@@ -69,7 +69,7 @@ export function CheckoutDisplayValue() {
 			</div>
 			<button
 				className="mt-3 w-full rounded bg-green-600 py-2 font-bold text-white transition hover:bg-green-700"
-				onClick={() => router.push("/checkout/pagamento")}
+				onClick={() => router.push("/checkout/payment")}
 				type="button"
 			>
 				Ir para pagamento

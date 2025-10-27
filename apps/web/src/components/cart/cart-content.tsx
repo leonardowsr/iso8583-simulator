@@ -269,7 +269,7 @@ export function CartClient({ className }: CartProps) {
 								size="lg"
 								onClick={() => {
 									setIsOpen(false);
-									router.push("/checkout");
+									router.push("/checkout/cart");
 								}}
 							>
 								Finalizar compra

@@ -1,4 +1,15 @@
+"use client";
+import type { Route } from "next";
+import { usePathname } from "next/navigation";
 import React from "react";
+import {
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 
 interface CheckoutHeaderProps {
@@ -6,53 +17,48 @@ interface CheckoutHeaderProps {
 	className?: string;
 }
 
-const steps = [
-	{ label: "Carrinho" },
-	{ label: "Pagamento" },
-	{ label: "Revisão" },
-	{ label: "Confirmação" },
+const steps: { label: string; href: Route }[] = [
+	{ label: "Carrinho", href: "/checkout/cart" },
+	{ label: "Pagamento", href: "/checkout/payment" },
+	{ label: "Confirmação", href: "/checkout/confirmation" },
 ];
 
-export function CheckoutHeader({ step, className }: CheckoutHeaderProps) {
+export function CheckoutHeader({ className }: { className?: string }) {
+	const pathname = usePathname();
+	const currentStep = steps.findIndex((s) => s.href === pathname);
+
 	return (
-		<nav
-			className={cn("flex items-center justify-center gap-4 py-4", className)}
-			aria-label="Etapas do checkout"
+		<Breadcrumb
+			className={cn("flex items-center justify-center py-4", className)}
 		>
-			{steps.map((s, idx) => (
-				<React.Fragment key={s.label}>
-					<div className="flex flex-col items-center">
-						<div
-							className={cn(
-								"flex h-8 w-8 items-center justify-center rounded-full border-2 font-bold text-sm transition-all",
-								idx < step
-									? "border-green-500 bg-green-500 text-white"
-									: idx === step
-										? "border-primary bg-primary text-white"
-										: "border-muted bg-muted text-muted-foreground",
+			<BreadcrumbList>
+				{steps.map((s, idx) => (
+					<React.Fragment key={s.label}>
+						<BreadcrumbItem>
+							{idx < currentStep ? (
+								<BreadcrumbLink
+									asChild
+									className="pointer-events-none cursor-default font-bold text-green-600"
+								>
+									<span>{s.label}</span>
+								</BreadcrumbLink>
+							) : idx === currentStep ? (
+								<BreadcrumbPage className="pointer-events-none cursor-default font-bold text-primary">
+									{s.label}
+								</BreadcrumbPage>
+							) : (
+								<BreadcrumbLink
+									asChild
+									className="pointer-events-none cursor-default text-muted-foreground"
+								>
+									<span>{s.label}</span>
+								</BreadcrumbLink>
 							)}
-						>
-							{idx + 1}
-						</div>
-						<span
-							className={cn(
-								"mt-1 font-medium text-xs",
-								idx === step ? "text-primary" : "text-muted-foreground",
-							)}
-						>
-							{s.label}
-						</span>
-					</div>
-					{idx < steps.length - 1 && (
-						<div
-							className={cn(
-								"mx-2 h-1 w-8 rounded bg-muted transition-all",
-								idx < step ? "bg-green-500" : "bg-muted",
-							)}
-						/>
-					)}
-				</React.Fragment>
-			))}
-		</nav>
+						</BreadcrumbItem>
+						{idx < steps.length - 1 && <BreadcrumbSeparator />}
+					</React.Fragment>
+				))}
+			</BreadcrumbList>
+		</Breadcrumb>
 	);
 }

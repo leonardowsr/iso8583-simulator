@@ -1,4 +1,4 @@
-import Header from "@/components/nav/header";
+import { CheckoutHeader } from "@/components/checkout/header";
 
 export default function RootLayout({
 	children,
@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<>
-			<Header />
+			<CheckoutHeader />
 			{children}
 		</>
 	);
