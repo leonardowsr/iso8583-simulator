@@ -1,4 +1,4 @@
-import { Check, CheckCheck, CircleCheck, HeartIcon } from "lucide-react";
+import { CircleCheck, HeartIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Product } from "@/_types/product";
@@ -32,18 +32,38 @@ const ProductCard = ({ product }: Props) => {
 	const addItem = useCartStore((state) => state.addItem);
 	const router = useRouter();
 
+	const imageSrc = product?.images?.[0] || "/placeholder.png";
+	const description = product?.description || "";
+	const title = product?.title || "Produto";
+	const price = typeof product?.price === "number" ? product.price : 0;
+	const slug = product?.slug || "";
+	const category = product?.category?.name || "";
+
+	// Handler para navegação
+	const handleNavigate = (e: React.MouseEvent) => {
+		// Evita navegação se clicar no botão
+		if ((e.target as HTMLElement).closest("button")) return;
+		router.push(`/products/${slug}`);
+	};
+
 	return (
-		<Card className="relative gap-3 from-neutral-600 to-violet-300 pt-0 pb-2 shadow-lg lg:max-w-60">
+		<Card
+			className="relative cursor-pointer gap-3 from-neutral-600 to-violet-300 pt-0 pb-2 shadow-lg lg:max-w-60"
+			onClick={handleNavigate}
+		>
 			<CardContent className="px-0">
 				<img
-					src={product.images[0]}
+					src={imageSrc}
 					alt="Banner"
 					className="aspect-video h-60 rounded-t-xl object-cover"
 				/>
 			</CardContent>
 			<Button
 				size="icon"
-				onClick={() => setLiked(!liked)}
+				onClick={(e) => {
+					e.stopPropagation();
+					setLiked(!liked);
+				}}
 				className="absolute top-4 right-4 rounded-full bg-primary/10 hover:bg-primary/20"
 			>
 				<HeartIcon
@@ -55,35 +75,36 @@ const ProductCard = ({ product }: Props) => {
 				<span className="sr-only">Like</span>
 			</Button>
 			<CardHeader className="m-0 flex-1 p-0 px-2">
-				<CardTitle className="m-0 p-0">{product.title}</CardTitle>
+				<CardTitle className="m-0 p-0">{title}</CardTitle>
 			</CardHeader>
 			<CardContent className="flex-1 px-2 py-0">
 				<p className="w-full text-[12px] text-muted-foreground">
-					{product.description.length > 70
-						? product.description.substring(0, 70) + "..."
-						: product.description}
+					{description.length > 70
+						? description.substring(0, 70) + "..."
+						: description}
 				</p>
 			</CardContent>
 			<CardFooter className="flex-1 flex-col justify-between gap-1 max-sm:items-stretch">
 				<div className="flex w-full items-center justify-between">
 					<span className="font-medium text-sm">Preço</span>
-					<span className="font-semibold text-xl">R$ {product.price}</span>
+					<span className="font-semibold text-xl">R$ {price}</span>
 				</div>
 				<div>
 					<Dialog>
 						<DialogTrigger asChild>
 							<Button
 								size="lg"
-								onClick={() =>
+								onClick={(e) => {
+									e.stopPropagation();
 									addItem({
-										id: product.slug,
-										name: product.title,
-										image: product.images[0],
-										price: product.price,
+										id: slug,
+										name: title,
+										image: imageSrc,
+										price: price,
 										quantity: 1,
-										category: product.category.name,
-									})
-								}
+										category: category,
+									});
+								}}
 							>
 								Adicionar ao carrinho
 							</Button>
@@ -103,7 +124,7 @@ const ProductCard = ({ product }: Props) => {
 								<DialogClose asChild>
 									<Button variant="outline">Continuar comprando</Button>
 								</DialogClose>
-								<Button onClick={() => router.push("/checkout")}>
+								<Button onClick={() => router.push("/checkout/cart")}>
 									Finalizar compra
 								</Button>
 							</DialogFooter>

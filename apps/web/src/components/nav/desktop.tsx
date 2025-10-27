@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { forwardRef } from "react";
 import {
 	NavigationMenu,
@@ -13,15 +14,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import { CONFIG } from "@/lib/constant";
 import { cn } from "@/lib/utils";
-
-const components: { title: string; href: string; description: string }[] = [
-	{
-		title: "Alert Dialog",
-		href: "/docs/primitives/alert-dialog",
-		description:
-			"A modal dialog that interrupts the user with important content and expects a response.",
-	},
-];
 
 export function MainNav() {
 	return (
@@ -57,7 +49,7 @@ export function NavMenu() {
 								<NavigationMenuLink asChild>
 									<Link
 										className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-										href="/"
+										href={"/products?categories=roupas"}
 									>
 										<div className="mt-4 mb-2 font-medium text-lg">Roupas</div>
 										<p className="text-muted-foreground text-sm leading-tight">
@@ -66,13 +58,16 @@ export function NavMenu() {
 									</Link>
 								</NavigationMenuLink>
 							</li>
-							<ListItem href="/docs" title="Eletrônicos">
+							<ListItem
+								href="/products?categories=eletronicos"
+								title="Eletrônicos"
+							>
 								Eletrônicos de alta qualidade para o seu dia a dia.
 							</ListItem>
-							<ListItem href="/docs/installation" title="Calçados">
+							<ListItem href="/products?categories=calcados" title="Calçados">
 								Calçados confortáveis e estilosos para todas as ocasiões.
 							</ListItem>
-							<ListItem href="/docs/primitives/typography" title="Móveis">
+							<ListItem href="/products?categories=moveis" title="Móveis">
 								Móveis elegantes e funcionais para sua casa.
 							</ListItem>
 						</ul>
