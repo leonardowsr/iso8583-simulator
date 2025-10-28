@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { commitMutation, useMutation } from "react-relay";
-import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import type {
 	confirmationOrderAddMutation$data,
@@ -34,7 +33,7 @@ export function Confirmation() {
 		confirmationOrderAddMutation,
 	);
 
-	const [error, setError] = useState<string | null>(null);
+	const [_error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<boolean>(false);
 	const [
 		isTransactionAddMutationInFlight,
@@ -101,7 +100,7 @@ export function Confirmation() {
 		if (!card) {
 			router.push("/checkout/payment");
 		}
-	}, [card]);
+	}, [card, router.push]);
 	return (
 		<>
 			<div className="mb-0 w-full md:w-2xl">

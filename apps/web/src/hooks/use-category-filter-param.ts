@@ -1,6 +1,5 @@
 import { useQueryStates } from "nuqs";
-import { createLoader, parseAsArrayOf, parseAsString } from "nuqs/server";
-
+import { parseAsArrayOf, parseAsString } from "nuqs/server";
 
 export const categoryFilterParamsSchema = {
 	categories: parseAsArrayOf(parseAsString).withDefault([]),

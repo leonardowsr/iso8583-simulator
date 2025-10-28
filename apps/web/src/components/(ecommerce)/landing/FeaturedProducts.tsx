@@ -1,13 +1,10 @@
 "use client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { use } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 import type { FeaturedProductsQuery as FeaturedProductsQueryType } from "@/__generated_ecommerce__/FeaturedProductsQuery.graphql";
-import type { Product } from "@/_types/product";
 import ProductCard from "@/components/(ecommerce)/products/product";
 import { Button } from "@/components/ui/button";
-import { PRODUCTS_LIST } from "@/constants/products";
 
 const FeaturedProductsQuery = graphql`
 	query FeaturedProductsQuery {

@@ -1,8 +1,6 @@
 import type { SearchParams } from "nuqs/server";
 import { graphql } from "react-relay";
-import pageProductsQuery, {
-	type pageProductsQuery as PageProductsQueryType,
-} from "@/__generated_ecommerce__/pageProductsQuery.graphql";
+import pageProductsQuery from "@/__generated_ecommerce__/pageProductsQuery.graphql";
 import { ProductsLayout } from "@/components/(ecommerce)/layout/products-layout";
 import { loadCategoriasParams } from "@/lib/paramsProductServer";
 import { withHydration } from "@/relay/with-hidratation";

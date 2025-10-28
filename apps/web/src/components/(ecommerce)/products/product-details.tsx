@@ -4,12 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { graphql, type PreloadedQuery, usePreloadedQuery } from "react-relay";
+import { type PreloadedQuery, usePreloadedQuery } from "react-relay";
 import pageProductDetailsQuery, {
 	type pageProductDetailsQuery as PageProductDetailsQueryType,
 } from "@/__generated_ecommerce__/pageProductDetailsQuery.graphql";
 import { Button } from "@/components/ui/button";
-import { PRODUCTS_LIST } from "@/constants/products";
 import { useCartStore } from "@/lib/store/use-cart-store";
 import {
 	Dialog,
