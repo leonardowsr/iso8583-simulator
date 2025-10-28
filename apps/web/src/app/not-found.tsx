@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Header from "@/components/nav/header";
+import Header from "@/components/(ecommerce)/nav/header";
 
 export default function NotFound() {
 	return (

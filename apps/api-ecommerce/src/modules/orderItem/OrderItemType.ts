@@ -11,17 +11,9 @@ export const OrderItemType = new GraphQLObjectType<IOrderItem>({
 			type: GraphQLString,
 			resolve: (item) => item.productId.toString(),
 		},
-		productName: {
+		name: {
 			type: GraphQLString,
-			resolve: (item) => item.productName,
-		},
-		productDescription: {
-			type: GraphQLString,
-			resolve: (item) => item.productDescription,
-		},
-		productImageUrl: {
-			type: GraphQLString,
-			resolve: (item) => item.productImageUrl,
+			resolve: (item) => item.name,
 		},
 		quantity: {
 			type: GraphQLInt,

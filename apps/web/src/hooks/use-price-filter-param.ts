@@ -11,11 +11,19 @@ export function usePriceFilterParam() {
 		clearOnDefault: true,
 	});
 
+	// Allow callers to pass nuqs options (e.g. { limitUrlUpdates: debounce(300) })
 	return {
 		minPrice: filter.minPrice,
 		maxPrice: filter.maxPrice,
-		setMinPrice: (min: number | undefined) => setFilter({ minPrice: min }),
-		setMaxPrice: (max: number | undefined) => setFilter({ maxPrice: max }),
-		clearPrice: () => setFilter({ minPrice: 0, maxPrice: 10000 }),
+		setMinPrice: (
+			min: number | undefined,
+			options?: Parameters<typeof setFilter>[1],
+		) => setFilter({ minPrice: min }, options),
+		setMaxPrice: (
+			max: number | undefined,
+			options?: Parameters<typeof setFilter>[1],
+		) => setFilter({ maxPrice: max }, options),
+		clearPrice: (options?: Parameters<typeof setFilter>[1]) =>
+			setFilter({ minPrice: 0, maxPrice: 10000 }, options),
 	};
 }

@@ -2,11 +2,16 @@ import type {
 	BaseContext,
 	FilteredConnectionArguments,
 } from "@entria/graphql-mongo-helpers/lib/createLoader";
-import { GraphQLInt, GraphQLList, GraphQLString } from "graphql";
+import {
+	GraphQLInt,
+	GraphQLList,
+	GraphQLNonNull,
+	GraphQLString,
+} from "graphql";
 import { connectionArgs } from "graphql-relay";
 import { Category } from "../category/CategoryModel";
 import { ProductLoader } from "./ProductLoader";
-import type { IProduct } from "./ProductModel";
+import { type IProduct, Product } from "./ProductModel";
 import { ProductConnection, ProductType } from "./ProductType";
 
 type GQLContext = BaseContext<"ProductLoader", IProduct>;
@@ -16,6 +21,19 @@ type ProductConnectionArgs = FilteredConnectionArguments & {
 	categories?: string[];
 	minPrice?: number | null;
 	maxPrice?: number | null;
+};
+
+export const productBySlugField = {
+	type: ProductType,
+	args: { slug: { type: new GraphQLNonNull(GraphQLString) } },
+	resolve: async (
+		_parent: unknown,
+		{ slug }: { slug: string },
+		context: GQLContext,
+	) => {
+		const product = await Product.findOne({ slug }).lean();
+		return product ? ProductLoader.load(context, product._id) : null;
+	},
 };
 
 export const productField = (key: string) => ({

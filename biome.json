@@ -25,7 +25,8 @@
 			"!**/.svelte-kit",
 			"!**/wrangler.jsonc",
 			"!**/prisma",
-			"!**/__generated__",
+			"!**/__generated_ecommerce__",
+			"!**/__generated_acquire__",
 			"!**/.source"
 		]
 	},

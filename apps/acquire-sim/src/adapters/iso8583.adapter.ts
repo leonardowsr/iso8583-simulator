@@ -83,7 +83,6 @@ export function createIssuerAdapterFactory(
 		return new Promise((resolve, reject) => {
 			const socket = getClient();
 			const isoBuffer = createIsoPack(data).getBufferMessage();
-
 			socket.write(isoBuffer, (err) => {
 				if (err) {
 					console.error("Error sending ISO 8583 message:", err);

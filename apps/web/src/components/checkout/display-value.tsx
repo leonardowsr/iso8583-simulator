@@ -1,8 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useCartStore } from "@/store/use-cart-store";
-import { LoginForm } from "../login-form";
+import { useCartStore } from "@/lib/store/use-cart-store";
+import { useUserStore } from "@/lib/store/use-user-store";
+import { LoginForm } from "../(ecommerce)/login-form";
 import {
 	Dialog,
 	DialogContent,
@@ -21,6 +23,9 @@ const FRETE = {
 };
 
 export function CheckoutDisplayValue() {
+	const user = useUserStore((state) => state.user);
+	const isAuthenticated = !!user;
+	const router = useRouter();
 	const cartItems = useCartStore((state) => state.cartItems);
 	const subtotal = cartItems.reduce(
 		(acc, item) => acc + item.price * item.quantity,
@@ -77,7 +82,13 @@ export function CheckoutDisplayValue() {
 			</div>
 			<button
 				className="mt-3 w-full rounded bg-green-600 py-2 font-bold text-white transition hover:bg-green-700"
-				onClick={() => setIsLoginModalOpen(true)}
+				onClick={() => {
+					if (!isAuthenticated) {
+						setIsLoginModalOpen(true);
+						return;
+					}
+					router.push("/checkout/payment");
+				}}
 				type="button"
 			>
 				Ir para pagamento

@@ -1,17 +1,25 @@
 "use client";
 import { Suspense, useMemo } from "react";
 import { RelayEnvironmentProvider } from "react-relay";
-import Header from "@/components/nav/header";
+import Header from "@/components/(ecommerce)/nav/header";
 import { Spinner } from "@/components/ui/spinner";
-import { createEnvironment, getClientEnvironment } from "./environment";
+import {
+	createEnvironment,
+	getClientEnvironment,
+	getClientEnvironmentAcquirer,
+} from "./environment";
 
 export function ReactRelayContainer({
 	children,
+	useAcquirer = false,
 }: {
 	children: React.ReactNode;
+	useAcquirer?: boolean;
 	records?: Record<string, unknown>;
 }) {
-	const environment = getClientEnvironment();
+	const environment = useAcquirer
+		? getClientEnvironmentAcquirer()
+		: getClientEnvironment();
 
 	return (
 		<RelayEnvironmentProvider environment={environment}>
@@ -19,14 +27,3 @@ export function ReactRelayContainer({
 		</RelayEnvironmentProvider>
 	);
 }
-
-const Fallback = () => {
-	return (
-		<div>
-			<Header />
-			<div className="flex min-h-screen items-center justify-center">
-				<Spinner className="h-8 w-8" />
-			</div>
-		</div>
-	);
-};

@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      uuid:
+        specifier: ^13.0.0
+        version: 13.0.0
     devDependencies:
       '@babel/preset-env':
         specifier: ^7.23.8
@@ -17,6 +21,9 @@ importers:
       '@biomejs/biome':
         specifier: ^2.2.0
         version: 2.2.7
+      '@types/uuid':
+        specifier: ^11.0.0
+        version: 11.0.0
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.5.6)
@@ -396,11 +403,11 @@ importers:
         specifier: ^7.65.0
         version: 7.65.0(react@19.2.0)
       react-relay:
-        specifier: ^15.0.0
-        version: 15.0.0(react@19.2.0)
+        specifier: ^20.0.0
+        version: 20.1.1(react@19.2.0)
       relay-runtime:
-        specifier: ^15.0.0
-        version: 15.0.0
+        specifier: ^20.0.0
+        version: 20.1.1
       sonner:
         specifier: ^2.0.5
         version: 2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -433,8 +440,8 @@ importers:
         specifier: latest
         version: 19.2.2(@types/react@19.2.2)
       '@types/react-relay':
-        specifier: ^14.1.3
-        version: 14.1.3
+        specifier: ^18.2.1
+        version: 18.2.1
       '@types/relay-runtime':
         specifier: ^14.1.10
         version: 14.1.10
@@ -442,8 +449,8 @@ importers:
         specifier: '*'
         version: link:../../packages/tsconfig
       relay-compiler:
-        specifier: ^15.0.0
-        version: 15.0.0
+        specifier: ^20.0.0
+        version: 20.1.1
       tailwindcss:
         specifier: ^4.1.10
         version: 4.1.16
@@ -1101,12 +1108,12 @@ packages:
   '@babel/regjsgen@0.8.0':
     resolution: {integrity: sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==}
 
-  '@babel/runtime@7.22.6':
-    resolution: {integrity: sha512-wDb5pWm4WDdF6LFUde3Jl8WzPA+3ZbxYqkC6xAXuD3irdEHN1k0NfTRrJD8ZD378SJ61miMLCqIOXYhd8x+AJQ==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/runtime@7.23.4':
     resolution: {integrity: sha512-2Yv65nlWnWlSpe3fXEyX5i7fx5kIKo4Qbcj+hMO0odwaneFjfXw5fdum+4yL20O0QiaHpia0cYQ9xpNMqrBwHg==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/runtime@7.28.4':
+    resolution: {integrity: sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.22.15':
@@ -2769,8 +2776,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react-relay@14.1.3':
-    resolution: {integrity: sha512-tsu+3jN0zeOYKV485fwUy3yMEZWkDVzC2JG0tJgEH6p9tcPQkBAUoXqEZFwSBtHtNo1etfa1Eityg3fC55qDvQ==}
+  '@types/react-relay@18.2.1':
+    resolution: {integrity: sha512-KgmFapsxAylhxcFfaAv5GZZJhTHnDvV8IDZVsUm5afpJUvgZC1Y68ssfOGsFfiFY/2EhxHM/YPfpdKbfmF3Ecg==}
 
   '@types/react-transition-group@4.4.9':
     resolution: {integrity: sha512-ZVNmWumUIh5NhH8aMD9CR2hdW0fNuYInlocZHaZ+dgk/1K49j1w/HoAuK1ki+pgscQrOFRTlXeoURtuzEkV3dg==}
@@ -2795,6 +2802,10 @@ packages:
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
+
+  '@types/uuid@11.0.0':
+    resolution: {integrity: sha512-HVyk8nj2m+jcFRNazzqyVKiZezyhDKrGUA3jlEcg/nZ6Ms+qHwocba1Y/AaVaznJTAM9xpdFSh+ptbNrhOGvZA==}
+    deprecated: This is a stub types definition. uuid provides its own type definitions, so you do not need this installed.
 
   '@types/webidl-conversions@7.0.0':
     resolution: {integrity: sha512-xTE1E+YF4aWPJJeUzaZI5DRntlkY3+BCVJi0axFptnjGmAoWxkyREIh/XMrfxVLejwQxMCfDXdICo0VLxThrog==}
@@ -4353,10 +4364,10 @@ packages:
   react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
 
-  react-relay@15.0.0:
-    resolution: {integrity: sha512-KWdeMMKMJanOL9LsGZYkyAekayYIi+Y4mbDM8VYbHVPgTWJWAQP6yJKS+V4D17qIMo1L84QJQjGaQWEG139p9Q==}
+  react-relay@20.1.1:
+    resolution: {integrity: sha512-pwl7wHHXCOx32dOg4TVNkhVojgGVvOBMo9pcMGeM1BIFYvmwGauKTtBB+qr5buXHGooCL8TXjMVg+ZLizIsbeQ==}
     peerDependencies:
-      react: ^16.9.0 || ^17 || ^18
+      react: ^16.9.0 || ^17 || ^18 || ^19
 
   react-remove-scroll-bar@2.3.8:
     resolution: {integrity: sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==}
@@ -4423,9 +4434,6 @@ packages:
   regenerate@1.4.2:
     resolution: {integrity: sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==}
 
-  regenerator-runtime@0.13.11:
-    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
-
   regenerator-runtime@0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
 
@@ -4440,12 +4448,12 @@ packages:
     resolution: {integrity: sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==}
     hasBin: true
 
-  relay-compiler@15.0.0:
-    resolution: {integrity: sha512-19gIIdrVe/lk7Dkz/hqxpBd54bBDWAKG+kR5ael+xznJPdjlr/rlAmh5Tqi6Mgf/wiEQGdtKiZqeNdOW2/wVRw==}
+  relay-compiler@20.1.1:
+    resolution: {integrity: sha512-J/FFFLS/3vnbDkyQMw8l3Ev7dNHXMgC1RAs0fITz4Q63TFPOw142knKxY1Mm5ZZBABkAs9g2JghXaqM+phwTxw==}
     hasBin: true
 
-  relay-runtime@15.0.0:
-    resolution: {integrity: sha512-7AXkXLQo6gpJNBhk4Kii5b+Yat62HSDD1TgJBi021iSjT1muI8iYd4UZG4f/If209LmaVjkZt2HTNAlk6xtslw==}
+  relay-runtime@20.1.1:
+    resolution: {integrity: sha512-N98ZkkyuIHdXmHaPuljihM1QbFYXATF0gxA0CESFphszsQzXs9A/zZloVfzdOI/xg3B3CfM/5nozvIoeTDIcfw==}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -4878,6 +4886,10 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  uuid@13.0.0:
+    resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
+    hasBin: true
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
@@ -5760,13 +5772,11 @@ snapshots:
 
   '@babel/regjsgen@0.8.0': {}
 
-  '@babel/runtime@7.22.6':
-    dependencies:
-      regenerator-runtime: 0.13.11
-
   '@babel/runtime@7.23.4':
     dependencies:
       regenerator-runtime: 0.14.0
+
+  '@babel/runtime@7.28.4': {}
 
   '@babel/template@7.22.15':
     dependencies:
@@ -7479,7 +7489,7 @@ snapshots:
     dependencies:
       '@types/react': 19.2.2
 
-  '@types/react-relay@14.1.3':
+  '@types/react-relay@18.2.1':
     dependencies:
       '@types/react': 19.2.2
       '@types/relay-runtime': 14.1.10
@@ -7514,6 +7524,10 @@ snapshots:
       '@types/node': 17.0.12
 
   '@types/stack-utils@2.0.3': {}
+
+  '@types/uuid@11.0.0':
+    dependencies:
+      uuid: 13.0.0
 
   '@types/webidl-conversions@7.0.0': {}
 
@@ -9280,14 +9294,14 @@ snapshots:
 
   react-is@18.2.0: {}
 
-  react-relay@15.0.0(react@19.2.0):
+  react-relay@20.1.1(react@19.2.0):
     dependencies:
-      '@babel/runtime': 7.22.6
+      '@babel/runtime': 7.28.4
       fbjs: 3.0.5
       invariant: 2.2.4
       nullthrows: 1.1.1
       react: 19.2.0
-      relay-runtime: 15.0.0
+      relay-runtime: 20.1.1
     transitivePeerDependencies:
       - encoding
 
@@ -9365,8 +9379,6 @@ snapshots:
 
   regenerate@1.4.2: {}
 
-  regenerator-runtime@0.13.11: {}
-
   regenerator-runtime@0.14.0: {}
 
   regenerator-transform@0.15.2:
@@ -9386,11 +9398,11 @@ snapshots:
     dependencies:
       jsesc: 0.5.0
 
-  relay-compiler@15.0.0: {}
+  relay-compiler@20.1.1: {}
 
-  relay-runtime@15.0.0:
+  relay-runtime@20.1.1:
     dependencies:
-      '@babel/runtime': 7.22.6
+      '@babel/runtime': 7.28.4
       fbjs: 3.0.5
       invariant: 2.2.4
     transitivePeerDependencies:
@@ -9780,6 +9792,8 @@ snapshots:
       react: 19.2.0
 
   util-deprecate@1.0.2: {}
+
+  uuid@13.0.0: {}
 
   uuid@8.3.2: {}
 

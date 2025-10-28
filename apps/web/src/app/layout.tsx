@@ -5,9 +5,9 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./index.css";
 
 import { Toaster } from "sonner";
-import { ReactQueryProvider } from "@/components/providers/react-query-provider";
+import { ReactQueryProvider } from "@/lib/providers/react-query-provider";
 import { ReactRelayContainer } from "@/relay/ReactRelayContainer";
-import { ThemeProvider } from "../components/providers/theme-provider";
+import { ThemeProvider } from "../lib/providers/theme-provider";
 
 export const metadata: Metadata = {
 	title: "Banco",

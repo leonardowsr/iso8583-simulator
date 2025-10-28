@@ -2,8 +2,8 @@
 
 import { Minus, Plus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/lib/store/use-cart-store";
 import { cn } from "@/lib/utils";
-import { useCartStore } from "@/store/use-cart-store";
 import { Button } from "../ui/button";
 
 export function CheckoutProductList({ className }: { className?: string }) {

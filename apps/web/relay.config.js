@@ -1,14 +1,16 @@
-const config = {
+module.exports = {
 	src: "./src",
-	artifactDirectory: "./src/__generated__",
 	schema: "./data/schema.graphql",
+	artifactDirectory: "./src/__generated_ecommerce__",
+	language: "typescript",
+
 	exclude: [
 		"**/node_modules/**",
 		"**/.next/**",
 		"**/__mocks__/**",
-		"**/__generated__/**",
+		"**/__generated_acquire__/**",
+		"app/(acquire)/**",
+		"components/(acquire)/**",
+		"src/mutations/acquire/**",
 	],
-	language: "typescript",
 };
-
-module.exports = config;
