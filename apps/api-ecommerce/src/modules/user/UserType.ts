@@ -1,10 +1,4 @@
-import {
-	GraphQLFloat,
-	GraphQLInt,
-	GraphQLList,
-	GraphQLObjectType,
-	GraphQLString,
-} from "graphql";
+import { GraphQLObjectType, GraphQLString } from "graphql";
 import { connectionDefinitions, globalIdField } from "graphql-relay";
 import { registerTypeLoader } from "../_node/typeRegister";
 import { UserLoader } from "./UserLoader";

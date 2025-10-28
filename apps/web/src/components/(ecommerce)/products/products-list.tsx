@@ -1,21 +1,9 @@
 "use client";
 import { useEffect } from "react";
-import { set } from "react-hook-form";
 import { graphql, usePaginationFragment } from "react-relay";
-import { toast } from "sonner";
 import type { productsList_products$key } from "@/__generated_ecommerce__/productsList_products.graphql";
-import page from "@/app/(ecommerce)/page";
-import {
-	Pagination,
-	PaginationContent,
-	PaginationItem,
-	PaginationLink,
-	PaginationNext,
-	PaginationPrevious,
-} from "@/components/ui/pagination";
 import { useCategoryFilterParam } from "@/hooks/use-category-filter-param";
 import { usePriceFilterParam } from "@/hooks/use-price-filter-param";
-import { cn } from "@/lib/utils";
 import { Button } from "../../ui/button";
 import { Card } from "../../ui/card";
 import { Skeleton } from "../../ui/skeleton";
@@ -78,7 +66,7 @@ export const ProductsList = ({ fragmentRef }: Props) => {
 			},
 			{ fetchPolicy: "network-only" },
 		);
-	}, [categories, minPrice, maxPrice]);
+	}, [categories, minPrice, maxPrice, refetch]);
 
 	if (isLoadingNext) {
 		return <LoadingSkeleton />;

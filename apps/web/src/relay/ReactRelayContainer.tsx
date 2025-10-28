@@ -1,10 +1,6 @@
 "use client";
-import { Suspense, useMemo } from "react";
 import { RelayEnvironmentProvider } from "react-relay";
-import Header from "@/components/(ecommerce)/nav/header";
-import { Spinner } from "@/components/ui/spinner";
 import {
-	createEnvironment,
 	getClientEnvironment,
 	getClientEnvironmentAcquirer,
 } from "./environment";

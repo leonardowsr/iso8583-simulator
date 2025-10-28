@@ -4,7 +4,7 @@ import ProductDetail from "@/components/(ecommerce)/products/product-details";
 import { getPreloadedQuery } from "@/relay/network";
 import { withHydration } from "@/relay/with-hidratation";
 
-const productDetailsQuery = graphql`
+const _productDetailsQuery = graphql`
 		query pageProductDetailsQuery($slug: String!) {
 			productBySlug(slug: $slug) {
 				id
@@ -23,7 +23,7 @@ export default async function Page({
 	params: Promise<{ slug: string }>;
 }) {
 	const { slug } = await params;
-	const preload = await getPreloadedQuery(
+	const _preload = await getPreloadedQuery(
 		pageProductDetailsQuery,
 		{ slug: slug[0] },
 		{ fetchPolicy: "store-or-network" },

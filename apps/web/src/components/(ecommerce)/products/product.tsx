@@ -1,11 +1,10 @@
 "use client";
+import { title } from "node:process";
 import { CircleCheck, HeartIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { title } from "process";
 import { useState } from "react";
 import { graphql, useFragment } from "react-relay";
 import type { product_product$key } from "@/__generated_ecommerce__/product_product.graphql";
-import type { Product } from "@/_types/product";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
