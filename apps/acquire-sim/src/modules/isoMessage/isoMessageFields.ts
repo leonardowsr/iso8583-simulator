@@ -1,0 +1,38 @@
+import type {
+	BaseContext,
+	FilteredConnectionArguments,
+} from "@entria/graphql-mongo-helpers/lib/createLoader";
+import { connectionArgs } from "graphql-relay";
+import { IsoMessageLoader } from "./isoMessageLoader";
+import type { IIsoMessage } from "./isoMessageModel";
+import { IsoMessageConnection, IsoMessageType } from "./isoMessageType";
+
+type IsoMessageConnectionArgs = FilteredConnectionArguments;
+type IsoMessageContext = BaseContext<"IsoMessageLoader", IIsoMessage>;
+
+export const isoMessageField = (key: string) => ({
+	[key]: {
+		type: IsoMessageType,
+		resolve: async (
+			obj: Record<string, unknown>,
+			_unused: unknown,
+			context: IsoMessageContext,
+		) => IsoMessageLoader.load(context, obj.isoMessage as string),
+	},
+});
+
+export const isoMessageConnectionField = (key: string) => ({
+	[key]: {
+		type: IsoMessageConnection.connectionType,
+		args: {
+			...connectionArgs,
+		},
+		resolve: async (
+			_: unknown,
+			args: IsoMessageConnectionArgs,
+			context: IsoMessageContext,
+		) => {
+			return await IsoMessageLoader.loadAll(context, args);
+		},
+	},
+});

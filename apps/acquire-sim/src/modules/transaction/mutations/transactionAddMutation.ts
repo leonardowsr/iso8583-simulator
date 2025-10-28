@@ -3,7 +3,7 @@ import { mutationWithClientMutationId } from "graphql-relay";
 import mongoose, { type HydratedDocument } from "mongoose";
 import { createIssuerAdapterFactory } from "../../../adapters/iso8583.adapter";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
-import { SpyMessage } from "../../spyMessage/SpyMessageModel";
+import { IsoMessage } from "../../isoMessage/isoMessageModel";
 import {
 	ETransactionStatus,
 	type ITransaction,
@@ -75,7 +75,7 @@ const mutation = mutationWithClientMutationId({
 		}
 
 		try {
-			const isoClient = createIssuerAdapterFactory(redisPubSub, SpyMessage);
+			const isoClient = createIssuerAdapterFactory(redisPubSub, IsoMessage);
 
 			await isoClient.sendTransaction({
 				...args,

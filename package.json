@@ -8,6 +8,7 @@
 		]
 	},
 	"scripts": {
+		"commit": "git-cz",
 		"check": "biome check --write --unsafe",
 		"format": "biome check --write .",
 		"build": "turbo run build",
@@ -35,6 +36,11 @@
 		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
 			"biome check --write --unsafe ."
 		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "cz-conventional-changelog"
+		}
 	},
 	"packageManager": "pnpm@10.0.0",
 	"dependencies": {

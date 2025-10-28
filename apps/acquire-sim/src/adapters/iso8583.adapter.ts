@@ -10,8 +10,8 @@ import { config } from "../config";
 import { PUB_SUB_EVENTS } from "../modules/_pubSub/pubSubEvents";
 import {
 	Edirection,
-	type ISpyMessage,
-} from "../modules/spyMessage/SpyMessageModel";
+	type IIsoMessage,
+} from "../modules/isoMessage/isoMessageModel";
 
 type transactionData = TransactionAddInput & { transactionId: string };
 export interface IIso8583Client {
@@ -20,7 +20,7 @@ export interface IIso8583Client {
 
 export function createIssuerAdapterFactory(
 	pubSub: RedisPubSub,
-	spyMessageModel: Model<ISpyMessage>,
+	isoMessageModel: Model<IIsoMessage>,
 ) {
 	let client: net.Socket | null = null;
 	const host = config.ISSUER_HOST;
@@ -68,7 +68,7 @@ export function createIssuerAdapterFactory(
 			throw err;
 		}
 
-		const messageOut = await spyMessageModel.create({
+		const messageOut = await isoMessageModel.create({
 			rawContent:
 				"Sending ISO 8583 message, mti 0200 to issuer sim to authorize card",
 			transactionId: data.transactionId,
@@ -77,7 +77,7 @@ export function createIssuerAdapterFactory(
 		});
 
 		pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
-			spyMessage: messageOut._id.toString(),
+			isoMessage: messageOut._id.toString(),
 		});
 
 		return new Promise((resolve, reject) => {
@@ -93,7 +93,7 @@ export function createIssuerAdapterFactory(
 
 			socket.once("data", async (response) => {
 				const isoData = parseIsobuffer(response);
-				const messageIn = await spyMessageModel.create({
+				const messageIn = await isoMessageModel.create({
 					transactionId: data.transactionId,
 					direction: Edirection.INCOMING,
 					idempotencyKey: data.idempotencyKey,
@@ -102,7 +102,7 @@ export function createIssuerAdapterFactory(
 				});
 
 				pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
-					spyMessage: messageIn._id.toString(),
+					isoMessage: messageIn._id.toString(),
 				});
 
 				await close();
@@ -119,7 +119,7 @@ export function createIssuerAdapterFactory(
 			socket.once("timeout", async () => {
 				console.error("ISO 8583 message timed out");
 
-				const messageIn = await spyMessageModel.create({
+				const messageIn = await isoMessageModel.create({
 					transactionId: data.transactionId,
 					direction: Edirection.INCOMING,
 					idempotencyKey: data.idempotencyKey,
@@ -128,7 +128,7 @@ export function createIssuerAdapterFactory(
 				});
 
 				pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
-					spyMessage: messageIn._id.toString(),
+					isoMessage: messageIn._id.toString(),
 				});
 
 				await close();
@@ -138,7 +138,7 @@ export function createIssuerAdapterFactory(
 			socket.once("error", async (err) => {
 				console.error("ISO 8583 client error:", err);
 
-				const messageIn = await spyMessageModel.create({
+				const messageIn = await isoMessageModel.create({
 					transactionId: data.transactionId,
 					direction: Edirection.INCOMING,
 					idempotencyKey: data.idempotencyKey,
@@ -147,7 +147,7 @@ export function createIssuerAdapterFactory(
 				});
 
 				pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
-					spyMessage: messageIn._id.toString(),
+					isoMessage: messageIn._id.toString(),
 				});
 
 				await close();
@@ -164,10 +164,10 @@ export function createIssuerAdapterFactory(
 // 	private host: string = config.ISSUER_HOST;
 // 	private port: number = config.ISSUER_PORT;
 // 	private pubSub: RedisPubSub;
-// 	private spyMessageModel: Model<ISpyMessage>;
-// 	constructor(pubSub: RedisPubSub, spyMessageModel: Model<ISpyMessage>) {
+// 	private isoMessageModel: Model<IIsoMessage>;
+// 	constructor(pubSub: RedisPubSub, isoMessageModel: Model<IIsoMessage>) {
 // 		this.pubSub = pubSub;
-// 		this.spyMessageModel = spyMessageModel;
+// 		this.isoMessageModel = isoMessageModel;
 // 	}
 
 // 	private getClient(): net.Socket {
@@ -203,7 +203,7 @@ export function createIssuerAdapterFactory(
 // 			throw err;
 // 		}
 
-// 		const messageOut = await this.spyMessageModel.create({
+// 		const messageOut = await this.isoMessageModel.create({
 // 			rawContent:
 // 				"Sending ISO 8583 message, mti 0200 to issuer sim to authorize card",
 // 			transactionId: data.transactionId,
@@ -212,7 +212,7 @@ export function createIssuerAdapterFactory(
 // 		});
 
 // 		this.pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
-// 			spyMessage: messageOut._id.toString(),
+// 			isoMessage: messageOut._id.toString(),
 // 		});
 
 // 		return new Promise((resolve, reject) => {
@@ -232,7 +232,7 @@ export function createIssuerAdapterFactory(
 // 			client.once("data", async (response) => {
 // 				const isoData = parseIsobuffer(response);
 
-// 				const messageIn = await this.spyMessageModel.create({
+// 				const messageIn = await this.isoMessageModel.create({
 // 					transactionId: data.transactionId,
 // 					direction: Edirection.INCOMING,
 // 					idempotencyKey: data.idempotencyKey,
@@ -240,7 +240,7 @@ export function createIssuerAdapterFactory(
 // 					isoResponseCode: isoData["39"] || "ER",
 // 				});
 // 				this.pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
-// 					spyMessage: messageIn._id.toString(),
+// 					isoMessage: messageIn._id.toString(),
 // 				});
 
 // 				await this.close();
@@ -257,7 +257,7 @@ export function createIssuerAdapterFactory(
 // 			client.once("timeout", async () => {
 // 				console.error("ISO 8583 message timed out");
 
-// 				const messageIn = await this.spyMessageModel.create({
+// 				const messageIn = await this.isoMessageModel.create({
 // 					transactionId: data.transactionId,
 // 					direction: Edirection.INCOMING,
 // 					idempotencyKey: data.idempotencyKey,
@@ -265,7 +265,7 @@ export function createIssuerAdapterFactory(
 // 					isoResponseCode: "91",
 // 				});
 // 				this.pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
-// 					spyMessage: messageIn._id.toString(),
+// 					isoMessage: messageIn._id.toString(),
 // 				});
 
 // 				await this.close();
@@ -275,7 +275,7 @@ export function createIssuerAdapterFactory(
 // 			client.once("error", async (err) => {
 // 				console.error("ISO 8583 client error:", err);
 
-// 				const messageIn = await this.spyMessageModel.create({
+// 				const messageIn = await this.isoMessageModel.create({
 // 					transactionId: data.transactionId,
 // 					direction: Edirection.INCOMING,
 // 					idempotencyKey: data.idempotencyKey,
@@ -283,7 +283,7 @@ export function createIssuerAdapterFactory(
 // 					isoResponseCode: "96",
 // 				});
 // 				this.pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
-// 					spyMessage: messageIn._id.toString(),
+// 					isoMessage: messageIn._id.toString(),
 // 				});
 
 // 				await this.close();
