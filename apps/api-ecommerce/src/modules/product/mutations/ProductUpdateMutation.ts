@@ -1,9 +1,10 @@
-import { removeUndefined } from "@woovi-playground/shared";
+import { validateZod } from "@woovi-playground/shared";
 import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import { Product } from "../ProductModel";
 import { productField } from "../productFields";
-import type { ProductUpdateInput } from "../schemas";
+import type { ProductUpdateInput } from "../productSchemas";
+import { productUpdateSchema } from "../productSchemas";
 
 const mutation = mutationWithClientMutationId({
 	name: "ProductUpdate",
@@ -29,6 +30,7 @@ const mutation = mutationWithClientMutationId({
 	},
 
 	mutateAndGetPayload: async (args: ProductUpdateInput) => {
+		validateZod(productUpdateSchema, args);
 		const updates = removeUndefined({
 			name: args.name,
 			description: args.description,
@@ -63,3 +65,15 @@ const mutation = mutationWithClientMutationId({
 export const ProductUpdateMutation = {
 	...mutation,
 };
+
+function removeUndefined<T extends Record<string, unknown>>(
+	obj: T,
+): Partial<T> {
+	const result: Partial<T> = {};
+	for (const key in obj) {
+		if (obj[key] !== undefined) {
+			result[key] = obj[key];
+		}
+	}
+	return result;
+}

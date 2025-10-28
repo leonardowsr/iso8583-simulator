@@ -1,3 +1,4 @@
+import { validateZod } from "@woovi-playground/shared";
 import {
 	GraphQLInt,
 	GraphQLList,
@@ -8,7 +9,8 @@ import { mutationWithClientMutationId } from "graphql-relay";
 import { Category } from "../../category/CategoryModel";
 import { Product } from "../ProductModel";
 import { productField } from "../productFields";
-import type { ProductAddInput } from "../schemas";
+import type { ProductAddInput } from "../productSchemas";
+import { productAddSchema } from "../productSchemas";
 
 const mutation = mutationWithClientMutationId({
 	name: "ProductAdd",
@@ -34,6 +36,7 @@ const mutation = mutationWithClientMutationId({
 	},
 
 	mutateAndGetPayload: async (args: ProductAddInput) => {
+		validateZod(productAddSchema, args);
 		const [existingProduct, category] = await Promise.all([
 			Product.findOne({ name: args.name }),
 			Category.findById(args.category),
