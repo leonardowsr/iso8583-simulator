@@ -9,7 +9,7 @@ import { CardHeader } from "../ui/card";
 import ContainerContent from "./container-content";
 
 interface Props {
-	queryRefs: PreloadedQuery<PageProductsQueryType>;
+	queryRefs: { pageProductsQuery: PreloadedQuery<PageProductsQueryType> };
 }
 
 export function ProductsLayout({ queryRefs }: Props) {

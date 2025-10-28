@@ -1,3 +1,4 @@
+import type { ConcreteRequest } from "relay-runtime";
 import { getPreloadedQuery } from "@/relay/network";
 import { RelayHydrate } from "@/relay/RelayHydrate";
 
@@ -6,8 +7,9 @@ export async function withHydration<T>({
 	query,
 	variables = {},
 }: {
-	Component: React.ComponentType<any>;
-	query: any;
+	Component: React.ComponentType<T>;
+	query: ConcreteRequest;
+	// biome-ignore lint/suspicious/noExplicitAny: no effect
 	variables?: Record<string, any>;
 }) {
 	const preloaded = await getPreloadedQuery(query, variables);

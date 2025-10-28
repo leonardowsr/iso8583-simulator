@@ -89,7 +89,18 @@ type Product {
   description: String
   images: [String]
   slug: String
-  category: String
+  category: Category
+  createdAt: String
+}
+
+"""Represents a category"""
+type Category {
+  """The ID of an object"""
+  id: ID!
+  name: String
+  slug: String
+  products: [Product]
+  image: String
   createdAt: String
 }
 
@@ -152,17 +163,6 @@ type CategoryEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
-}
-
-"""Represents a category"""
-type Category {
-  """The ID of an object"""
-  id: ID!
-  name: String
-  slug: String
-  products: [Product]
-  image: String
-  createdAt: String
 }
 
 type Mutation {

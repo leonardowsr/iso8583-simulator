@@ -19,7 +19,7 @@ type PageProps = {
 };
 export default async function Page({ searchParams }: PageProps) {
 	const { categories } = await loadCategoriasParams(searchParams);
-	console.log("categories no page products", categories);
+
 	return withHydration({
 		Component: ProductsLayout,
 		query: pageProductsQuery,

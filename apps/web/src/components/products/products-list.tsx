@@ -39,8 +39,8 @@ export const ProductsListFragment = graphql`
 					name
 					description
 					price
+					slug
 					images
-					createdAt
 				}
 			}
 			pageInfo {
@@ -85,7 +85,7 @@ export const ProductsList = ({ fragmentRef }: Props) => {
 	useEffect(() => {
 		refetchData();
 	}, [categories, minPrice, maxPrice]);
-	console.log("paginatedProducts", data.products);
+
 	const refetchData = () => {
 		refetch({
 			minPrice: minPrice || 0,

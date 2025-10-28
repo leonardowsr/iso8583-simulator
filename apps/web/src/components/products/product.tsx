@@ -2,6 +2,10 @@
 import { CircleCheck, HeartIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import type {
+	FeaturedProductsQuery,
+	FeaturedProductsQuery$data,
+} from "@/__generated__/FeaturedProductsQuery.graphql";
 import type { Product } from "@/_types/product";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,7 +29,7 @@ import {
 } from "../ui/dialog";
 
 interface Props {
-	product: Product;
+	product: Omit<Product, "category">;
 }
 
 const ProductCard = ({ product }: Props) => {
@@ -35,10 +39,9 @@ const ProductCard = ({ product }: Props) => {
 
 	const imageSrc = product?.images?.[0] || "/placeholder.png";
 	const description = product?.description || "";
-	const title = product?.title || "Produto";
+	const title = product?.name || "Produto";
 	const price = typeof product?.price === "number" ? product.price : 0;
 	const slug = product?.slug || "";
-	const category = product?.category?.name || "";
 
 	// Handler para navegação
 	const handleNavigate = (e: React.MouseEvent) => {
@@ -103,7 +106,6 @@ const ProductCard = ({ product }: Props) => {
 										image: imageSrc,
 										price: price,
 										quantity: 1,
-										category: category,
 									});
 								}}
 							>

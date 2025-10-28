@@ -58,7 +58,6 @@ export function CheckoutProductList({ className }: { className?: string }) {
 										<span className="sr-only">Remover item</span>
 									</button>
 								</div>
-								<p className="text-muted-foreground text-xs">{item.category}</p>
 							</div>
 							<div className="mt-2 flex items-center justify-between">
 								<div className="flex items-center rounded-md border">
