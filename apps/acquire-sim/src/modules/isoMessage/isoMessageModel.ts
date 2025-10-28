@@ -6,7 +6,7 @@ export enum Edirection {
 	OUTGOING = "out",
 }
 
-const Schema = new mongoose.Schema<ISpyMessage>(
+const Schema = new mongoose.Schema<IIsoMessage>(
 	{
 		idempotencyKey: {
 			type: String,
@@ -26,12 +26,12 @@ const Schema = new mongoose.Schema<ISpyMessage>(
 		isoResponseCode: { type: String, required: false },
 	},
 	{
-		collection: "SpyMessages",
+		collection: "IsoMessages",
 		timestamps: true,
 	},
 );
 
-export type ISpyMessage = {
+export type IIsoMessage = {
 	idempotencyKey: string;
 	isoResponseCode: string;
 	direction: Edirection;
@@ -41,7 +41,7 @@ export type ISpyMessage = {
 	updatedAt: Date;
 } & Document;
 
-export const SpyMessage: Model<ISpyMessage> = mongoose.model(
-	"SpyMessages",
+export const IsoMessage: Model<IIsoMessage> = mongoose.model(
+	"IsoMessages",
 	Schema,
 );

@@ -1,7 +1,8 @@
 import type { GraphQLObjectType, GraphQLTypeResolver } from "graphql";
 import { fromGlobalId, nodeDefinitions } from "graphql-relay";
 
-type Load = (context: unknown, id: string) => unknown;
+// biome-ignore lint/suspicious/noExplicitAny: acceptable here
+type Load = (context: any, id: string) => unknown;
 type TypeLoaders = {
 	[key: string]: {
 		type: GraphQLObjectType;

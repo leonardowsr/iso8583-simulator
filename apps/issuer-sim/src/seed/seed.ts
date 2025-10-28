@@ -1,4 +1,4 @@
-import { Accounts, EAccountType } from "./AccountModel";
+import { Accounts, EAccountType } from "../modules/account/AccountModel";
 
 const createDefaultAccounts = async () => {
 	const [existingUserAccount, existingInternalAccount] = await Promise.all([

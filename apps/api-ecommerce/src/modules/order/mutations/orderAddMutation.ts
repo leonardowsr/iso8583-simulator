@@ -1,3 +1,4 @@
+import { validateZod } from "@woovi-playground/shared";
 import {
 	GraphQLInputObjectType,
 	GraphQLInt,
@@ -8,11 +9,9 @@ import { fromGlobalId, mutationWithClientMutationId } from "graphql-relay";
 import { Product } from "../../product/ProductModel";
 import { Order } from "../OrderModel";
 import { orderField } from "../orderFields";
+import { type OrderAddInput, orderAddSchema } from "../orderSchemas";
 
-export type InputOrderAdd = {
-	userId: string;
-	items: { productId: string; quantity: number }[];
-};
+// use zod-typed OrderAddInput
 
 export const mutation = mutationWithClientMutationId({
 	name: "OrderAdd",
@@ -34,7 +33,8 @@ export const mutation = mutationWithClientMutationId({
 			),
 		},
 	},
-	mutateAndGetPayload: async (args: InputOrderAdd) => {
+	mutateAndGetPayload: async (args: OrderAddInput) => {
+		validateZod(orderAddSchema, args);
 		const decodedItems = args.items.map((item) => {
 			const { id } = fromGlobalId(item.productId);
 			return {

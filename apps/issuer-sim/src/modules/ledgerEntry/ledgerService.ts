@@ -1,6 +1,11 @@
+import { validateZod } from "@woovi-playground/shared";
 import type mongoose from "mongoose";
 import { CustomError } from "../_error/customError";
 import { EledgerEntryType, LedgerEntries } from "./LedgerEntryModel";
+import {
+	checkExistingEntrySchema,
+	createLedgerEntrySchema,
+} from "./ledgerEntrySchemas";
 
 export const ledgerService = () => {
 	const ledgerEntries = LedgerEntries;
@@ -14,6 +19,7 @@ export const ledgerService = () => {
 		},
 		session: mongoose.ClientSession,
 	) {
+		validateZod(createLedgerEntrySchema, data);
 		await Promise.all([
 			ledgerEntries.create({
 				amount: data.amount,
@@ -36,6 +42,7 @@ export const ledgerService = () => {
 		idempotencyKey: string,
 		session: mongoose.ClientSession,
 	) {
+		validateZod(checkExistingEntrySchema, idempotencyKey);
 		const existingEntry = await ledgerEntries
 			.findOne({ idempotencyKey })
 			.session(session);

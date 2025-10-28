@@ -1,13 +1,16 @@
 import type { Iiso8583ParsedSchema } from "@woovi-playground/shared";
+import { validateZod } from "@woovi-playground/shared";
 import mongoose from "mongoose";
 import { accountService } from "../account/accountService";
 import { ledgerService } from "../ledgerEntry/ledgerService";
+import { isoParsedSchema } from "./authorizationSchemas";
 
 export function authorizationService() {
 	const account = accountService();
 	const ledger = ledgerService();
 
 	async function authorizeTransaction(data: Iiso8583ParsedSchema) {
+		validateZod(isoParsedSchema, data);
 		const session = await mongoose.startSession();
 		await session.withTransaction(async () => {
 			await ledger.checkExistingEntry(data.idempotencyKey, session);

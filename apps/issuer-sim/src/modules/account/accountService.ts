@@ -1,6 +1,8 @@
+import { validateZod } from "@woovi-playground/shared";
 import type mongoose from "mongoose";
 import { CustomError } from "../_error/customError";
 import { Accounts, EAccountType } from "./AccountModel";
+import { validateAccountSchema } from "./accountSchemas";
 
 export const accountService = () => {
 	async function updateAccountBalance(
@@ -29,6 +31,7 @@ export const accountService = () => {
 		},
 		session: mongoose.ClientSession,
 	) {
+		validateZod(validateAccountSchema, data);
 		const [costumerAccount, internalAccount] = await Promise.all([
 			Accounts.findOne({
 				cardNumber: data.cardNumber,

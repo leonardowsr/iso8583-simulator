@@ -1,8 +1,10 @@
+import { validateZod } from "@woovi-playground/shared";
 import { GraphQLID, GraphQLNonNull } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import { Product } from "../ProductModel";
 import { productField } from "../productFields";
-import type { ProductUpdateInput } from "../schemas";
+import type { ProductUpdateInput } from "../productSchemas";
+import { productUpdateSchema } from "../productSchemas";
 
 const mutation = mutationWithClientMutationId({
 	name: "ProductDelete",
@@ -13,6 +15,7 @@ const mutation = mutationWithClientMutationId({
 	},
 
 	mutateAndGetPayload: async (args: ProductUpdateInput) => {
+		validateZod(productUpdateSchema, args);
 		const product = await Product.findByIdAndDelete(args.id);
 
 		if (!product) {

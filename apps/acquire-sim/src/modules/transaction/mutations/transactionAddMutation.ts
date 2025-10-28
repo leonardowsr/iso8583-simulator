@@ -1,27 +1,20 @@
+import { validateZod } from "@woovi-playground/shared";
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import mongoose, { type HydratedDocument } from "mongoose";
 import { createIssuerAdapterFactory } from "../../../adapters/iso8583.adapter";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
-import { SpyMessage } from "../../spyMessage/SpyMessageModel";
+import { IsoMessage } from "../../isoMessage/isoMessageModel";
 import {
 	ETransactionStatus,
 	type ITransaction,
 	Transaction,
 } from "../TransationModel";
 import { transactionField } from "../transactionFields";
-
-export type TransactionAddInput = {
-	userId: string;
-	orderRef: string;
-	amount: number;
-	idempotencyKey: string;
-	cardNumber: string;
-	cardHolderName: string;
-	cardExpiryMonth: string;
-	cardExpiryYear: string;
-	cardCvv: string;
-};
+import {
+	type TransactionAddInput,
+	transactionAddSchema,
+} from "../transactionSchemas";
 
 const mutation = mutationWithClientMutationId({
 	name: "TransactionAdd",
@@ -37,9 +30,7 @@ const mutation = mutationWithClientMutationId({
 		cardCvv: { type: new GraphQLNonNull(GraphQLString) },
 	},
 	mutateAndGetPayload: async (args: TransactionAddInput) => {
-		if (String(args.amount).length > 12) {
-			throw new Error("Valor da transação excede o limite permitido");
-		}
+		validateZod(transactionAddSchema, args);
 		const session = await mongoose.startSession();
 
 		let transaction!: HydratedDocument<ITransaction>;
@@ -75,7 +66,7 @@ const mutation = mutationWithClientMutationId({
 		}
 
 		try {
-			const isoClient = createIssuerAdapterFactory(redisPubSub, SpyMessage);
+			const isoClient = createIssuerAdapterFactory(redisPubSub, IsoMessage);
 
 			await isoClient.sendTransaction({
 				...args,

@@ -2,23 +2,23 @@ import { subscriptionWithClientId } from "graphql-relay-subscription";
 import { withFilter } from "graphql-subscriptions";
 import { PUB_SUB_EVENTS } from "../../_pubSub/pubSubEvents";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
-import { SpyMessage } from "../SpyMessageModel";
-import { spyMessageField } from "../spyMessageFields";
+import { isoMessageField } from "../isoMessageFields";
+import { IsoMessage } from "../isoMessageModel";
 
-type SpyMessageAddedPayload = {
-	spyMessage: string;
+type IsoMessageAddedPayload = {
+	isoMessage: string;
 };
 
 const subscription = subscriptionWithClientId({
-	name: "SpyMessageAdded",
+	name: "IsoMessageAdded",
 	subscribe: withFilter(
 		() => redisPubSub.asyncIterator(PUB_SUB_EVENTS.MESSAGE.ADDED),
-		async (payload: SpyMessageAddedPayload) => {
-			const spyMessage = await SpyMessage.findOne({
-				_id: payload.spyMessage,
+		async (payload: IsoMessageAddedPayload) => {
+			const isoMessage = await IsoMessage.findOne({
+				_id: payload.isoMessage,
 			});
 
-			if (!spyMessage) {
+			if (!isoMessage) {
 				return false;
 			}
 
@@ -26,14 +26,14 @@ const subscription = subscriptionWithClientId({
 			return true;
 		},
 	),
-	getPayload: async (obj: SpyMessageAddedPayload) => ({
-		spyMessage: obj?.spyMessage,
+	getPayload: async (obj: IsoMessageAddedPayload) => ({
+		isoMessage: obj?.isoMessage,
 	}),
 	outputFields: {
-		...spyMessageField("spyMessage"),
+		...isoMessageField("isoMessage"),
 	},
 });
 
-export const SpyMessageAddedSubscription = {
+export const IsoMessageAddedSubscription = {
 	...subscription,
 };

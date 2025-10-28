@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-
 import { config } from "./config";
-import { createDefaultAccounts } from "./modules/account/seed";
+import { createDefaultAccounts } from "./seed/seed";
 
 async function connectDatabase() {
 	mongoose.connection.on("close", () =>

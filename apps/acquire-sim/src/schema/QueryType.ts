@@ -1,11 +1,12 @@
 import { GraphQLObjectType } from "graphql";
-import { spyMessageConnectionField } from "../modules/spyMessage/spyMessageFields";
+import { isoMessageConnectionField } from "../modules/isoMessage/isoMessageFields";
 import { transactionConnectionField } from "../modules/transaction/transactionFields";
+import type { GQLContext } from "../server/context";
 
-export const QueryType = new GraphQLObjectType({
+export const QueryType = new GraphQLObjectType<unknown, GQLContext>({
 	name: "Query",
 	fields: () => ({
-		...spyMessageConnectionField("messages"),
+		...isoMessageConnectionField("messages"),
 		...transactionConnectionField("transactions"),
 	}),
 });

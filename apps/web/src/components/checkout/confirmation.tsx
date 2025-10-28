@@ -49,7 +49,7 @@ export function Confirmation() {
 			input: {
 				userId: user.id,
 				items: cartItems.map((item) => ({
-					productId: item.id, // ajuste aqui para usar o ID real
+					productId: item.id,
 					quantity: item.quantity,
 				})),
 			},
