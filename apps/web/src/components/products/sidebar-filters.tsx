@@ -1,4 +1,8 @@
+"use client";
 import { Trash } from "lucide-react";
+import { useFragment } from "react-relay";
+import { graphql } from "relay-runtime";
+import type { sidebarFilters_categories$key } from "@/__generated__/sidebarFilters_categories.graphql";
 import { useCategoryFilterParam } from "@/hooks/use-category-filter-param";
 import { usePriceFilterParam } from "@/hooks/use-price-filter-param";
 import { Button } from "../ui/button";
@@ -8,14 +12,26 @@ import { Field, FieldLabel } from "../ui/field";
 import { MaskInput } from "../ui/mask-input";
 import { Slider } from "../ui/slider";
 
-const CATEGORIES = [
-	{ label: "Roupas", value: "roupas" },
-	{ label: "Eletrônicos", value: "eletronicos" },
-	{ label: "Móveis", value: "moveis" },
-	{ label: "Calçados", value: "calcados" },
-];
+export const SidebarCategoriesFragment = graphql`
+	fragment sidebarFilters_categories on Query {
+		categories {
+			edges {
+				node {
+					id
+					name
+					slug
+				}
+			}
+		}
+	}
+`;
 
-export function SidebarFilters() {
+interface Props {
+	fragmentRef: sidebarFilters_categories$key;
+}
+export function SidebarFilters({ fragmentRef }: Props) {
+	const data = useFragment(SidebarCategoriesFragment, fragmentRef);
+
 	const { categories, setCategories, clearCategories } =
 		useCategoryFilterParam();
 	const { minPrice, maxPrice, setMinPrice, setMaxPrice, clearPrice } =
@@ -84,18 +100,15 @@ export function SidebarFilters() {
 				<div>
 					<p className="mt-4 mb-2">Categorias:</p>
 					<div className="flex flex-col gap-2">
-						{CATEGORIES.map((cat) => (
-							<Field orientation="horizontal" key={cat.value}>
+						{data.categories.edges.map(({ node: cat }) => (
+							<Field orientation="horizontal" key={cat.id}>
 								<Checkbox
-									id={`cat-${cat.value}`}
-									checked={categories.includes(cat.value)}
-									onCheckedChange={() => handleCategoryChange(cat.value)}
+									id={`cat-${cat.slug}`}
+									checked={categories.includes(cat.slug)}
+									onCheckedChange={() => handleCategoryChange(cat.slug)}
 								/>
-								<FieldLabel
-									htmlFor={`cat-${cat.value}`}
-									className="font-normal"
-								>
-									{cat.label}
+								<FieldLabel htmlFor={`cat-${cat.slug}`} className="font-normal">
+									{cat.name}
 								</FieldLabel>
 							</Field>
 						))}

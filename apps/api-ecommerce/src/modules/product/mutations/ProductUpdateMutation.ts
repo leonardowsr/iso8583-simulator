@@ -23,6 +23,9 @@ const mutation = mutationWithClientMutationId({
 		images: {
 			type: GraphQLString,
 		},
+		category: {
+			type: GraphQLString,
+		},
 	},
 
 	mutateAndGetPayload: async (args: ProductUpdateInput) => {
@@ -31,6 +34,7 @@ const mutation = mutationWithClientMutationId({
 			description: args.description,
 			price: args.price,
 			images: args.images,
+			category: args.category,
 		});
 
 		if (Object.keys(updates).length === 0) {

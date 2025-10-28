@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
 	src: "./src",
 	artifactDirectory: "./src/__generated__",
 	schema: "./data/schema.graphql",
@@ -10,3 +10,5 @@ module.exports = {
 	],
 	language: "typescript",
 };
+
+module.exports = config;

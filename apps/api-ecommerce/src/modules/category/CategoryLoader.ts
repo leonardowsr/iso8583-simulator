@@ -1,21 +1,18 @@
 import { createLoader } from "@entria/graphql-mongo-helpers";
-import { model } from "mongoose";
 import { registerLoader } from "../_loader/loaderRegister";
-import { Product } from "./ProductModel";
+import { Category } from "./CategoryModel";
 
 const { getLoader, load, loadAll, Wrapper, clearCache } = createLoader({
-	model: Product,
-	loaderName: "ProductLoader",
+	model: Category,
+	loaderName: "CategoryLoader",
 });
 
-registerLoader("ProductLoader", getLoader);
+registerLoader("CategoryLoader", getLoader);
 
-export const ProductLoader = {
-	Product: Wrapper,
+export const CategoryLoader = {
+	Category: Wrapper,
 	load,
 	clearCache,
 	loadAll,
 	getLoader,
 };
-
-

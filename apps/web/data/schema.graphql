@@ -1,127 +1,229 @@
 type Query {
-	messages(
-		"""
-		Returns the items in the list that come after the specified cursor.
-		"""
-		after: String
+  products(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
 
-		"""
-		Returns the first n items from the list.
-		"""
-		first: Int
+    """Returns the first n items from the list."""
+    first: Int
 
-		"""
-		Returns the items in the list that come before the specified cursor.
-		"""
-		before: String
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
 
-		"""
-		Returns the last n items from the list.
-		"""
-		last: Int
-	): MessageConnection
+    """Returns the last n items from the list."""
+    last: Int
+    search: String
+    categories: [String]
+    minPrice: Int
+    maxPrice: Int
+  ): ProductConnection
+  orders(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): OrderConnection
+  categories(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): CategoryConnection
 }
 
-"""
-A connection to a list of items.
-"""
-type MessageConnection {
-	"""
-	Information to aid in pagination.
-	"""
-	pageInfo: PageInfo!
+"""A connection to a list of items."""
+type ProductConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
-	"""
-	A list of edges.
-	"""
-	edges: [MessageEdge]
+  """A list of edges."""
+  edges: [ProductEdge]
+
+  """Total number of products"""
+  count: Int
 }
 
-"""
-Information about pagination in a connection.
-"""
+"""Information about pagination in a connection."""
 type PageInfo {
-	"""
-	When paginating forwards, are there more items?
-	"""
-	hasNextPage: Boolean!
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
 
-	"""
-	When paginating backwards, are there more items?
-	"""
-	hasPreviousPage: Boolean!
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
 
-	"""
-	When paginating backwards, the cursor to continue.
-	"""
-	startCursor: String
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
 
-	"""
-	When paginating forwards, the cursor to continue.
-	"""
-	endCursor: String
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
 }
 
-"""
-An edge in a connection.
-"""
-type MessageEdge {
-	"""
-	The item at the end of the edge
-	"""
-	node: Message
+"""An edge in a connection."""
+type ProductEdge {
+  """The item at the end of the edge"""
+  node: Product
 
-	"""
-	A cursor for use in pagination
-	"""
-	cursor: String!
+  """A cursor for use in pagination"""
+  cursor: String!
 }
 
-"""
-Represents a message
-"""
-type Message implements Node {
-	"""
-	The ID of an object
-	"""
-	id: ID!
-	content: String
-	createdAt: String
+"""Represents a product"""
+type Product {
+  """The ID of an object"""
+  id: ID!
+  name: String
+  price: Int
+  description: String
+  images: [String]
+  slug: String
+  category: String
+  createdAt: String
 }
 
-"""
-An object with an ID
-"""
-interface Node {
-	"""
-	The id of the object.
-	"""
-	id: ID!
+"""A connection to a list of items."""
+type OrderConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OrderEdge]
+}
+
+"""An edge in a connection."""
+type OrderEdge {
+  """The item at the end of the edge"""
+  node: Order
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""Represents a product"""
+type Order {
+  """The ID of an object"""
+  id: ID!
+  code: String
+  userId: String
+  orderItems: [OrderItem]!
+  status: String
+  price: Int
+  acquiretransactionId: String
+  createdAt: String
+}
+
+"""Represents an item in an order"""
+type OrderItem {
+  """The ID of an object"""
+  id: ID!
+  productId: String
+  productName: String
+  productDescription: String
+  productImageUrl: String
+  quantity: Int
+  price: Int
+}
+
+"""A connection to a list of items."""
+type CategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CategoryEdge]
+}
+
+"""An edge in a connection."""
+type CategoryEdge {
+  """The item at the end of the edge"""
+  node: Category
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""Represents a category"""
+type Category {
+  """The ID of an object"""
+  id: ID!
+  name: String
+  slug: String
+  products: [Product]
+  image: String
+  createdAt: String
 }
 
 type Mutation {
-	MessageAdd(input: MessageAddInput!): MessageAddPayload
+  ProductAdd(input: ProductAddInput!): ProductAddPayload
+  ProductUpdate(input: ProductUpdateInput!): ProductUpdatePayload
+  ProductDelete(input: ProductDeleteInput!): ProductDeletePayload
+  orderAdd(input: OrderAddInput!): OrderAddPayload
 }
 
-type MessageAddPayload {
-	message: Message
-	clientMutationId: String
+type ProductAddPayload {
+  product: Product
+  clientMutationId: String
 }
 
-input MessageAddInput {
-	content: String!
-	clientMutationId: String
+input ProductAddInput {
+  name: String!
+  slug: String!
+  description: String!
+  price: Int!
+  images: [String]
+  category: String!
+  clientMutationId: String
 }
 
-type Subscription {
-	MessageAdded(input: MessageAddedInput!): MessageAddedPayload
+type ProductUpdatePayload {
+  product: Product
+  clientMutationId: String
 }
 
-type MessageAddedPayload {
-	message: Message
-	clientSubscriptionId: String
+input ProductUpdateInput {
+  id: ID!
+  name: String
+  description: String
+  price: Int
+  images: String
+  category: String
+  clientMutationId: String
 }
 
-input MessageAddedInput {
-	clientSubscriptionId: String
+type ProductDeletePayload {
+  product: Product
+  clientMutationId: String
+}
+
+input ProductDeleteInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type OrderAddPayload {
+  order: Order
+  clientMutationId: String
+}
+
+input OrderAddInput {
+  userId: String
+  items: [OrderItemInput]
+  clientMutationId: String
+}
+
+input OrderItemInput {
+  productId: String
+  quantity: Int
 }

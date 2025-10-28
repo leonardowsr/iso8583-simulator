@@ -25,6 +25,7 @@
 			"!**/.svelte-kit",
 			"!**/wrangler.jsonc",
 			"!**/prisma",
+			"!**/__generated__",
 			"!**/.source"
 		]
 	},

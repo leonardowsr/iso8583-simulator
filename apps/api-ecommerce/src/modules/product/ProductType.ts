@@ -1,4 +1,10 @@
-import { GraphQLFloat, GraphQLObjectType, GraphQLString } from "graphql";
+import {
+	GraphQLFloat,
+	GraphQLInt,
+	GraphQLList,
+	GraphQLObjectType,
+	GraphQLString,
+} from "graphql";
 import { connectionDefinitions, globalIdField } from "graphql-relay";
 import { registerTypeLoader } from "../_node/typeRegister";
 import { ProductLoader } from "./ProductLoader";
@@ -14,7 +20,7 @@ const ProductType = new GraphQLObjectType<IProduct>({
 			resolve: (product) => product.name,
 		},
 		price: {
-			type: GraphQLFloat,
+			type: GraphQLInt,
 			resolve: (product) => product.price,
 		},
 		description: {
@@ -22,8 +28,16 @@ const ProductType = new GraphQLObjectType<IProduct>({
 			resolve: (product) => product.description,
 		},
 		images: {
-			type: GraphQLString,
+			type: new GraphQLList(GraphQLString),
 			resolve: (product) => product.images,
+		},
+		slug: {
+			type: GraphQLString,
+			resolve: (product) => product.slug,
+		},
+		category: {
+			type: GraphQLString,
+			resolve: (product) => product.category.toString(),
 		},
 		createdAt: {
 			type: GraphQLString,
@@ -35,6 +49,13 @@ const ProductType = new GraphQLObjectType<IProduct>({
 const ProductConnection = connectionDefinitions({
 	name: "Product",
 	nodeType: ProductType,
+	connectionFields: {
+		count: {
+			type: GraphQLInt,
+			description: "Total number of products",
+			resolve: (connection) => connection.count,
+		},
+	},
 });
 
 registerTypeLoader(ProductType, ProductLoader.load);

@@ -9,6 +9,7 @@
 		"zod": "^4.1.12"
 	},
 	"devDependencies": {
-		"@woovi-playground/tsconfig": "*"
+		"@woovi-playground/tsconfig": "*",
+		"tsx": "^3.12.6"
 	}
 }

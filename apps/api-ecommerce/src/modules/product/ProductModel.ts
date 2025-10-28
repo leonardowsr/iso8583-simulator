@@ -28,6 +28,12 @@ const Schema = new mongoose.Schema<IProduct>(
 			required: false,
 			description: "Image URL of the product",
 		},
+		category: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Category",
+			required: true,
+			description: "Category of the product",
+		},
 	},
 	{ collection: "Product", timestamps: true },
 );
@@ -38,6 +44,7 @@ export type IProduct = {
 	slug: string;
 	description: string;
 	images: string[];
+	category: mongoose.Types.ObjectId;
 	createdAt: Date;
 	updatedAt: Date;
 } & Document;

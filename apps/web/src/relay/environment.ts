@@ -25,4 +25,13 @@ function createEnvironment() {
 	return environment;
 }
 
-export { createEnvironment };
+let clientEnvironment: ReturnType<typeof createEnvironment> | null = null;
+
+function getClientEnvironment() {
+	if (!clientEnvironment) {
+		clientEnvironment = createEnvironment();
+	}
+	return clientEnvironment;
+}
+
+export { createEnvironment, getClientEnvironment };

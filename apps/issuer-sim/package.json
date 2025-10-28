@@ -4,20 +4,11 @@
 	"private": true,
 	"scripts": {
 		"config:local": "cp .env.example .env",
-		"dev": "tsx watch src/index.ts",
-		"schema": "tsx scripts/updateSchema.ts && cp schema/schema.graphql ../web/data"
+		"dev": "tsx watch src/index.ts"
 	},
 	"dependencies": {
 		"@woovi-playground/shared": "*",
-		"@entria/graphql-mongo-helpers": "^1.1.2",
-		"dataloader": "^2.2.3",
 		"dotenv-safe": "^8.2.0",
-		"graphql": "^16.11.0",
-		"graphql-redis-subscriptions": "^2.6.0",
-		"graphql-relay": "^0.10.0",
-		"graphql-relay-subscription": "^1.0.0",
-		"graphql-subscriptions": "^2.0.0",
-		"graphql-ws": "^5.14.2",
 		"iso_8583": "^2.6.7",
 		"kcors": "^2.2.2",
 		"koa": "^2.14.2",

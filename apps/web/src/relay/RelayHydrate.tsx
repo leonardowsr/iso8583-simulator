@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: no affect */
+"use client";
 import type { NextPage } from "next";
 import type React from "react";
 import { useMemo } from "react";

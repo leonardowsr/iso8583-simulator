@@ -49,12 +49,12 @@ const ProductCard = ({ product }: Props) => {
 
 	return (
 		<Card
-			className="relative cursor-pointer gap-3 from-neutral-600 to-violet-300 pt-0 pb-2 shadow-lg lg:max-w-60"
+			className="relative cursor-pointer gap-3 from-neutral-600 to-violet-300 pt-0 pb-2 shadow-lg md:min-w-46 lg:max-w-60"
 			onClick={handleNavigate}
 		>
 			<CardContent className="px-0">
 				<img
-					src={imageSrc}
+					src={imageSrc ?? "https://placehold.co/400x400"}
 					alt="Banner"
 					className="aspect-video h-60 rounded-t-xl object-cover"
 				/>

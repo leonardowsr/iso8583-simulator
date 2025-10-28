@@ -20,7 +20,6 @@ export const productAddSchema = z.object({
 		.string()
 		.min(3, "Slug deve ter pelo menos 3 caracteres")
 		.max(200, "Slug deve ter no máximo 200 caracteres"),
-	category: z.string().min(1, "Categoria é obrigatória"),
 	images: z.array(z.url("URL da imagem deve ser uma URL válida")).optional(),
 });
 
