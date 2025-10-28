@@ -7,6 +7,7 @@ const registerLoader = (key: string, getLoader: () => unknown) => {
 const getDataloaders = (): Record<string, () => unknown> =>
 	Object.keys(loaders).reduce(
 		(prev, loaderKey) => ({
+			// biome-ignore lint/performance/noAccumulatingSpread: acceptable here
 			...prev,
 			[loaderKey]: loaders[loaderKey](),
 		}),
