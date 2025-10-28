@@ -42,7 +42,6 @@ const mutation = mutationWithClientMutationId({
 		}
 		const session = await mongoose.startSession();
 
-		// biome-ignore lint/suspicious/noExplicitAny: problem with never type after set transaction
 		let transaction!: HydratedDocument<ITransaction>;
 
 		await session.withTransaction(async () => {

@@ -1,13 +1,17 @@
 import { Environment, RecordSource, Store } from "relay-runtime";
 
-import { createNetwork } from "./network";
+import {
+	createNetwork,
+	GRAPHQL_ENDPOINT_ACQUIRER,
+	GRAPHQL_ENPOINT,
+} from "./network";
 
 const IS_SERVER = typeof window === typeof undefined;
 const CLIENT_DEBUG = false;
 const SERVER_DEBUG = false;
 
-function createEnvironment() {
-	const network = createNetwork();
+function createEnvironment(graphqlEndpoint = GRAPHQL_ENPOINT) {
+	const network = createNetwork(graphqlEndpoint);
 	const environment = new Environment({
 		network,
 		store: new Store(new RecordSource(), {}),
@@ -25,4 +29,26 @@ function createEnvironment() {
 	return environment;
 }
 
-export { createEnvironment };
+let clientEnvironment: ReturnType<typeof createEnvironment> | null = null;
+let clientEnvironmentAcquirer: ReturnType<typeof createEnvironment> | null =
+	null;
+
+function getClientEnvironment() {
+	if (!clientEnvironment) {
+		clientEnvironment = createEnvironment();
+	}
+	return clientEnvironment;
+}
+
+function getClientEnvironmentAcquirer() {
+	if (!clientEnvironmentAcquirer) {
+		clientEnvironmentAcquirer = createEnvironment(GRAPHQL_ENDPOINT_ACQUIRER);
+	}
+	return clientEnvironmentAcquirer;
+}
+
+export {
+	createEnvironment,
+	getClientEnvironment,
+	getClientEnvironmentAcquirer,
+};

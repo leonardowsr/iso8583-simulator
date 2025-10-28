@@ -1,21 +1,29 @@
+"use client";
 import { Suspense, useMemo } from "react";
-import { ReactRelayContext } from "react-relay";
-import { createEnvironment } from "./environment";
-import { type NextPageWithLayout, RelayHydrate } from "./RelayHydrate";
+import { RelayEnvironmentProvider } from "react-relay";
+import Header from "@/components/(ecommerce)/nav/header";
+import { Spinner } from "@/components/ui/spinner";
+import {
+	createEnvironment,
+	getClientEnvironment,
+	getClientEnvironmentAcquirer,
+} from "./environment";
 
-export function ReactRelayContainer<T>({
-	Component,
-	props,
+export function ReactRelayContainer({
+	children,
+	useAcquirer = false,
 }: {
-	Component: NextPageWithLayout<T>;
-	props: any;
+	children: React.ReactNode;
+	useAcquirer?: boolean;
+	records?: Record<string, unknown>;
 }) {
-	const environment = useMemo(() => createEnvironment(), []);
+	const environment = useAcquirer
+		? getClientEnvironmentAcquirer()
+		: getClientEnvironment();
+
 	return (
-		<ReactRelayContext.Provider value={{ environment }}>
-			<Suspense fallback={null}>
-				<RelayHydrate Component={Component} props={props} />
-			</Suspense>
-		</ReactRelayContext.Provider>
+		<RelayEnvironmentProvider environment={environment}>
+			{children}
+		</RelayEnvironmentProvider>
 	);
 }

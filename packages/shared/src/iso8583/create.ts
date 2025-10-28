@@ -23,7 +23,7 @@ export const createIsoPack = (args: TransactionAddInput): iso_8583 => {
 
 	const isoData = {
 		0: "0200",
-		2: args.cardNumber,
+		2: args.cardNumber.replace(/\s+/g, ""),
 		3: "000000",
 		4: amount,
 		7: `${MM}${DD}${hh}${mm}${ss}`,

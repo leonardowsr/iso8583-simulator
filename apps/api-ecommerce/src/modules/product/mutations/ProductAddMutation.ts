@@ -5,6 +5,7 @@ import {
 	GraphQLString,
 } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
+import { Category } from "../../category/CategoryModel";
 import { Product } from "../ProductModel";
 import { productField } from "../productFields";
 import type { ProductAddInput } from "../schemas";
@@ -27,21 +28,31 @@ const mutation = mutationWithClientMutationId({
 		images: {
 			type: new GraphQLList(GraphQLString),
 		},
+		category: {
+			type: new GraphQLNonNull(GraphQLString),
+		},
 	},
 
 	mutateAndGetPayload: async (args: ProductAddInput) => {
-		const existingProduct = await Product.findOne({ name: args.name });
+		const [existingProduct, category] = await Promise.all([
+			Product.findOne({ name: args.name }),
+			Category.findById(args.category),
+		]);
 
 		if (existingProduct) {
 			throw new Error("Product with this name already exists");
 		}
 
+		if (!category) {
+			throw new Error("Category not found");
+		}
 		const product = await Product.create({
 			name: args.name,
 			description: args.description,
 			price: args.price,
 			slug: args.slug,
 			images: args.images,
+			category: args.category,
 		});
 
 		return {

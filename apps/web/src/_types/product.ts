@@ -1,9 +1,9 @@
 import type { Category } from "./category";
 
 type Product = {
-	title: string;
+	name: string;
 	slug: string;
-	images: string[];
+	images: string[] | readonly string[];
 	price: number;
 	description: string;
 	category: Category;

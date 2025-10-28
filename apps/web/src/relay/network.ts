@@ -7,9 +7,13 @@ import {
 	type Variables,
 } from "relay-runtime";
 
+export const GRAPHQL_ENPOINT = process.env
+	.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string;
+export const GRAPHQL_ENDPOINT_ACQUIRER = process.env
+	.NEXT_PUBLIC_GRAPHQL_ENDPOINT_ACQUIRER as string;
 const ONE_MINUTE_IN_MS = 60 * 1000;
 
-function createNetwork() {
+function createNetwork(graphqlEndpoint: string) {
 	const responseCache = new QueryResponseCache({
 		size: 100,
 		ttl: ONE_MINUTE_IN_MS,
@@ -32,7 +36,7 @@ function createNetwork() {
 			}
 		}
 
-		return networkFetch(operation, variables);
+		return networkFetch(operation, variables, graphqlEndpoint);
 	}
 
 	const network = Network.create(fetchResponse);
@@ -46,15 +50,14 @@ function createNetwork() {
  * https://relay.dev/docs/en/quick-start-guide#relay-environment.
  */
 
-const GRAPHQL_ENPOINT = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string;
-
 async function networkFetch(
 	params: RequestParameters,
 	variables: Variables,
+	endpoint: string,
 	headers?: HeadersInit,
 ) {
 	// Fetch data from GraphQL API:
-	const response = await fetch(GRAPHQL_ENPOINT, {
+	const response = await fetch(endpoint, {
 		method: "POST",
 		headers: {
 			...headers,
@@ -91,7 +94,12 @@ async function getPreloadedQuery(
 	variables: Variables,
 	headers?: HeadersInit,
 ) {
-	const response = await networkFetch(params, variables, headers);
+	const response = await networkFetch(
+		params,
+		variables,
+		GRAPHQL_ENPOINT,
+		headers,
+	);
 	return {
 		params,
 		variables,
@@ -99,4 +107,22 @@ async function getPreloadedQuery(
 	};
 }
 
-export { createNetwork, getPreloadedQuery };
+async function getPreloadedQueryAcquirer(
+	{ params }: ConcreteRequest,
+	variables: Variables,
+	headers?: HeadersInit,
+) {
+	const response = await networkFetch(
+		params,
+		variables,
+		GRAPHQL_ENDPOINT_ACQUIRER,
+		headers,
+	);
+	return {
+		params,
+		variables,
+		response,
+	};
+}
+
+export { createNetwork, getPreloadedQuery, getPreloadedQueryAcquirer };

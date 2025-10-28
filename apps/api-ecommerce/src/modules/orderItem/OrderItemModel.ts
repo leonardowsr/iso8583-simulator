@@ -8,20 +8,10 @@ export const Schema = new mongoose.Schema<IOrderItem>(
 			required: true,
 			description: "Reference to the product",
 		},
-		productName: {
+		name: {
 			type: String,
 			required: true,
 			description: "Product name at the time of purchase",
-		},
-		productDescription: {
-			type: String,
-			required: true,
-			description: "Product description at the time of purchase",
-		},
-		productImageUrl: {
-			type: String,
-			required: false,
-			description: "Product image URL at the time of purchase",
 		},
 		quantity: {
 			type: Number,
@@ -40,9 +30,7 @@ export const Schema = new mongoose.Schema<IOrderItem>(
 export type IOrderItem = {
 	_id: mongoose.Types.ObjectId;
 	productId: mongoose.Types.ObjectId;
-	productName: string;
-	productDescription: string;
-	productImageUrl?: string;
+	name: string;
 	quantity: number;
 	price: number;
 } & mongoose.Document;

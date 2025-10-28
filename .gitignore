@@ -41,3 +41,4 @@ apps/server/docs*
 data
 .docker
 mongo-keyfile
+watchman/

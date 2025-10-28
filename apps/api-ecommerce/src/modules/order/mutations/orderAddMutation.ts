@@ -4,12 +4,12 @@ import {
 	GraphQLList,
 	GraphQLString,
 } from "graphql";
-import { mutationWithClientMutationId } from "graphql-relay";
+import { fromGlobalId, mutationWithClientMutationId } from "graphql-relay";
 import { Product } from "../../product/ProductModel";
 import { Order } from "../OrderModel";
 import { orderField } from "../orderFields";
 
-export type inputOrderAdd = {
+export type InputOrderAdd = {
 	userId: string;
 	items: { productId: string; quantity: number }[];
 };
@@ -27,15 +27,25 @@ export const mutation = mutationWithClientMutationId({
 					fields: {
 						productId: { type: GraphQLString },
 						quantity: { type: GraphQLInt },
+						price: { type: GraphQLInt },
+						productName: { type: GraphQLString },
 					},
 				}),
 			),
 		},
 	},
-	mutateAndGetPayload: async (args: inputOrderAdd) => {
-		const mappedProducts = args.items.map((p) => p.productId);
+	mutateAndGetPayload: async (args: InputOrderAdd) => {
+		const decodedItems = args.items.map((item) => {
+			const { id } = fromGlobalId(item.productId);
+			return {
+				...item,
+				productId: id,
+			};
+		});
+		const mappedProducts = decodedItems.map((p) => p.productId);
 		const products = await Product.find({ _id: { $in: mappedProducts } });
 
+		args.items = decodedItems;
 		if (products.length !== mappedProducts.length) {
 			throw new Error("Um ou mais produtos não foram encontrados");
 		}
@@ -44,14 +54,14 @@ export const mutation = mutationWithClientMutationId({
 		const orderItems = [];
 
 		for (const p of products) {
-			const item = args.items.find((i) => i.productId === p._id.toString());
+			const item = decodedItems.find((i) => i.productId === p._id.toString());
 			if (item) {
 				totalValor += p.price * item.quantity;
 				orderItems.push({
 					productId: p._id,
-					productName: p.name,
-					productDescription: p.description,
-					productImageUrl: p.images,
+					name: p.name,
+					description: p.description,
+					imageUrl: p.images,
 					quantity: item.quantity,
 					price: p.price,
 				});
@@ -60,7 +70,7 @@ export const mutation = mutationWithClientMutationId({
 
 		const order = await Order.create({
 			code: `ORDER-${Date.now()}`,
-			userId: args.userId,
+			userId: fromGlobalId(args.userId)?.id,
 			orderItems,
 			price: totalValor,
 		});

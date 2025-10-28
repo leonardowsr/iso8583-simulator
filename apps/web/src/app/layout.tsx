@@ -5,8 +5,9 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./index.css";
 
 import { Toaster } from "sonner";
-import { ReactQueryProvider } from "@/components/providers/react-query-provider";
-import { ThemeProvider } from "../components/providers/theme-provider";
+import { ReactQueryProvider } from "@/lib/providers/react-query-provider";
+import { ReactRelayContainer } from "@/relay/ReactRelayContainer";
+import { ThemeProvider } from "../lib/providers/theme-provider";
 
 export const metadata: Metadata = {
 	title: "Banco",
@@ -20,13 +21,15 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body>
-				<ReactQueryProvider>
-					<Toaster position="top-right" />
-					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-						<NuqsAdapter>{children}</NuqsAdapter>
-						<NextTopLoader />
-					</ThemeProvider>
-				</ReactQueryProvider>
+				<ReactRelayContainer>
+					<ReactQueryProvider>
+						<Toaster position="top-right" />
+						<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+							<NuqsAdapter>{children}</NuqsAdapter>
+							<NextTopLoader />
+						</ThemeProvider>
+					</ReactQueryProvider>
+				</ReactRelayContainer>
 			</body>
 		</html>
 	);

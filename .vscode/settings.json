@@ -5,5 +5,8 @@
 		"titleBar.activeForeground": "#FEFCFD"
 	},
 	"biome.enabled": true,
-	"prettier.enable": false
+	"prettier.enable": false,
+	// "relay.pathToConfig": "./apps/web/relay.config.js",
+	"relay.rootDirectory": "./apps/web",
+	"relay.autoStartCompiler": true
 }

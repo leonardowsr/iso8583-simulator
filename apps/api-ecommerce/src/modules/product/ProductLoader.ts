@@ -1,4 +1,5 @@
 import { createLoader } from "@entria/graphql-mongo-helpers";
+import { model } from "mongoose";
 import { registerLoader } from "../_loader/loaderRegister";
 import { Product } from "./ProductModel";
 
@@ -16,3 +17,5 @@ export const ProductLoader = {
 	loadAll,
 	getLoader,
 };
+
+

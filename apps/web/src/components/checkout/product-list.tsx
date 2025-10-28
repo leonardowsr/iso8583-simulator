@@ -2,8 +2,8 @@
 
 import { Minus, Plus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/lib/store/use-cart-store";
 import { cn } from "@/lib/utils";
-import { useCartStore } from "@/store/use-cart-store";
 import { Button } from "../ui/button";
 
 export function CheckoutProductList({ className }: { className?: string }) {
@@ -58,7 +58,6 @@ export function CheckoutProductList({ className }: { className?: string }) {
 										<span className="sr-only">Remover item</span>
 									</button>
 								</div>
-								<p className="text-muted-foreground text-xs">{item.category}</p>
 							</div>
 							<div className="mt-2 flex items-center justify-between">
 								<div className="flex items-center rounded-md border">

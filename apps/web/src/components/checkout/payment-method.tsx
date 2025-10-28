@@ -27,7 +27,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useCardStore } from "@/store/use-card-store";
+import { useCardStore } from "@/lib/store/use-card-store";
 import { MaskInput } from "../ui/mask-input";
 
 export default function CardPaymentMethod() {
@@ -59,8 +59,8 @@ export default function CardPaymentMethod() {
 		router.push("/checkout/confirmation");
 	}
 	return (
-		<div>
-			<div className="mb-0 w-full md:w-[450px]">
+		<div className="w-full flex-col items-center space-y-4 p-4 pt-4 md:flex md:flex-col md:space-y-0">
+			<div className="m-auto max-w-[450px]">
 				<Link
 					href={"/checkout/cart"}
 					className="text-muted-foreground text-sm hover:text-primary"
@@ -68,7 +68,7 @@ export default function CardPaymentMethod() {
 					Voltar ao carrinho
 				</Link>
 			</div>
-			<Card className="w-full md:w-[450px]">
+			<Card className="m-auto w-full max-w-[450px]">
 				<CardHeader>
 					<CardTitle>Adicionar Método de Pagamento</CardTitle>
 					<CardDescription>Insira os dados do cartão</CardDescription>
