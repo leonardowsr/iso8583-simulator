@@ -1,14 +1,12 @@
-import path from "node:path";
-import dotenvSafe from "dotenv-safe";
+// import path from "node:path";
 
-const cwd = process.cwd();
+// import dotenvSafe from "dotenv-safe";
 
-const root = path.join.bind(cwd);
+// const cwd = process.cwd();
 
-dotenvSafe.config({
-	sample: root(".env.example"),
-	allowEmptyValues: true,
-});
+// const root = path.join.bind(cwd);
+
+// dotenvSafe.config({});
 
 const ENV = process.env;
 
