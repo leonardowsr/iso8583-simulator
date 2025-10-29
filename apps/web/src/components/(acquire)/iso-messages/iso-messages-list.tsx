@@ -47,7 +47,6 @@ export function IsoMessagesList({
 		connections: [data.isoMessages?.__id ?? ""],
 		input: { clientSubscriptionId: "client-1" },
 	});
-	console.log("data", data);
 	return (
 		<div className="m-auto flex max-w-6/7 flex-col gap-6 p-4">
 			<h2 className="font-semibold text-slate-800 text-xl">
