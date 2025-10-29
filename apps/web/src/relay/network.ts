@@ -6,6 +6,7 @@ import {
 	type RequestParameters,
 	type Variables,
 } from "relay-runtime";
+import { subscribe } from "./websocket";
 
 export const GRAPHQL_ENPOINT = process.env
 	.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string;
@@ -39,7 +40,7 @@ function createNetwork(graphqlEndpoint: string) {
 		return networkFetch(operation, variables, graphqlEndpoint);
 	}
 
-	const network = Network.create(fetchResponse);
+	const network = Network.create(fetchResponse, subscribe);
 	// @ts-expect-error Private API Hackery? 🤷‍♂️
 	network.responseCache = responseCache;
 	return network;

@@ -29,6 +29,11 @@ const IsoMessageType = new GraphQLObjectType<IIsoMessage>({
 			type: GraphQLString,
 			resolve: (isoMessage) => isoMessage.idempotencyKey,
 		},
+		relatedMessage: {
+			type: GraphQLString,
+			resolve: (isoMessage) =>
+				isoMessage.relatedMessage ? isoMessage.relatedMessage.toString() : null,
+		},
 		createdAt: {
 			type: GraphQLString,
 			resolve: (isoMessage) => isoMessage.createdAt.toISOString(),

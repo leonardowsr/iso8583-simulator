@@ -18,7 +18,6 @@ export const isoTcpServer = () => {
 	server.on("connection", (socket) => {
 		socket.on("data", async (data) => {
 			const isoInstance = new iso_8583();
-
 			try {
 				const unpackedData = parseIsoPack(data, isoInstance);
 
@@ -28,24 +27,32 @@ export const isoTcpServer = () => {
 						unpackedData.error.message,
 					);
 				}
+
 				await authorizeTransaction.authorizeTransaction(unpackedData);
 
 				const isoInstanceRes = new iso_8583(isoResponse);
-
 				const responseBuffer = isoInstanceRes.getBufferMessage();
 				socket.write(responseBuffer);
 			} catch (err) {
 				let errorBuffer: Uint8Array;
-				if (err instanceof CustomError) {
-					errorBuffer = createIsoErrorBuffer(
-						err.reason || "INVALID_ISO8583_DATA",
-						err.message || "Failed to parse ISO8583 data",
-					);
-				} else {
-					errorBuffer = createIsoErrorBuffer(
-						errorEnum.UNKNOWN_ERROR,
-						"Algo deu errado",
-					);
+				switch (true) {
+					case err instanceof CustomError:
+						errorBuffer = createIsoErrorBuffer(
+							err.reason || "INVALID_ISO8583_DATA",
+							err.message || "Failed to parse ISO8583 data",
+						);
+						break;
+					case err instanceof Error:
+						errorBuffer = createIsoErrorBuffer(
+							errorEnum.UNKNOWN_ERROR,
+							err?.message || "Algo deu errado",
+						);
+						break;
+					default:
+						errorBuffer = createIsoErrorBuffer(
+							errorEnum.UNKNOWN_ERROR,
+							"Algo deu errado",
+						);
 				}
 
 				socket.write(errorBuffer);

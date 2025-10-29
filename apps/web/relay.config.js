@@ -9,7 +9,7 @@ module.exports = {
 		"**/.next/**",
 		"**/__mocks__/**",
 		"**/__generated_acquire__/**",
-		"app/(acquire)/**",
+		"src/app/(acquire)/**",
 		"components/(acquire)/**",
 		"src/mutations/acquire/**",
 	],

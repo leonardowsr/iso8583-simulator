@@ -56,5 +56,16 @@ export const createIsoErrorBuffer = (
 	};
 
 	const buffer = new iso_8583(isoData).getBufferMessage();
+
+	if (buffer?.error) {
+		const isoData = {
+			0: "0210",
+			39: "ER",
+			44: reason,
+			63: `${buffer.error} ref: createIsoErrorBuffer`,
+		};
+		const bufferError = new iso_8583(isoData).getBufferMessage();
+		return bufferError;
+	}
 	return buffer;
 };
