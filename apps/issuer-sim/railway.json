@@ -2,9 +2,9 @@
 	"$schema": "https://railway.com/railway.schema.json",
 	"build": {
 		"builder": "RAILPACK",
-		"buildCommand": "pnpm install --no-frozen-lockfile --strict-peer-dependencies false && pnpm run build"
+		"buildCommand": "pnpm install --no-frozen-lockfile --strict-peer-dependencies false && npx turbo build --filter=./apps/issuer-sim"
 	},
 	"deploy": {
-		"startCommand": "pnpm run start"
+		"startCommand": "pnpm run start --filter=./apps/issuer-sim"
 	}
 }
