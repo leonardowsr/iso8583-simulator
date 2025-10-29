@@ -6,7 +6,8 @@
 		"config:local": "cp .env.example .env",
 		"dev": "tsx watch src/index.ts",
 		"schema": "tsx scripts/updateSchema.ts && cp schema/schema.graphql ../web/data/",
-		"db:seed": "tsx src/seed/seed.ts"
+		"db:seed": "tsx src/seed/seed.ts",
+		"test": "npx jest --runInBand --colors --passWithNoTests"
 	},
 	"dependencies": {
 		"@entria/graphql-mongo-helpers": "^1.1.2",

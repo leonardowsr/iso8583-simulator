@@ -2,6 +2,19 @@ import mongoose from "mongoose";
 import { config } from "../config";
 import { Category } from "../modules/category/CategoryModel";
 import { Product } from "../modules/product/ProductModel";
+import { User } from "../modules/user/UserModel";
+
+export const createDefaultUser = async () => {
+	const existingUser = await User.findOne({ email: "admin@example.com" });
+	if (!existingUser) {
+		const user = new User({
+			name: "Admin",
+			email: "admin@example.com",
+			password: "admin123",
+		});
+		await user.save();
+	}
+};
 
 export async function createProductsAndCategoriesSeed() {
 	try {

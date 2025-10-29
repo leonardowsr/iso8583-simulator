@@ -5,7 +5,8 @@
 	"scripts": {
 		"config:local": "cp .env.example .env",
 		"dev": "tsx watch src/index.ts",
-		"schema": "tsx scripts/updateSchema.ts && cp schema/schema.graphql ../web/data/schemaAcquirer.graphql"
+		"schema": "tsx scripts/updateSchema.ts && cp schema/schema.graphql ../web/data/schemaAcquirer.graphql",
+		"test": "npx jest --runInBand --colors --passWithNoTests"
 	},
 	"dependencies": {
 		"@woovi-playground/shared": "*",
