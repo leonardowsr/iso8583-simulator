@@ -24,6 +24,11 @@ const Schema = new mongoose.Schema<IIsoMessage>(
 		},
 		rawContent: { type: String, required: true },
 		isoResponseCode: { type: String, required: false },
+		relatedMessage: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: false,
+			ref: "IsoMessages",
+		},
 	},
 	{
 		collection: "IsoMessages",
@@ -37,6 +42,7 @@ export type IIsoMessage = {
 	direction: Edirection;
 	transactionId: mongoose.Types.ObjectId;
 	rawContent: string;
+	relatedMessage?: mongoose.Types.ObjectId;
 	createdAt: Date;
 	updatedAt: Date;
 } & Document;

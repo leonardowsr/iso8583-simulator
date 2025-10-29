@@ -21,8 +21,7 @@ export const ProductsListFragment = graphql`
 		maxPrice: { type: "Int",defaultValue:10000 }
 		search: { type: "String", defaultValue: "" }	
 	)
-	@refetchable(queryName: "ProductsListRefetchQuery")
-	 {
+	@refetchable(queryName: "ProductsListRefetchQuery") {
 		products(first: $first, after: $after,categories: $categories, minPrice: $minPrice, maxPrice: $maxPrice, search: $search)
 			@connection(key: "ProductsList_products" filters: ["categories","minPrice","maxPrice","search"]) {
 			edges {

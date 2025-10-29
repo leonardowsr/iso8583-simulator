@@ -6,6 +6,7 @@ export type TransactionAddInput = {
 	amount: number;
 	idempotencyKey: string;
 	cardNumber: string;
+	transactionId: string;
 	cardHolderName: string;
 	cardExpiryMonth: string;
 	cardExpiryYear: string;
@@ -39,6 +40,7 @@ export const createIsoPack = (args: TransactionAddInput): iso_8583 => {
 		48: args.cardHolderName,
 		49: "986",
 		55: args.cardCvv, // só para simulação
+		62: args.transactionId, //
 		63: args.idempotencyKey, // correlacionar
 	};
 	return new iso_8583(isoData);
@@ -56,5 +58,16 @@ export const createIsoErrorBuffer = (
 	};
 
 	const buffer = new iso_8583(isoData).getBufferMessage();
+
+	if (buffer?.error) {
+		const isoData = {
+			0: "0210",
+			39: "ER",
+			44: reason,
+			63: `${buffer.error} ref: createIsoErrorBuffer`,
+		};
+		const bufferError = new iso_8583(isoData).getBufferMessage();
+		return bufferError;
+	}
 	return buffer;
 };

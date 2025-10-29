@@ -21,6 +21,7 @@ export async function createProductsAndCategoriesSeed() {
 		await Product.deleteMany({});
 		await Category.deleteMany({});
 
+		await createDefaultUser();
 		const uniqueCategoriesMap = new Map(
 			PRODUCTS_LIST.map((product) => [product.category.slug, product.category]),
 		);

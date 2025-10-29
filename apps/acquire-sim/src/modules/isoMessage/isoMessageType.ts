@@ -29,6 +29,13 @@ const IsoMessageType = new GraphQLObjectType<IIsoMessage>({
 			type: GraphQLString,
 			resolve: (isoMessage) => isoMessage.idempotencyKey,
 		},
+		relatedMessage: {
+			type: IsoMessageType,
+			resolve: async (isoMessage, _args, ctx) => {
+				if (!isoMessage.relatedMessage) return null;
+				return IsoMessageLoader.load(ctx, isoMessage.relatedMessage.toString());
+			},
+		},
 		createdAt: {
 			type: GraphQLString,
 			resolve: (isoMessage) => isoMessage.createdAt.toISOString(),
@@ -40,6 +47,14 @@ const IsoMessageType = new GraphQLObjectType<IIsoMessage>({
 const IsoMessageConnection = connectionDefinitions({
 	name: "IsoMessage",
 	nodeType: IsoMessageType,
+	connectionFields: () => ({
+		direction: {
+			type: GraphQLString,
+			resolve: (_conn, _args, _ctx) => {
+				return null;
+			},
+		},
+	}),
 });
 
 registerTypeLoader(IsoMessageType, IsoMessageLoader.load);

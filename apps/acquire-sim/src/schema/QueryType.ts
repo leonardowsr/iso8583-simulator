@@ -6,7 +6,7 @@ import type { GQLContext } from "../server/context";
 export const QueryType = new GraphQLObjectType<unknown, GQLContext>({
 	name: "Query",
 	fields: () => ({
-		...isoMessageConnectionField("messages"),
+		...isoMessageConnectionField("isoMessages"),
 		...transactionConnectionField("transactions"),
 	}),
 });

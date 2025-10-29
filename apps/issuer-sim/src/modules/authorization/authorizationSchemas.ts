@@ -3,16 +3,13 @@ import { z } from "zod";
 export type IsoParsedInput = z.infer<typeof isoParsedSchema>;
 
 export const isoParsedSchema = z.object({
-	idempotencyKey: z.string().min(1, "idempotencyKey é obrigatório"),
+	idempotencyKey: z.string(),
 	amount: z
 		.number()
 		.int()
 		.min(0, "amount must be >= 0")
-		.max(100000000000, "amount excede o limite permitido"),
-	cardHolderName: z.string().min(1, "cardHolderName é obrigatório"),
-	cardNumber: z
-		.string()
-		.min(12, "cardNumber é muito curto")
-		.max(12, "cardNumber é muito longo"),
-	cardExpirationDate: z.string().min(1, "cardExpirationDate é obrigatório"),
+		.max(100000000000, "amount must be lower than 100000000000"),
+	cardHolderName: z.string().min(1, "cardHolderName is required"),
+	cardNumber: z.string().length(16, "cardNumber must be 16 characters long"),
+	cardExpirationDate: z.string().min(1, "cardExpirationDate is required"),
 });

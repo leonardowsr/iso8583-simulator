@@ -2,6 +2,7 @@ import type {
 	BaseContext,
 	FilteredConnectionArguments,
 } from "@entria/graphql-mongo-helpers/lib/createLoader";
+import { GraphQLString } from "graphql";
 import { connectionArgs } from "graphql-relay";
 import { IsoMessageLoader } from "./isoMessageLoader";
 import type { IIsoMessage } from "./isoMessageModel";
@@ -26,13 +27,21 @@ export const isoMessageConnectionField = (key: string) => ({
 		type: IsoMessageConnection.connectionType,
 		args: {
 			...connectionArgs,
+			direction: { type: GraphQLString },
 		},
 		resolve: async (
 			_: unknown,
-			args: IsoMessageConnectionArgs,
+			args: IsoMessageConnectionArgs & { direction?: string },
 			context: IsoMessageContext,
 		) => {
-			return await IsoMessageLoader.loadAll(context, args);
+			console.log(args.direction);
+			const filters: Record<string, unknown> = {};
+
+			if (args.direction) {
+				filters.direction = args.direction;
+			}
+
+			return await IsoMessageLoader.loadAll(context, { ...args, filters });
 		},
 	},
 });

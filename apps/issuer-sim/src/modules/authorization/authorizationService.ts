@@ -14,7 +14,6 @@ export function authorizationService() {
 		const session = await mongoose.startSession();
 		await session.withTransaction(async () => {
 			await ledger.checkExistingEntry(data.idempotencyKey, session);
-
 			const { costumerAccount, internalAccount } =
 				await account.validateAccount(
 					{
@@ -25,17 +24,16 @@ export function authorizationService() {
 					},
 					session,
 				);
-
 			await ledger.createLedgerEntry(
 				{
 					amount: data.amount,
+					transactionId: data.transactionId,
 					costumerAccountId: costumerAccount._id,
 					internalAccountId: internalAccount._id,
 					idempotencyKey: data.idempotencyKey,
 				},
 				session,
 			);
-
 			await account.updateAccountBalance(
 				{
 					accountId: costumerAccount._id,
