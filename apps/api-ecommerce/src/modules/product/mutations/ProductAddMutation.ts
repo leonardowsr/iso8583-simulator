@@ -9,8 +9,7 @@ import { mutationWithClientMutationId } from "graphql-relay";
 import { Category } from "../../category/CategoryModel";
 import { Product } from "../ProductModel";
 import { productField } from "../productFields";
-import type { ProductAddInput } from "../productSchemas";
-import { productAddSchema } from "../productSchemas";
+import { ProductAddInput, productAddSchema } from "../productSchemas";
 
 const mutation = mutationWithClientMutationId({
 	name: "ProductAdd",
