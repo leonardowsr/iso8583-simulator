@@ -6,9 +6,7 @@ const cwd = process.cwd();
 const root = path.join.bind(cwd);
 
 dotenvSafe.config({
-	path: root(".env"),
 	allowEmptyValues: true,
-	debug: true,
 	example: root(".env.example"),
 });
 
