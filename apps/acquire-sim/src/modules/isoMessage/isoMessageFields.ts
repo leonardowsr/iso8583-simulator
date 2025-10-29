@@ -34,7 +34,6 @@ export const isoMessageConnectionField = (key: string) => ({
 			args: IsoMessageConnectionArgs & { direction?: string },
 			context: IsoMessageContext,
 		) => {
-			console.log(args.direction);
 			const filters: Record<string, unknown> = {};
 
 			if (args.direction) {

@@ -1,5 +1,4 @@
 "use client";
-import React, { useMemo } from "react";
 import { graphql, usePaginationFragment } from "react-relay";
 import type { isoMessageItemFragment$key } from "@/__generated_ecommerce__/isoMessageItemFragment.graphql";
 import type { isoMessagesListFragment$key } from "@/__generated_ecommerce__/isoMessagesListFragment.graphql";

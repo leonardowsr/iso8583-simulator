@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: no effect */
 import http from "node:http";
 
 import { WebSocketServer as WSWebSocketServer } from "ws";
@@ -7,15 +8,17 @@ const WebSocketServer = WSWebSocketServer;
 
 export const createWebsocketMiddleware = (
 	propertyName = "ws",
-	options = {},
+	options = {} as any,
 ) => {
-	if (options instanceof http.Server) options = { server: options };
+	let serverOptions = options;
+	if (options instanceof http.Server) {
+		serverOptions = { server: options };
+	}
 
-	// const wsServers = new WeakMap();
 	const wsServers = {};
 
 	const getOrCreateWebsocketServer = (url: string) => {
-		// const server = wsServers.get(url);
+		// @ts-expect-error
 		const server = wsServers[url];
 
 		if (server) {
@@ -23,20 +26,21 @@ export const createWebsocketMiddleware = (
 		}
 
 		const newServer = new WebSocketServer({
-			...(options.wsOptions || {}),
+			...(serverOptions.wsOptions || {}),
 			noServer: true,
 		});
 
+		// @ts-expect-error
 		wsServers[url] = newServer;
 		// wsServers.set(url, newServer);
 
 		return newServer;
 	};
 
-	const websocketMiddleware = async (ctx, next) => {
+	const websocketMiddleware = async (ctx: any, next: any) => {
 		const upgradeHeader = (ctx.request.headers.upgrade || "")
 			.split(",")
-			.map((s) => s.trim());
+			.map((s: any) => s.trim());
 
 		if (~upgradeHeader.indexOf("websocket")) {
 			const wss = getOrCreateWebsocketServer(ctx.url);
@@ -47,7 +51,7 @@ export const createWebsocketMiddleware = (
 						ctx.req,
 						ctx.request.socket,
 						Buffer.alloc(0),
-						(ws) => {
+						(ws: unknown) => {
 							wss.emit("connection", ws, ctx.req);
 							resolve(ws);
 						},

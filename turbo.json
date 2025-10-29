@@ -4,8 +4,10 @@
 	"ui": "tui",
 	"tasks": {
 		"build": {
-			"outputs": [".next/**", "!.next/cache/**"]
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", "apps/*/dist/**", "packages/*/dist/**"]
 		},
+		"start": {},
 		"config:local": {},
 		"dev": {
 			"cache": false,

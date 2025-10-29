@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: no effect */
 import { execute, parse, subscribe, validate } from "graphql";
 import { useServer } from "graphql-ws/lib/use/ws";
 
@@ -14,7 +15,7 @@ type WsContext = {
 	connectionParams: ConnectionParams;
 };
 
-export const ws = async (ctx) => {
+export const ws = async (ctx: any) => {
 	if (ctx.wss) {
 		// handle upgrade
 		const client = await ctx.ws();
@@ -25,7 +26,9 @@ export const ws = async (ctx) => {
 				context: async (_wsContext: WsContext) => getContext(),
 				execute,
 				subscribe,
+				// @ts-expect-error
 				onConnect: async (_wsContext: WsContext) => {},
+				// @ts-expect-error
 				onSubscribe: async (_wsContext: WsContext, message) => {
 					const { operationName, query, variables } = message.payload;
 
@@ -47,19 +50,13 @@ export const ws = async (ctx) => {
 
 					return args;
 				},
-				// onNext: async ({ connectionParams }) => {
-				//   const token = getTokenFromConnectionParams(connectionParams);
 
-				//   if (!(await isTokenValid(token))) {
-				//     return ctx.extra.socket.close(4403, 'Forbidden');
-				//   }
-				// },
-				// onError: (ctx, msg, errors) => {
-				//   console.error('Error', { ctx, msg, errors });
-				// },
-				// onComplete: (ctx, msg) => {
-				//   console.log('Complete', { ctx, msg });
-				// },
+				onError: (ctx, msg, errors) => {
+					console.error("Error", { ctx, msg, errors });
+				},
+				onComplete: (ctx, msg) => {
+					console.info("Complete", { ctx, msg });
+				},
 			},
 			ctx.wss,
 		);

@@ -6,6 +6,8 @@
 		"config:local": "cp .env.example .env",
 		"dev": "tsx watch src/index.ts",
 		"schema": "tsx scripts/updateSchema.ts && cp schema/schema.graphql ../web/data/",
+		"build": "tsc --project tsconfig.json",
+		"start": "node dist/index.js",
 		"db:seed": "tsx src/seed/seed.ts",
 		"test": "npx jest --runInBand --colors --passWithNoTests"
 	},
