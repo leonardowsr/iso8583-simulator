@@ -1,5 +1,6 @@
 import { LoginForm } from "@/components/(ecommerce)/login-form";
 import Header from "@/components/(ecommerce)/nav/header";
+export const dynamic = "force-dynamic";
 
 export default function LoginPage() {
 	return (
