@@ -5,6 +5,6 @@
 		"buildCommand": "pnpm install --no-frozen-lockfile --strict-peer-dependencies false && npx turbo build --filter=./apps/acquire-sim"
 	},
 	"deploy": {
-		"startCommand": "pnpm run start --filter=./apps/acquire-sim"
+		"startCommand": "cd apps/acquire-sim && pnpm run start"
 	}
 }
