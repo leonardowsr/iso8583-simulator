@@ -5,6 +5,6 @@
 		"buildCommand": "pnpm install --no-frozen-lockfile --strict-peer-dependencies false && npx turbo build --filter=./apps/api-ecommerce"
 	},
 	"deploy": {
-		"startCommand": "pnpm run start --filter=./apps/api-ecommerce"
+		"startCommand": "cd apps/api-ecommerce && pnpm run start"
 	}
 }
