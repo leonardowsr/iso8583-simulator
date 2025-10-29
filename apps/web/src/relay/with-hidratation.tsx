@@ -1,5 +1,5 @@
 import type { ConcreteRequest } from "relay-runtime";
-import { getPreloadedQuery } from "@/relay/network";
+import { GRAPHQL_ENPOINT, getPreloadedQuery } from "@/relay/network";
 import { RelayHydrate } from "@/relay/RelayHydrate";
 
 export async function withHydration<T>({
@@ -12,6 +12,10 @@ export async function withHydration<T>({
 	// biome-ignore lint/suspicious/noExplicitAny: no effect
 	variables?: Record<string, any>;
 }) {
+	if (!GRAPHQL_ENPOINT) {
+		return <RelayHydrate Component={Component} props={{}} />;
+	}
+
 	const preloaded = await getPreloadedQuery(query, variables);
 
 	return (
