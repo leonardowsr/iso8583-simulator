@@ -77,7 +77,7 @@ export function createIssuerAdapterFactory(
 			direction: Edirection.OUTGOING,
 			idempotencyKey: data.idempotencyKey,
 		});
-		relatedOutMessageId = messageOut._id.toString();
+		relatedOutMessageId = messageOut._id;
 
 		pubSub.publish(PUB_SUB_EVENTS.MESSAGE.ADDED, {
 			isoMessage: messageOut._id.toString(),
@@ -85,6 +85,7 @@ export function createIssuerAdapterFactory(
 
 		return new Promise((resolve, reject) => {
 			const socket = getClient();
+
 			const isoBuffer = createIsoPack(data).getBufferMessage();
 			socket.write(isoBuffer, (err) => {
 				if (err) {

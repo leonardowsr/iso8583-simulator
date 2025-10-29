@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3373c6107a9b9004e2a20633a28babad>>
+ * @generated SignedSource<<6d6eeb1b4e370f514948d4a8b3f7aa1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,6 +46,11 @@ return {
       "name": "after"
     },
     {
+      "defaultValue": "in",
+      "kind": "LocalArgument",
+      "name": "direction"
+    },
+    {
       "defaultValue": 20,
       "kind": "LocalArgument",
       "name": "first"
@@ -78,7 +83,13 @@ return {
   "selections": [
     {
       "alias": "isoMessages",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "direction",
+          "variableName": "direction"
+        }
+      ],
       "concreteType": "IsoMessageConnection",
       "kind": "LinkedField",
       "name": "__pages_isoMessages_connection",
@@ -185,6 +196,6 @@ return {
 };
 })();
 
-(node as any).hash = "f2eb6d883c8b38c9d08956b460c77342";
+(node as any).hash = "3870b0cfafc36670066474ff63fb8fe4";
 
 export default node;

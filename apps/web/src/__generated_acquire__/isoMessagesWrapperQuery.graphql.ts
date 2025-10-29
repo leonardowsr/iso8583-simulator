@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a97d792febd53933e5dff5ee5a7f6a60>>
+ * @generated SignedSource<<4d39d7ba82e066c06ef0fe48d94d5d48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type isoMessagesWrapperQuery$variables = {
   after?: string | null | undefined;
+  direction?: string | null | undefined;
   first?: number | null | undefined;
 };
 export type isoMessagesWrapperQuery$data = {
@@ -31,9 +32,14 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "direction"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "first"
 },
-v2 = [
+v3 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -41,22 +47,77 @@ v2 = [
   },
   {
     "kind": "Variable",
+    "name": "direction",
+    "variableName": "direction"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
     "variableName": "first"
   }
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "idempotencyKey",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "rawContent",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isoResponseCode",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "direction",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "transactionId",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "isoMessagesWrapperQuery",
     "selections": [
       {
-        "args": (v2/*: any*/),
+        "args": (v3/*: any*/),
         "kind": "FragmentSpread",
         "name": "isoMessagesListFragment"
       }
@@ -67,15 +128,16 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
+      (v2/*: any*/),
+      (v0/*: any*/),
+      (v1/*: any*/)
     ],
     "kind": "Operation",
     "name": "isoMessagesWrapperQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "IsoMessageConnection",
         "kind": "LinkedField",
         "name": "isoMessages",
@@ -97,53 +159,29 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/),
+                  (v9/*: any*/),
+                  (v10/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "idempotencyKey",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "rawContent",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isoResponseCode",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "direction",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "transactionId",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "createdAt",
+                    "concreteType": "IsoMessage",
+                    "kind": "LinkedField",
+                    "name": "relatedMessage",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      (v8/*: any*/),
+                      (v9/*: any*/),
+                      (v5/*: any*/),
+                      (v10/*: any*/)
+                    ],
                     "storageKey": null
                   },
                   {
@@ -208,8 +246,10 @@ return {
       },
       {
         "alias": null,
-        "args": (v2/*: any*/),
-        "filters": null,
+        "args": (v3/*: any*/),
+        "filters": [
+          "direction"
+        ],
         "handle": "connection",
         "key": "pages_isoMessages",
         "kind": "LinkedHandle",
@@ -218,16 +258,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "525a0fd0c0bf78d5e890d6a81656d8af",
+    "cacheID": "5cea493d5926707a8e405557f6b4a8bf",
     "id": null,
     "metadata": {},
     "name": "isoMessagesWrapperQuery",
     "operationKind": "query",
-    "text": "query isoMessagesWrapperQuery(\n  $first: Int\n  $after: String\n) {\n  ...isoMessagesListFragment_2HEEH6\n}\n\nfragment isoMessageItemFragment on IsoMessage {\n  id\n  rawContent\n  isoResponseCode\n  direction\n  transactionId\n  idempotencyKey\n  createdAt\n}\n\nfragment isoMessagesListFragment_2HEEH6 on Query {\n  isoMessages(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        idempotencyKey\n        ...isoMessageItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query isoMessagesWrapperQuery(\n  $first: Int\n  $after: String\n  $direction: String\n) {\n  ...isoMessagesListFragment_1exh8A\n}\n\nfragment isoMessageItemFragment on IsoMessage {\n  id\n  rawContent\n  isoResponseCode\n  direction\n  transactionId\n  idempotencyKey\n  createdAt\n  relatedMessage {\n    id\n    rawContent\n    isoResponseCode\n    direction\n    transactionId\n    idempotencyKey\n    createdAt\n  }\n}\n\nfragment isoMessagesListFragment_1exh8A on Query {\n  isoMessages(first: $first, after: $after, direction: $direction) {\n    edges {\n      node {\n        id\n        idempotencyKey\n        ...isoMessageItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f404b4def7f407a3693ef842fa2df32d";
+(node as any).hash = "bf2045e387208635a2b6b19c6941d0ff";
 
 export default node;

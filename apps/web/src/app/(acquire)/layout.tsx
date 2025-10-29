@@ -1,3 +1,4 @@
+import Header from "@/components/(ecommerce)/nav/header";
 import { ReactRelayContainer } from "@/relay/ReactRelayContainer";
 
 export default function RootLayout({
@@ -5,5 +6,10 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return <ReactRelayContainer useAcquirer>{children}</ReactRelayContainer>;
+	return (
+		<ReactRelayContainer useAcquirer>
+			<Header />
+			{children}
+		</ReactRelayContainer>
+	);
 }

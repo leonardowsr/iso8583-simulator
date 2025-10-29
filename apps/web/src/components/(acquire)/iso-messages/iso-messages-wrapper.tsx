@@ -6,16 +6,15 @@ import isoMessagesWrapperQuery, {
 import { IsoMessagesList } from "@/components/(acquire)/iso-messages/iso-messages-list";
 
 export const PageQuery = graphql`
-  query isoMessagesWrapperQuery($first: Int, $after: String) {
-    ...isoMessagesListFragment @arguments(first: $first, after: $after)
+  query isoMessagesWrapperQuery($first: Int, $after: String, $direction: String) {
+    ...isoMessagesListFragment @arguments(first: $first, after: $after, direction: $direction)
   }
 `;
 export default function IsoMessagesWrapper() {
 	const queryData = useLazyLoadQuery<IsoMessagesWrapperQueryType>(
 		isoMessagesWrapperQuery,
-		{ first: 20 },
+		{ direction: "in" },
 	);
 
-	console.log("queryData", queryData);
 	return <IsoMessagesList fragmentRef={queryData} />;
 }

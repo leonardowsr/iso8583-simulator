@@ -27,6 +27,7 @@ export function authorizationService() {
 			await ledger.createLedgerEntry(
 				{
 					amount: data.amount,
+					transactionId: data.transactionId,
 					costumerAccountId: costumerAccount._id,
 					internalAccountId: internalAccount._id,
 					idempotencyKey: data.idempotencyKey,

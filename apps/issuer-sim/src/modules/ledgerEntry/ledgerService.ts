@@ -10,6 +10,7 @@ export const ledgerService = () => {
 		data: {
 			amount: number;
 			costumerAccountId: string;
+			transactionId: string;
 			internalAccountId: string;
 			idempotencyKey: string;
 		},
@@ -19,6 +20,7 @@ export const ledgerService = () => {
 			ledgerEntries.create({
 				amount: data.amount,
 				type: EledgerEntryType.CASHOUT,
+				transactionId: data.transactionId,
 				accountId: data.costumerAccountId,
 				idempotencyKey: data.idempotencyKey,
 				session: session,
@@ -27,6 +29,7 @@ export const ledgerService = () => {
 			ledgerEntries.create({
 				amount: data.amount,
 				type: EledgerEntryType.CASHIN,
+				transactionId: data.transactionId,
 				accountId: data.internalAccountId,
 				idempotencyKey: `${data.idempotencyKey}`,
 				session: session,

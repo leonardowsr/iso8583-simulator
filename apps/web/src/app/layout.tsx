@@ -5,7 +5,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./index.css";
 
 import { Toaster } from "sonner";
-import { ReactQueryProvider } from "@/lib/providers/react-query-provider";
+
 import { ReactRelayContainer } from "@/relay/ReactRelayContainer";
 import { ThemeProvider } from "../lib/providers/theme-provider";
 
@@ -22,13 +22,11 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<body>
 				<ReactRelayContainer>
-					<ReactQueryProvider>
-						<Toaster position="top-right" />
-						<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-							<NuqsAdapter>{children}</NuqsAdapter>
-							<NextTopLoader />
-						</ThemeProvider>
-					</ReactQueryProvider>
+					<Toaster position="top-right" />
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+						<NuqsAdapter>{children}</NuqsAdapter>
+						<NextTopLoader />
+					</ThemeProvider>
 				</ReactRelayContainer>
 			</body>
 		</html>

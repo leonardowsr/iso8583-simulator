@@ -15,6 +15,7 @@ export const iso8583Schema = z
 		14: z.string({ error: "EXPIRATION_DATE_REQ" }).length(4), // Date, Expiration
 		48: z.string({ error: "CARDHOLDER_NAME_REQ" }).max(250), // Additional Data – Private
 		55: z.string({ error: "ICC_DATA_REQ" }), // ICC Data – EMV Having multiple subfields
+		62: z.string({ error: "TRANSACTION_ID_REQ" }).max(100), // Identificação da Transação
 		63: z.string({ error: "IDEMPOTENCY_REQ" }).max(100), // Additional Data – Private
 	})
 	.transform((data) => {
@@ -29,6 +30,7 @@ export const iso8583Schema = z
 			cardExpirationDate: data[14],
 			cardHolderName: data[48],
 			cardCvv: data[55],
+			transactionId: data[62],
 			idempotencyKey: data[63],
 		};
 	});

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6a6c214d1e98758a23bee6aa7ee1f3f>>
+ * @generated SignedSource<<6d6eeb1b4e370f514948d4a8b3f7aa1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,8 @@ export type isoMessagesListFragment$data = {
     readonly __id: string;
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly id: string;
+        readonly idempotencyKey: string | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"isoMessageItemFragment">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -42,6 +44,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "after"
+    },
+    {
+      "defaultValue": "in",
+      "kind": "LocalArgument",
+      "name": "direction"
     },
     {
       "defaultValue": 20,
@@ -76,7 +83,13 @@ return {
   "selections": [
     {
       "alias": "isoMessages",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "direction",
+          "variableName": "direction"
+        }
+      ],
       "concreteType": "IsoMessageConnection",
       "kind": "LinkedField",
       "name": "__pages_isoMessages_connection",
@@ -98,6 +111,20 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "idempotencyKey",
+                  "storageKey": null
+                },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -169,6 +196,6 @@ return {
 };
 })();
 
-(node as any).hash = "e6c28b24a47d777b34b966b355ecfa97";
+(node as any).hash = "3870b0cfafc36670066474ff63fb8fe4";
 
 export default node;

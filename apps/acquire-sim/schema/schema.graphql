@@ -11,6 +11,7 @@ type Query {
 
     """Returns the last n items from the list."""
     last: Int
+    direction: String
   ): IsoMessageConnection
   transactions(
     """Returns the items in the list that come after the specified cursor."""
@@ -34,6 +35,7 @@ type IsoMessageConnection {
 
   """A list of edges."""
   edges: [IsoMessageEdge]
+  direction: String
 }
 
 """Information about pagination in a connection."""
@@ -69,7 +71,7 @@ type IsoMessage implements Node {
   direction: String
   transactionId: String
   idempotencyKey: String
-  relatedMessage: String
+  relatedMessage: IsoMessage
   createdAt: String
 }
 

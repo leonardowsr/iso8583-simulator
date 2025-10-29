@@ -39,6 +39,13 @@ export function NavMenu() {
 					</Link>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
+					<Link href="/messages" legacyBehavior passHref>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+							<div className="font-normal text-foreground/70">IsoMessages</div>
+						</NavigationMenuLink>
+					</Link>
+				</NavigationMenuItem>
+				<NavigationMenuItem>
 					<NavigationMenuTrigger>
 						<div className="font-normal text-foreground/70">Categorias</div>
 					</NavigationMenuTrigger>

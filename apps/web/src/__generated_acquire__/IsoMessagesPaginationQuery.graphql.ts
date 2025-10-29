@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8324a568c3b0ecb61784128ce11b5af7>>
+ * @generated SignedSource<<1c4a6cc78756cd39b836649de3e93e03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type IsoMessagesPaginationQuery$variables = {
   after?: string | null | undefined;
+  direction?: string | null | undefined;
   first?: number | null | undefined;
 };
 export type IsoMessagesPaginationQuery$data = {
@@ -30,6 +31,11 @@ var v0 = [
     "name": "after"
   },
   {
+    "defaultValue": "in",
+    "kind": "LocalArgument",
+    "name": "direction"
+  },
+  {
     "defaultValue": 20,
     "kind": "LocalArgument",
     "name": "first"
@@ -43,10 +49,64 @@ v1 = [
   },
   {
     "kind": "Variable",
+    "name": "direction",
+    "variableName": "direction"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
     "variableName": "first"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "idempotencyKey",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "rawContent",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isoResponseCode",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "direction",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "transactionId",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -93,53 +153,29 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "idempotencyKey",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "rawContent",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isoResponseCode",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "direction",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "transactionId",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "createdAt",
+                    "concreteType": "IsoMessage",
+                    "kind": "LinkedField",
+                    "name": "relatedMessage",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      (v3/*: any*/),
+                      (v8/*: any*/)
+                    ],
                     "storageKey": null
                   },
                   {
@@ -205,7 +241,9 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "filters": null,
+        "filters": [
+          "direction"
+        ],
         "handle": "connection",
         "key": "pages_isoMessages",
         "kind": "LinkedHandle",
@@ -214,16 +252,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9bb2d3def8a0b3c25e070a8ef11f8f09",
+    "cacheID": "109dcef8d3cf2bd07b164df4d84e0f2a",
     "id": null,
     "metadata": {},
     "name": "IsoMessagesPaginationQuery",
     "operationKind": "query",
-    "text": "query IsoMessagesPaginationQuery(\n  $after: String\n  $first: Int = 20\n) {\n  ...isoMessagesListFragment_2HEEH6\n}\n\nfragment isoMessageItemFragment on IsoMessage {\n  id\n  rawContent\n  isoResponseCode\n  direction\n  transactionId\n  idempotencyKey\n  createdAt\n}\n\nfragment isoMessagesListFragment_2HEEH6 on Query {\n  isoMessages(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        idempotencyKey\n        ...isoMessageItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query IsoMessagesPaginationQuery(\n  $after: String\n  $direction: String = \"in\"\n  $first: Int = 20\n) {\n  ...isoMessagesListFragment_1exh8A\n}\n\nfragment isoMessageItemFragment on IsoMessage {\n  id\n  rawContent\n  isoResponseCode\n  direction\n  transactionId\n  idempotencyKey\n  createdAt\n  relatedMessage {\n    id\n    rawContent\n    isoResponseCode\n    direction\n    transactionId\n    idempotencyKey\n    createdAt\n  }\n}\n\nfragment isoMessagesListFragment_1exh8A on Query {\n  isoMessages(first: $first, after: $after, direction: $direction) {\n    edges {\n      node {\n        id\n        idempotencyKey\n        ...isoMessageItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f2eb6d883c8b38c9d08956b460c77342";
+(node as any).hash = "3870b0cfafc36670066474ff63fb8fe4";
 
 export default node;

@@ -18,6 +18,7 @@ const Schema = new mongoose.Schema<ILedgerEntry>(
 			required: true,
 			enum: EledgerEntryType,
 		},
+		transactionId: { type: String, required: true },
 		createdAt: { type: Date, default: Date.now },
 		idempotencyKey: { type: String, required: true },
 	},
@@ -31,6 +32,7 @@ export type ILedgerEntry = {
 	amount: number;
 	accountId: mongoose.Types.ObjectId;
 	idempotencyKey: string;
+	transactionId: string;
 	type: EledgerEntryType;
 	createdAt: Date;
 	updatedAt: Date;
