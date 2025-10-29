@@ -1,6 +1,5 @@
 "use client";
 
-import { useMediaQuery } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import Link from "next/link";
@@ -23,6 +22,8 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useCartStore } from "@/lib/store/use-cart-store";
 import { cn } from "@/lib/utils";
 
@@ -42,7 +43,7 @@ interface CartProps {
 export function CartClient({ className }: CartProps) {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [isMounted, setIsMounted] = React.useState(false);
-	const isDesktop = useMediaQuery("(min-width: 768px)");
+	const isDesktop = !useIsMobile();
 	const router = useRouter();
 
 	const cartItems = useCartStore((state) => state.cartItems);
