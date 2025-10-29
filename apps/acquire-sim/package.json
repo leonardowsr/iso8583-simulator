@@ -42,5 +42,6 @@
 		"@types/node": "^17.0.12",
 		"@types/ws": "^8.18.1",
 		"tsx": "^3.12.6"
-	}
+	},
+	"packageManager": "pnpm@10.0.0"
 }
