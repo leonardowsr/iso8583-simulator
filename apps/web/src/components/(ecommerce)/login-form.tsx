@@ -1,4 +1,6 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 import { toast } from "sonner";
 import type { loginFormUserQuery } from "@/__generated_ecommerce__/loginFormUserQuery.graphql";
@@ -32,6 +34,13 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
 	const data = useLazyLoadQuery<loginFormUserQuery>(UserQuery, {});
 	const userStore = useUserStore((state) => state);
+	const router = useRouter();
+
+	useEffect(() => {
+		if (userStore.user) {
+			router.push("/");
+		}
+	}, [userStore.user]);
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
 			<form>
@@ -62,6 +71,7 @@ export function LoginForm({
 							onClick={() => {
 								toast.success("Login realizado com sucesso!");
 								userStore.setUser(data.users.edges[0].node);
+								router.push("/");
 							}}
 						>
 							Login
