@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { config } from "./config";
 
 async function connectDatabase() {
+	console.info("MONGO_URI (runtime) =>", JSON.stringify(config.MONGO_URI));
 	mongoose.connection.on("connected", () =>
 		console.info("✅ Database connected successfully"),
 	);

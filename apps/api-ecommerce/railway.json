@@ -5,6 +5,6 @@
 		"buildCommand": "pnpm install --no-frozen-lockfile --strict-peer-dependencies false && pnpm run build"
 	},
 	"deploy": {
-		"startCommand": "pnpm run start"
+		"startCommand": "cd apps/api-ecommerce && pnpm run start"
 	}
 }
