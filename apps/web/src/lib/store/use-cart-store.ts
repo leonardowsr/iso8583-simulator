@@ -11,17 +11,26 @@ export interface CartItem {
 }
 
 interface CartState {
+	rehydrated: boolean;
+	setRehydrated: (rehydrated: boolean) => void;
 	cartItems: CartItem[];
+	cartItemsPayment: CartItem[];
 	addItem: (item: CartItem) => void;
 	updateQuantity: (id: string, quantity: number) => void;
 	removeItem: (id: string) => void;
+	setCartItemsPayment: () => void;
 	clearCart: () => void;
 }
 
 export const useCartStore = create<CartState>()(
 	persist(
-		(set, _get) => ({
+		(set) => ({
+			rehydrated: false,
+			setRehydrated(rehydrated) {
+				set({ rehydrated });
+			},
 			cartItems: [],
+			cartItemsPayment: [],
 			addItem: (item) => {
 				set((state) => {
 					const existing = state.cartItems.find((i) => i.id === item.id);
@@ -51,10 +60,20 @@ export const useCartStore = create<CartState>()(
 					cartItems: state.cartItems.filter((item) => item.id !== id),
 				}));
 			},
+			setCartItemsPayment: () => {
+				set((state) => ({
+					cartItemsPayment: [...state.cartItems],
+				}));
+			},
 			clearCart: () => set({ cartItems: [] }),
 		}),
 		{
 			name: "cart_items",
+			onRehydrateStorage: (state) => () => {
+				if (state && typeof state.setRehydrated === "function") {
+					state.setRehydrated(true);
+				}
+			},
 		},
 	),
 );

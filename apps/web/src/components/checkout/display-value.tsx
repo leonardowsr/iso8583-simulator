@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useCartStore } from "@/lib/store/use-cart-store";
 import { useUserStore } from "@/lib/store/use-user-store";
 import { LoginForm } from "../(ecommerce)/login-form";
+import { Button } from "../ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -80,7 +81,7 @@ export function CheckoutDisplayValue() {
 					</span>
 				</div>
 			</div>
-			<button
+			<Button
 				className="mt-3 w-full rounded bg-green-600 py-2 font-bold text-white transition hover:bg-green-700"
 				onClick={() => {
 					if (!isAuthenticated) {
@@ -89,10 +90,12 @@ export function CheckoutDisplayValue() {
 					}
 					router.push("/checkout/payment");
 				}}
+				size="lg"
+				disabled={!cartItems.length}
 				type="button"
 			>
 				Ir para pagamento
-			</button>
+			</Button>
 			<Dialog open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
 				<DialogContent className="sm:max-w-md">
 					<DialogHeader>

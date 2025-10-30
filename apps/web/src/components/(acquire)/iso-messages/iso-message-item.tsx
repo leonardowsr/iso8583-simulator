@@ -39,7 +39,7 @@ export default function IsoMessageItem(props: Props) {
 			<>
 				<tr
 					key={isoMessage.id}
-					className="border-t-2 border-t-primary/10 border-b bg-white shadow-sm ring-1 ring-slate-100 first:border-t-0 last:border-b-0"
+					className="border-t-2 shadow-sm ring-slate-100 first:border-t-0 last:border-b-0 dark:border-t-white/40"
 				>
 					<td className="whitespace-nowrap px-3">
 						<span
@@ -71,10 +71,7 @@ export default function IsoMessageItem(props: Props) {
 					</td>
 				</tr>
 
-				<tr
-					key={related.id}
-					className="border-b bg-slate-50 shadow-sm ring-1 ring-slate-100 last:border-b-0"
-				>
+				<tr key={related.id}>
 					<td className="whitespace-nowrap px-3 py-0.5">
 						<div className="flex flex-col gap-1">
 							<span

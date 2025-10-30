@@ -2,6 +2,7 @@ import { validateZod } from "@woovi-playground/shared";
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import mongoose, { type HydratedDocument } from "mongoose";
+import { resolve } from "path";
 import { createIssuerAdapterFactory } from "../../../adapters/iso8583.adapter";
 import { redisPubSub } from "../../_pubSub/redisPubSub";
 import { IsoMessage } from "../../isoMessage/isoMessageModel";
@@ -67,7 +68,7 @@ const mutation = mutationWithClientMutationId({
 
 		try {
 			const isoClient = createIssuerAdapterFactory(redisPubSub, IsoMessage);
-
+			await new Promise((res) => setTimeout(res, 2000));
 			await isoClient.sendTransaction({
 				...args,
 				transactionId: transaction._id.toString(),

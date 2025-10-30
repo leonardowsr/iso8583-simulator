@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils";
 const steps: { label: string; href: Route }[] = [
 	{ label: "Carrinho", href: "/checkout/cart" },
 	{ label: "Pagamento", href: "/checkout/payment" },
-	{ label: "Confirmação", href: "/checkout/confirmation" },
 ];
 
 export function CheckoutHeader({ className }: { className?: string }) {
