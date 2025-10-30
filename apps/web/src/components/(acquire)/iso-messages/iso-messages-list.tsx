@@ -53,9 +53,9 @@ export function IsoMessagesList({
 				📡 ISO8583 Messages Monitor
 			</h2>
 
-			<div className="max-h-[600px] overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
+			<div className="max-h-[600px] overflow-x-auto rounded-lg border border-slate-200 shadow-sm dark:border-gray-500">
 				<table className="w-full min-w-[900px] divide-y divide-slate-100 text-sm">
-					<thead className="bg-slate-100 text-slate-600 text-xs uppercase tracking-wide">
+					<thead className="text-slate-600 text-xs uppercase tracking-wide">
 						<tr>
 							<th className="px-3 py-2">Dir</th>
 							<th className="px-3 py-2">Raw</th>
@@ -65,7 +65,7 @@ export function IsoMessagesList({
 							<th className="px-3 py-2">When</th>
 						</tr>
 					</thead>
-					<tbody className="divide-y divide-slate-50 bg-white">
+					<tbody className="divide-y">
 						{data.isoMessages?.edges.map(({ node }, idx) => {
 							if (!node) return null;
 							return (

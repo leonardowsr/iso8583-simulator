@@ -1,10 +1,14 @@
 "use client";
 
-import { ViewIcon } from "lucide-react";
+import { Menu, ViewIcon } from "lucide-react";
 import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	NavigationMenu,
+	NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { docsConfig } from "@/lib/constant";
@@ -20,41 +24,23 @@ export function MobileNav() {
 					variant="ghost"
 					className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
 				>
-					<ViewIcon className="h-5" />
+					<Menu className="size-6" />
 					<span className="sr-only">Toggle Menu</span>
 				</Button>
 			</SheetTrigger>
-			<SheetContent side="left" className="pr-0">
-				<MobileLink
-					href="/"
-					className="flex items-center"
-					onOpenChange={setOpen}
-				>
-					<div className="relative z-20 flex items-center font-medium text-lg">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							className="mr-2 h-6 w-6"
-						>
-							<title>Home</title>
-							<path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-						</svg>
-						{/* {Config.name} */}
-					</div>
-				</MobileLink>
-				<ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-					<div className="flex flex-col space-y-2">
+			<SheetContent side="left" className="w-full pr-0">
+				<ScrollArea className="my-4 h-[calc(100vh-8rem)] w-full pb-10 pl-6">
+					<NavigationMenu className="flex w-full flex-col items-start justify-start">
 						{docsConfig.sidebarNav.map((item, index) => (
-							<div key={index} className="flex flex-col space-y-3 pt-6">
-								<h4 className="font-medium">{item.title}</h4>
-							</div>
+							<NavigationMenuLink
+								key={index}
+								href={item.href}
+								className="flex w-full text-xl"
+							>
+								<h2 className="font-medium">{item.title}</h2>
+							</NavigationMenuLink>
 						))}
-					</div>
+					</NavigationMenu>
 				</ScrollArea>
 			</SheetContent>
 		</Sheet>

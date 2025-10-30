@@ -18,28 +18,16 @@ interface DocsConfig {
 export const docsConfig: DocsConfig = {
 	sidebarNav: [
 		{
-			title: "Products",
+			title: "Início",
+			href: "/",
+		},
+		{
+			title: "Produtos",
 			href: "/products",
 		},
 		{
-			title: "Blog",
-			href: "/blog",
-		},
-		{
-			title: "Orders",
-			href: "/profile/orders",
-		},
-		{
-			title: "Payments",
-			href: "/profile/payments",
-		},
-		{
-			title: "Contact",
-			href: "/contact",
-		},
-		{
-			title: "About",
-			href: "/about",
+			title: "IsoMessages",
+			href: "/messages",
 		},
 	],
 };

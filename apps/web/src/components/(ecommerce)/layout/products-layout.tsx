@@ -26,14 +26,12 @@ export function ProductsLayout({ queryRefs }: Props) {
 				</CardHeader>
 			}
 		>
-			<div>
-				<div className="flex gap-4">
-					<div className="flex h-full max-h-fit border-none">
-						<SidebarFilters fragmentRef={data} />
-					</div>
-					<div className="flex flex-1">
-						<ProductsList fragmentRef={data} />
-					</div>
+			<div className="flex max-w-[425px] flex-col items-center gap-4 md:max-w-full md:flex-row md:items-start">
+				<div className="flex h-full max-h-fit border-none">
+					<SidebarFilters fragmentRef={data} />
+				</div>
+				<div className="flex flex-1">
+					<ProductsList fragmentRef={data} />
 				</div>
 			</div>
 		</ContainerContent>
