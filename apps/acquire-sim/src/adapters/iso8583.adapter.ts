@@ -43,6 +43,8 @@ export function createIssuerAdapterFactory(
 				reject(err);
 			});
 
+			console.info("Connecting to ISO 8583 server at", `${host}:${port}`);
+
 			socket.connect(port, host, () => {
 				console.info("Connected to ISO 8583 server");
 				resolve();
