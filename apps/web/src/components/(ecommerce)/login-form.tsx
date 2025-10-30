@@ -37,54 +37,58 @@ export function LoginForm({
 	const router = useRouter();
 
 	useEffect(() => {
+		if (!userStore.rehydrated) return;
 		if (userStore.user) {
 			router.push("/");
 		}
-	}, [userStore.user]);
+	}, [userStore.user, userStore.rehydrated]);
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
-			<form>
-				<FieldGroup>
-					<Field>
-						<FieldLabel htmlFor="email">Email</FieldLabel>
-						<Input
-							id="email"
-							defaultValue={"admin@example.com"}
-							type="email"
-							placeholder="m@example.com"
-							required
-						/>
-					</Field>
-					<Field>
-						<FieldLabel htmlFor="password">Senha</FieldLabel>
-						<Input
-							id="password"
-							type="password"
-							defaultValue={"admin123"}
-							placeholder="••••••••"
-							required
-						/>
-					</Field>
-					<Field>
-						<Button
-							type="submit"
-							onClick={() => {
-								toast.success("Login realizado com sucesso!");
-								userStore.setUser(data.users.edges[0].node);
-								router.push("/");
-							}}
-						>
-							Login
-						</Button>
-					</Field>
-					<FieldSeparator>Ou</FieldSeparator>
-					<Field>
-						<Button variant="link" className="cursor-pointer">
-							Se cadastrar
-						</Button>
-					</Field>
-				</FieldGroup>
-			</form>
+			{userStore.user ? (
+				<div>Você já está logado</div>
+			) : (
+				<form>
+					<FieldGroup>
+						<Field>
+							<FieldLabel htmlFor="email">Email</FieldLabel>
+							<Input
+								id="email"
+								defaultValue={"admin@example.com"}
+								type="email"
+								placeholder="m@example.com"
+								required
+							/>
+						</Field>
+						<Field>
+							<FieldLabel htmlFor="password">Senha</FieldLabel>
+							<Input
+								id="password"
+								type="password"
+								defaultValue={"admin123"}
+								placeholder="••••••••"
+								required
+							/>
+						</Field>
+						<Field>
+							<Button
+								type="submit"
+								onClick={() => {
+									toast.success("Login realizado com sucesso!");
+									userStore.setUser(data.users.edges[0].node);
+								}}
+							>
+								Login
+							</Button>
+						</Field>
+						<FieldSeparator>Ou</FieldSeparator>
+						<Field>
+							<Button variant="link" className="cursor-pointer">
+								Se cadastrar
+							</Button>
+						</Field>
+					</FieldGroup>
+				</form>
+			)}
 		</div>
 	);
 }
