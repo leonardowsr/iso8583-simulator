@@ -156,7 +156,7 @@ export default function CardPaymentMethod() {
 							isPending: false,
 							isError: true,
 						}));
-
+						form.setValue("cvv", "");
 						toast.error(
 							"Erro ao processar o pagamento, verifique os dados do seu cartão.",
 						);
@@ -294,9 +294,11 @@ export default function CardPaymentMethod() {
 													Número do cartão
 												</FieldLabel>
 												<MaskInput
+													{...field}
 													onValueChange={(value) => field.onChange(value)}
 													aria-invalid={fieldState.invalid}
 													id="card-number"
+													disabled={isSubmitting}
 													mask="creditCard"
 													placeholder="0000 0000 0000 0000"
 												/>
@@ -317,7 +319,9 @@ export default function CardPaymentMethod() {
 														Expiração
 													</FieldLabel>
 													<Select
+														{...field}
 														value={field.value}
+														disabled={isSubmitting}
 														aria-invalid={fieldState.invalid}
 														onValueChange={field.onChange}
 													>
@@ -358,6 +362,7 @@ export default function CardPaymentMethod() {
 												<Field data-invalid={fieldState.invalid}>
 													<FieldLabel htmlFor="card-year">Ano</FieldLabel>
 													<Select
+														{...field}
 														value={field.value}
 														onValueChange={field.onChange}
 													>
@@ -394,6 +399,7 @@ export default function CardPaymentMethod() {
 												<Field data-invalid={fieldState.invalid}>
 													<FieldLabel htmlFor="card-cvv">CVV</FieldLabel>
 													<Input
+														{...field}
 														maxLength={3}
 														id="card-cvv"
 														onChange={(e) => {
