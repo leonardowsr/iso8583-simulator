@@ -1,5 +1,5 @@
 {
-	"name": "@woovi-playground/web",
+	"name": "@fintech/web",
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
@@ -65,7 +65,7 @@
 		"@types/react-dom": "latest",
 		"@types/react-relay": "^18.2.1",
 		"@types/relay-runtime": "^14.1.10",
-		"@woovi-playground/tsconfig": "*",
+		"@fintech/tsconfig": "*",
 		"relay-compiler": "^20.0.0",
 		"tailwindcss": "^4.1.10",
 		"typescript": "latest"

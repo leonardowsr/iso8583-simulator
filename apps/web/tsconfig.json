@@ -1,5 +1,5 @@
 {
-	"extends": "@woovi-playground/tsconfig/nextjs.json",
+	"extends": "@fintech/tsconfig/nextjs.json",
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",

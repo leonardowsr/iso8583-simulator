@@ -1,4 +1,4 @@
-import { validateZod } from "@woovi-playground/shared";
+import { validateZod } from "@fintech/shared";
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import mongoose, { type HydratedDocument } from "mongoose";

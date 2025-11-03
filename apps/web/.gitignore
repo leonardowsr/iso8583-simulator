@@ -19,6 +19,7 @@
 .DS_Store
 *.pem
 next-env.d
+next-env.*
 
 # debug
 npm-debug.log*

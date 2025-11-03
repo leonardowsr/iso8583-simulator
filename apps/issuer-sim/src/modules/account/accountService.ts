@@ -1,4 +1,4 @@
-import { validateZod } from "@woovi-playground/shared";
+import { validateZod } from "@fintech/shared";
 import type mongoose from "mongoose";
 import { CustomError } from "../_error/customError";
 import { Accounts, EAccountType } from "./AccountModel";
@@ -32,9 +32,10 @@ export const accountService = () => {
 		session: mongoose.ClientSession,
 	) {
 		validateZod(validateAccountSchema, data);
+		const hashedCardNumber = data.cardNumber;
 		const [costumerAccount, internalAccount] = await Promise.all([
 			Accounts.findOne({
-				cardNumber: data.cardNumber,
+				cardNumber: hashedCardNumber,
 				cardHolderName: data.cardHolderName,
 			}).session(session),
 			Accounts.findOne({

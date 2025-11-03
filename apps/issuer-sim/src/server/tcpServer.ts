@@ -1,5 +1,5 @@
 import net from "node:net";
-import { createIsoErrorBuffer, parseIsoPack } from "@woovi-playground/shared";
+import { createIsoErrorBuffer, parseIsoPack } from "@fintech/shared";
 // @ts-expect-error
 import iso_8583 from "iso_8583";
 import { config } from "../config";

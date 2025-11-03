@@ -1,4 +1,4 @@
-import { validateZod } from "@woovi-playground/shared";
+import { validateZod } from "@fintech/shared";
 import {
 	GraphQLInputObjectType,
 	GraphQLInt,

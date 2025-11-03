@@ -1,4 +1,4 @@
-import { validateZod } from "@woovi-playground/shared";
+import { validateZod } from "@fintech/shared";
 import type mongoose from "mongoose";
 import { CustomError } from "../_error/customError";
 import { EledgerEntryType, LedgerEntries } from "./LedgerEntryModel";

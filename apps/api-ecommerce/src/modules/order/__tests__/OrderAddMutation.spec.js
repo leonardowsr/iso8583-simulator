@@ -16,7 +16,7 @@ jest.mock("../OrderModel", () => ({
 	},
 }));
 
-jest.mock("@woovi-playground/shared", () => ({
+jest.mock("@fintech/shared", () => ({
 	validateZod: jest.fn(),
 	ValidationError: class ValidationError extends Error {},
 }));
@@ -33,7 +33,7 @@ jest.mock("graphql-relay", () => ({
 
 const mockedProduct = Product;
 const mockedOrder = Order;
-const { validateZod } = require("@woovi-playground/shared");
+const { validateZod } = require("@fintech/shared");
 const { fromGlobalId } = require("graphql-relay");
 
 describe("OrderAddMutation", () => {

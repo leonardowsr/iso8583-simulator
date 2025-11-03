@@ -3,7 +3,7 @@ import {
 	createIsoPack,
 	parseIsobuffer,
 	type TransactionAddInput,
-} from "@woovi-playground/shared";
+} from "@fintech/shared";
 import type { RedisPubSub } from "graphql-redis-subscriptions";
 import type { Model } from "mongoose";
 import { config } from "../config";

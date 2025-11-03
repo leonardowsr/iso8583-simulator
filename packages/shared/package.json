@@ -1,5 +1,5 @@
 {
-	"name": "@woovi-playground/shared",
+	"name": "@fintech/shared",
 	"version": "0.0.0",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -9,11 +9,13 @@
 		"dev": "tsx watch src/index.ts"
 	},
 	"dependencies": {
+		"bcrypt": "^6.0.0",
 		"iso_8583": "^2.6.7",
 		"zod": "^4.1.12"
 	},
 	"devDependencies": {
-		"@woovi-playground/tsconfig": "*",
+		"@types/bcrypt": "^6.0.0",
+		"@fintech/tsconfig": "*",
 		"tsx": "^3.12.6"
 	}
 }

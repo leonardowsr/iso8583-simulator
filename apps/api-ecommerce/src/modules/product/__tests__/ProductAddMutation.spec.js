@@ -17,14 +17,14 @@ jest.mock("../../category/CategoryModel", () => ({
 	},
 }));
 
-jest.mock("@woovi-playground/shared", () => ({
+jest.mock("@fintech/shared", () => ({
 	validateZod: jest.fn(),
 	ValidationError: class ValidationError extends Error {},
 }));
 
 const mockedProduct = Product;
 const mockedCategory = Category;
-const { validateZod } = require("@woovi-playground/shared");
+const { validateZod } = require("@fintech/shared");
 
 describe("ProductAddMutation", () => {
 	beforeEach(() => {

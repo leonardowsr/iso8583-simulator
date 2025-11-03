@@ -1,6 +1,6 @@
 {
 	"private": true,
-	"name": "woovi-playground",
+	"name": "fintech",
 	"workspaces": {
 		"packages": [
 			"apps/*",

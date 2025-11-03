@@ -16,13 +16,9 @@ export const transactionAddSchema = z.object({
 		.min(12, "cardNumber é muito curto")
 		.max(19, "cardNumber é muito longo"),
 	cardHolderName: z.string().min(1, "cardHolderName é obrigatório"),
-	cardExpiryMonth: z.string().min(1, "cardExpiryMonth é obrigatório"),
-	cardExpiryYear: z.string().min(1, "cardExpiryYear é obrigatório"),
-	cardCvv: z
-		.string()
-		.min(3, "cardCvv é 3 dígitos")
-		.max(3, "cardCvv é 3 dígitos"),
+	cardExpiryMonth: z.string().length(2, "cardExpiryMonth must be 2 digits"),
+	cardExpiryYear: z.string().length(2, "cardExpiryYear must be 2 digits"),
+	cardCvv: z.string().length(3, "cardCvv must be 3 digits"),
 });
 
 export type TransactionAddInput = z.infer<typeof transactionAddSchema>;
-

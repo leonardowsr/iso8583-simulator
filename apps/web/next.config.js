@@ -3,7 +3,7 @@
 const nextConfig = {
 	reactStrictMode: true,
 	typedRoutes: true,
-	transpilePackages: ["@woovi-playground/ui"],
+	transpilePackages: ["@fintech/ui"],
 	compiler: {
 		// @ts-expect-error
 		relay: require("./relay.config"),

@@ -10,7 +10,7 @@
 		"test": "npx jest --runInBand --colors --passWithNoTests"
 	},
 	"dependencies": {
-		"@woovi-playground/shared": "*",
+		"@fintech/shared": "*",
 		"dotenv-safe": "^8.2.0",
 		"iso_8583": "^2.6.7",
 		"kcors": "^2.2.2",

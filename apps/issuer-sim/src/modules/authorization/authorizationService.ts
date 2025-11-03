@@ -1,5 +1,5 @@
-import type { Iiso8583ParsedSchema } from "@woovi-playground/shared";
-import { validateZod } from "@woovi-playground/shared";
+import type { Iiso8583ParsedSchema } from "@fintech/shared";
+import { validateZod } from "@fintech/shared";
 import mongoose from "mongoose";
 import { accountService } from "../account/accountService";
 import { ledgerService } from "../ledgerEntry/ledgerService";

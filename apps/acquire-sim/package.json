@@ -11,7 +11,7 @@
 		"test": "npx jest --runInBand --colors --passWithNoTests"
 	},
 	"dependencies": {
-		"@woovi-playground/shared": "*",
+		"@fintech/shared": "*",
 		"@entria/graphql-mongo-helpers": "^1.1.2",
 		"dataloader": "^2.2.3",
 		"dotenv-safe": "^8.2.0",

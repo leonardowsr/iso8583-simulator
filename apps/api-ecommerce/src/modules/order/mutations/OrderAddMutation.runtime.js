@@ -1,4 +1,4 @@
-const { validateZod } = require("@woovi-playground/shared");
+const { validateZod } = require("@fintech/shared");
 const { fromGlobalId } = require("graphql-relay");
 const { Product } = require("../../product/ProductModel");
 const { Order } = require("../OrderModel");

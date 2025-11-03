@@ -1,4 +1,4 @@
-const { validateZod } = require("@woovi-playground/shared");
+const { validateZod } = require("@fintech/shared");
 const { Product } = require("../ProductModel");
 const { Category } = require("../../category/CategoryModel");
 async function mutateAndGetPayload(args) {

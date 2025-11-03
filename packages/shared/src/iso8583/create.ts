@@ -1,5 +1,6 @@
 // @ts-expect-error
 import iso_8583 from "iso_8583";
+import { getCardBrand } from "./card";
 export type TransactionAddInput = {
 	userId: string;
 	orderRef: string;
@@ -21,6 +22,12 @@ export const createIsoPack = (args: TransactionAddInput): iso_8583 => {
 	const hh = String(now.getHours()).padStart(2, "0");
 	const mm = String(now.getMinutes()).padStart(2, "0");
 	const ss = String(now.getSeconds()).padStart(2, "0");
+
+	const pan = getCardBrand(args.cardNumber);
+
+	if (pan === "unknown") {
+		throw new Error("Card brand not supported");
+	}
 
 	const isoData = {
 		0: "0200",
