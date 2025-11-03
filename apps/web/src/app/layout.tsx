@@ -10,7 +10,7 @@ import { ReactRelayContainer } from "@/relay/ReactRelayContainer";
 import { ThemeProvider } from "../lib/providers/theme-provider";
 
 export const metadata: Metadata = {
-	title: "Banco",
+	title: "Ecommerce",
 };
 
 export default function RootLayout({
